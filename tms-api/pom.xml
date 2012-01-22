@@ -19,6 +19,12 @@
       <layout>default</layout>
       <name>Repository for library Library[eclipselink]</name>
     </repository>
+    <repository>
+      <url>http://download.java.net/maven/2/</url>
+      <id>javaee-api-6.0</id>
+      <layout>default</layout>
+      <name>Repository for library Library[javaee-api-6.0]</name>
+    </repository>
   </repositories>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -61,6 +67,12 @@
       <artifactId>derby</artifactId>
       <version>10.8.2.2</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>6.0</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+  <ui:composition template="/template.xhtml">
+    <ui:define name="title">
+      <h:outputText value="#{bundle.EditDeviceTitle}"></h:outputText>
+    </ui:define>
+    <ui:define name="body">
+      <h:panelGroup id="messagePanel" layout="block">
+        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+      </h:panelGroup>
+      <h:form>
+        <h:panelGrid columns="2">
+          <h:outputLabel value="#{bundle.EditDeviceLabel_batery}" for="batery" />
+          <h:inputText id="batery" value="#{deviceController.selected.batery}" title="#{bundle.EditDeviceTitle_batery}" />
+          <h:outputLabel value="#{bundle.EditDeviceLabel_mobileNumber}" for="mobileNumber" />
+          <h:inputText id="mobileNumber" value="#{deviceController.selected.mobileNumber}" title="#{bundle.EditDeviceTitle_mobileNumber}" />
+          <h:outputLabel value="#{bundle.EditDeviceLabel_simCard}" for="simCard" />
+          <h:inputText id="simCard" value="#{deviceController.selected.simCard}" title="#{bundle.EditDeviceTitle_simCard}" />
+          <h:outputLabel value="#{bundle.EditDeviceLabel_created}" for="created" />
+          <h:inputText id="created" value="#{deviceController.selected.created}" title="#{bundle.EditDeviceTitle_created}" >
+            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+          </h:inputText>
+          <h:outputLabel value="#{bundle.EditDeviceLabel_id}" for="id" />
+          <h:inputText id="id" value="#{deviceController.selected.id}" title="#{bundle.EditDeviceTitle_id}" />
+          <h:outputLabel value="#{bundle.EditDeviceLabel_updated}" for="updated" />
+          <h:inputText id="updated" value="#{deviceController.selected.updated}" title="#{bundle.EditDeviceTitle_updated}" >
+            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+          </h:inputText>
+          <h:outputLabel value="#{bundle.EditDeviceLabel_version}" for="version" />
+          <h:inputText id="version" value="#{deviceController.selected.version}" title="#{bundle.EditDeviceTitle_version}" />
+        </h:panelGrid>
+        <h:commandLink action="#{deviceController.update}" value="#{bundle.EditDeviceSaveLink}"/>
+        <br />
+        <br />
+        <h:commandLink action="View" value="#{bundle.EditDeviceViewLink}" immediate="true"/>
+        <br />
+        <h:commandLink action="#{deviceController.prepareList}" value="#{bundle.EditDeviceShowAllLink}" immediate="true"/>
+        <br />
+        <br />
+        <h:commandLink value="#{bundle.EditDeviceIndexLink}" action="/index" immediate="true" />
+      </h:form>
+    </ui:define>
+  </ui:composition>
+
+</html>
