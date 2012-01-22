@@ -15,6 +15,8 @@ import javax.ejb.Stateless;
  * se haga persistente como AlertRaw estdo 'no procesado'. Y que el resto del procesamiento se haga
  * de forma asincrona. Aunque esto no es obligatorio. Ademas, el proceso puede necesitar parsear el
  * mensaje para decidir como responder.
+ * 
+ * La captura HTTP se realiza en {@link org.inftel.tms.web.DeviceConnectorDelegatorServlet}.
  *
  * @author ibaca
  */
