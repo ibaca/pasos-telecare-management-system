@@ -3,7 +3,11 @@
   <persistence-unit name="tms-persistence" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/sample</jta-data-source>
+    <class>org.inftel.tms.domain.Affected</class>
+    <class>org.inftel.tms.domain.Alert</class>
+    <class>org.inftel.tms.domain.AlertRaw</class>
     <class>org.inftel.tms.domain.Device</class>
+    <class>org.inftel.tms.domain.Person</class>
     <class>org.inftel.tms.domain.User</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>

@@ -2,12 +2,7 @@ package org.inftel.tms.domain;
 
 import java.util.List;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * Son los afectados, deben tener dispositivos, aunque no es un requisito del modelo. Los
