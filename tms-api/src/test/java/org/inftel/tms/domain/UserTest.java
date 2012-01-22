@@ -42,7 +42,7 @@ public class UserTest {
   }
 
   @Test
-  public void createArtist() throws Exception {
+  public void createUser() throws Exception {
 
     User user = new User();
     user.setName("ambrosio");

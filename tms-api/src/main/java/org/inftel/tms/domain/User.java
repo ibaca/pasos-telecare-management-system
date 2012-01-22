@@ -1,16 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.inftel.tms.domain;
 
 import javax.persistence.Entity;
 
 /**
+ * Usuarios del sistema. Se usan para acceder a la pagina web y poder gestionar a los afectados y
+ * monitorizar y reaccionar ante las alertas que surgan.
  *
  * @author ibaca
  */
-@Entity(name="users")
+@Entity(name = "users")
 public class User extends BaseEntity {
 
   public static enum Role {
