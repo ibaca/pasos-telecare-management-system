@@ -41,24 +41,24 @@
     </plugins>
   </build>
     <dependencies>
-        <dependency>
+<!--        <dependency>
             <groupId>org.inftel.tms</groupId>
             <artifactId>tms-connector</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.inftel.tms</groupId>
             <artifactId>tms-core</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.inftel.tms</groupId>
             <artifactId>tms-statistics</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.inftel.tms</groupId>
             <artifactId>tms-web</artifactId>
