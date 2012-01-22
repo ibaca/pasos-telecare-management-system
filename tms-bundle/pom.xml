@@ -42,13 +42,25 @@
   </build>
     <dependencies>
         <dependency>
-            <groupId>org.inftel</groupId>
-            <artifactId>tms-devices</artifactId>
+            <groupId>org.inftel.tms</groupId>
+            <artifactId>tms-devices-services</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>org.inftel</groupId>
+            <groupId>org.inftel.tms</groupId>
+            <artifactId>tms-management-services</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>org.inftel.tms</groupId>
+            <artifactId>tms-statistics-services</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>org.inftel.tms</groupId>
             <artifactId>tms-web</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
