@@ -43,19 +43,19 @@
     <dependencies>
         <dependency>
             <groupId>org.inftel.tms</groupId>
-            <artifactId>tms-devices-services</artifactId>
+            <artifactId>tms-connector</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>org.inftel.tms</groupId>
-            <artifactId>tms-management-services</artifactId>
+            <artifactId>tms-core</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>org.inftel.tms</groupId>
-            <artifactId>tms-statistics-services</artifactId>
+            <artifactId>tms-statistics</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
