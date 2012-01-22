@@ -1,33 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.inftel.tms.domain;
 
 import java.io.Serializable;
-import javax.persistence.GenerationType;
-
-
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PostPersist;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 /**
  * Entidad base para las entidades persistentes. Permite unificar el comportamiento y facilita el
  * desarrollo de los servicios DAO.<br>
- *
- * Nota: Version no puede pornerse en esta entidad mapeada porque sino JPA no actualiza
- * correctamente el valor. Por tanto, solo se crean aquí el get/set abstracto.
  *
  * @author ibaca
  *
