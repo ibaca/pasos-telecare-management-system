@@ -7,12 +7,12 @@
   <packaging>pom</packaging>
   <name>tms</name>
   <modules>
-    <module>tms-bundle</module>
-    <module>tms-web</module>
     <module>tms-api</module>
-    <module>tms-statistics-services</module>
-    <module>tms-devices-services</module>
-    <module>tms-management-services</module>
+    <module>tms-bundle</module>
+    <module>tms-connector</module>
+    <module>tms-core</module>
     <module>tms-simulator</module>
+    <module>tms-statistics</module>
+    <module>tms-web</module>
   </modules>
 </project>
