@@ -45,8 +45,9 @@ public class UserTest {
   public void createUser() throws Exception {
 
     User user = new User();
-    user.setName("ambrosio");
+    user.setFullName("ambrosio");
     user.setPassword("secreta");
+    user.setEmail("ambrosio@mail.com");
     tx.begin();
     em.persist(user);
     tx.commit();

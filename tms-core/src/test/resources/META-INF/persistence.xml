@@ -6,6 +6,7 @@
     <class>org.inftel.tms.domain.Alert</class>
     <class>org.inftel.tms.domain.AlertRaw</class>
     <class>org.inftel.tms.domain.Device</class>
+    <class>org.inftel.tms.domain.Intervention</class>
     <class>org.inftel.tms.domain.Person</class>
     <class>org.inftel.tms.domain.User</class>
     <properties>
@@ -23,6 +24,7 @@
     <class>org.inftel.tms.domain.Alert</class>
     <class>org.inftel.tms.domain.AlertRaw</class>
     <class>org.inftel.tms.domain.Device</class>
+    <class>org.inftel.tms.domain.Intervention</class>
     <class>org.inftel.tms.domain.Person</class>
     <class>org.inftel.tms.domain.User</class>
     <properties>

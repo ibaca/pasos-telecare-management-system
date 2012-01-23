@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <users id='1000' name='Richard' password='Wright' userRole='0'/>
-    <users id='1001' name='Roger' password='Waters' userRole='0'/>
-    <users id='1002' name='Nick' password='Mason' userRole='1'/>
-    <users id='1003' name='David' password='Gilmour' userRole='1'/>
-    <users id='1004' name='Syd' password='Barrett' userRole='2'/>
+    <users id='1000' nickname='Richard' password='Wright' userRole='0' email='richard@mail.com'/>
+    <users id='1001' nickname='Roger' password='Waters' userRole='0' email='waters@mail.com'/>
+    <users id='1002' nickname='Nick' password='Mason' userRole='1' email='mason@mail.com'/>
+    <users id='1003' nickname='David' password='Gilmour' userRole='1' email='gilmour@mail.com'/>
+    <users id='1004' nickname='Syd' password='Barrett' userRole='2' email='barrett@mail.com'/>
 </dataset>

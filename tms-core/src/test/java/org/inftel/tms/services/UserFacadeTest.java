@@ -68,8 +68,9 @@ public class UserFacadeTest {
     UserFacadeRemote userFacade = (UserFacadeRemote) context.lookup("java:global/classes/UserFacade");
 
     User entity = new User();
-    entity.setName("test-user");
+    entity.setFullName("test-user");
     entity.setPassword("secreta");
+    entity.setEmail("test-user@mail.com");
     UserFacadeRemote instance = userFacade;
     instance.create(entity);
 

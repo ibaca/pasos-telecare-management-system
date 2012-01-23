@@ -1,10 +1,6 @@
 package org.inftel.tms.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * Representa las alertas tal cual llegan de los dispositivos. Puede considerarse inecesario esta
@@ -19,9 +15,22 @@ public class AlertRaw extends BaseEntity {
 
   @OneToOne(optional = true, mappedBy = "raw", fetch = FetchType.LAZY)
   Alert alert;
+  /**
+   * Cadena que representa el origen de la alerta, actualmente el telefono del dispositivo
+   */
+  @Basic(optional = false)
+  String origin;
   @Basic(optional = false, fetch = FetchType.EAGER)
   @Lob
   String rawData;
+
+  public String getOrigin() {
+    return origin;
+  }
+
+  public void setOrigin(String origin) {
+    this.origin = origin;
+  }
 
   public Alert getAlert() {
     return alert;
@@ -37,5 +46,9 @@ public class AlertRaw extends BaseEntity {
 
   public void setRawData(String rawData) {
     this.rawData = rawData;
+  }
+  
+  public boolean isProcessed() {
+    return getAlert() == null;
   }
 }

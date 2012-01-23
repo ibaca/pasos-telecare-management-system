@@ -1,5 +1,7 @@
 package org.inftel.tms.domain;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -15,16 +17,35 @@ public class User extends BaseEntity {
 
     USER, ADMIN, ROOT
   };
-  private String name;
+  private String fullName;
+  private String nickname;
+  @Column(nullable = false, unique = true)
+  private String email;
   private String password;
   private Role userRole;
 
-  public String getName() {
-    return name;
+  public String getEmail() {
+    return email;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
+
+  public String getNickname() {
+    return nickname;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
   }
 
   public String getPassword() {

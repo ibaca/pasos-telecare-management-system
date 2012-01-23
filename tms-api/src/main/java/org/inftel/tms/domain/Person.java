@@ -1,5 +1,9 @@
 package org.inftel.tms.domain;
 
+import com.beoui.geocell.annotations.Geocells;
+import com.beoui.geocell.annotations.Latitude;
+import com.beoui.geocell.annotations.Longitude;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import static org.apache.commons.lang.StringUtils.isBlank;
@@ -17,12 +21,25 @@ public class Person extends BaseEntity {
   @Basic(optional = false)
   private String email;
   private String mobileNumber;
+  @Latitude
   private double latitude;
+  @Longitude
   private double longitude;
+  @Geocells
+  @ElementCollection
+  private List<String> geoCellsData = new ArrayList<String>();
   @ManyToMany(mappedBy = "contacts", fetch = FetchType.LAZY)
   private List<Affected> chargeOf;
   @OneToOne(mappedBy = "data", optional = true, fetch = FetchType.LAZY)
   private Affected affected;
+  
+  public List<String> getGeoCellsData() {
+    return geoCellsData;
+  }
+
+  public void setGeoCellsData(List<String> geoCellsData) {
+    this.geoCellsData = geoCellsData;
+  }
 
   public Affected getAffected() {
     return affected;
