@@ -6,6 +6,7 @@ package org.inftel.tms.services;
 
 import java.util.List;
 import javax.ejb.Remote;
+import org.inftel.tms.domain.Device;
 import org.inftel.tms.domain.User;
 
 /**
@@ -28,5 +29,7 @@ public interface UserFacadeRemote {
   List<User> findRange(int[] range);
 
   int count();
+
+  List<Device> getDevices();
   
 }

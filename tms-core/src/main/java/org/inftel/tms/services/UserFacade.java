@@ -44,6 +44,15 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeRemote
     // Solo para demostrar el test!
     return getDeviceFacade().findAll();
   }
+
+  /** Uso interno para configurar test */
+  UserFacade(EntityManager em, DeviceFacadeRemote deviceFacade) {
+    super(User.class);
+    this.em = em;
+    this.deviceFacade = deviceFacade;
+  }
+  
+  
   
   
 }
