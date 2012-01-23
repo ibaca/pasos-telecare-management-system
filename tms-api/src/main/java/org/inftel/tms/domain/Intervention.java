@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ibaca
  */
 @Entity
-@Table(name = "interventions", catalog = "", schema = "tms")
+@Table(name = "interventions")
 @XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Intervention.findAll", query = "SELECT i FROM Intervention i"),
@@ -58,6 +58,4 @@ public class Intervention extends BaseEntity {
   public void setDescription(String description) {
     this.description = description;
   }
-  
-  
 }

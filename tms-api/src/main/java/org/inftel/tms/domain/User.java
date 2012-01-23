@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ibaca
  */
 @Entity
-@Table(name = "users", catalog = "", schema = "tms")
+@Table(name = "users")
 @XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),

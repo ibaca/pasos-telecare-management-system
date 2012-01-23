@@ -15,7 +15,7 @@ import static org.apache.commons.lang.StringUtils.isBlank;
  * @author ibaca
  */
 @Entity
-@Table(name = "people", catalog = "", schema = "tms")
+@Table(name = "people")
 @XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
@@ -47,7 +47,7 @@ public class Person extends BaseEntity {
   private List<Affected> chargeOf;
   @OneToOne(mappedBy = "data", optional = true, fetch = FetchType.LAZY)
   private Affected affected;
-  
+
   public List<String> getGeoCellsData() {
     return geoCellsData;
   }

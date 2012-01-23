@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ibaca
  */
 @Entity
-@Table(name = "alerts_raw", catalog = "", schema = "tms")
+@Table(name = "alerts_raw")
 @XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "AlertRaw.findAll", query = "SELECT a FROM AlertRaw a"),
