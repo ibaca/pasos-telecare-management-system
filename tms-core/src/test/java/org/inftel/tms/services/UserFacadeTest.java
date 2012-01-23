@@ -109,7 +109,7 @@ public class UserFacadeTest {
    * Basado en el ejemplo http://www.antoniogoncalves.org/xwiki/bin/view/Article/TestingJPA
    */
   @Test
-  public void testFindAll() throws Exception {
+  public void testCleanInsertDataset() throws Exception {
     // Inicializar EntityManager, obtener connection y cargar datos XML
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("tms-persistence-mocked");
     EntityManager em = emf.createEntityManager();
