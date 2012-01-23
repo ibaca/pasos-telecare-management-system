@@ -1,6 +1,5 @@
 package org.inftel.tms.devices;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -28,9 +27,20 @@ import javax.security.auth.login.Configuration;
 public class DeviceConnector implements DeviceConnectorRemote {
 
   private static final Logger logger = Logger.getLogger(DeviceConnector.class.getName());
-  
-  private Properties serverProps = new Properties();
-  private Properties alertProps = new Properties();
+  /*remote parameters programming
+   * key               123456
+   * call number       911234567
+   * id(ACK)           1000
+   * transport         2:TCP
+   * ip                01:12700000000108080
+   */
+  private static final String key = "&RK123456";
+  private static final String call ="&RV1911234567";
+  private static final String sms = "&RS1601234567";
+  private static final String id = "&KO1000";
+  private static final String transport="&RT2:TCP";
+  private static final String ip = "&RI01:12700000000108080";
+
 
   /**
    * Comprueba si la trama recibida del terminal es una Alarma técnica   
@@ -75,22 +85,16 @@ public class DeviceConnector implements DeviceConnectorRemote {
   @Override
   public CharSequence processAlertMessage(String from, String message) {
     logger.log(Level.INFO, "procesando mensaje de {0}: {1}", new Object[]{from, message});
-    
-    try {
-       serverProps.load(Configuration.class.getClassLoader().getResourceAsStream("server.properties"));
-    } catch (IOException ex) {
         
-    }
     //remote parameters programming
     if( (message == null) || (message.isEmpty()) ){
-        return "*$RP06"+
-                serverProps.getProperty("key") 
-                +serverProps.getProperty("key")
-                +serverProps.getProperty("call")
-                +serverProps.getProperty("sms")
-                +serverProps.getProperty("id")
-                +serverProps.getProperty("transport")
-                +serverProps.getProperty("ip")
+        return "*$RP06"
+                + key + key
+                + call
+                +sms
+                +id
+                +transport
+                +ip
                 +"#";
     }
     else if (isTechnicalAlarm(message)){
