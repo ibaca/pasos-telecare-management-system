@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.inftel.tms.services;
 
 import java.util.List;
@@ -15,11 +11,11 @@ import org.inftel.tms.domain.Device;
 @Remote
 public interface DeviceFacadeRemote {
 
-  void create(Device device);
+  void create(Device devices);
 
-  void edit(Device device);
+  void edit(Device devices);
 
-  void remove(Device device);
+  void remove(Device devices);
 
   Device find(Object id);
 
@@ -28,5 +24,4 @@ public interface DeviceFacadeRemote {
   List<Device> findRange(int[] range);
 
   int count();
-  
 }

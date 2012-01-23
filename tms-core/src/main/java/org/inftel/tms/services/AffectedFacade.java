@@ -3,14 +3,14 @@ package org.inftel.tms.services;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.inftel.tms.domain.Device;
+import org.inftel.tms.domain.Affected;
 
 /**
  *
  * @author ibaca
  */
 @Stateless
-public class DeviceFacade extends AbstractFacade<Device> implements DeviceFacadeRemote {
+public class AffectedFacade extends AbstractFacade<Affected> implements AffectedFacadeRemote {
 
   @PersistenceContext(unitName = "tms-persistence")
   private EntityManager em;
@@ -20,7 +20,7 @@ public class DeviceFacade extends AbstractFacade<Device> implements DeviceFacade
     return em;
   }
 
-  public DeviceFacade() {
-    super(Device.class);
+  public AffectedFacade() {
+    super(Affected.class);
   }
 }

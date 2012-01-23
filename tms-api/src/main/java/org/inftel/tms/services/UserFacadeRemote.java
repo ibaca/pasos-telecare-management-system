@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.inftel.tms.services;
 
 import java.util.List;
@@ -31,5 +27,4 @@ public interface UserFacadeRemote {
   int count();
 
   List<Device> getDevices();
-  
 }
