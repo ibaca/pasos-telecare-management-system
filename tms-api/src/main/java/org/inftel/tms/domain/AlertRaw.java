@@ -24,15 +24,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class AlertRaw extends BaseEntity {
 
   @OneToOne(optional = true, mappedBy = "raw", fetch = FetchType.LAZY)
-  Alert alert;
+  private Alert alert;
   /**
    * Cadena que representa el origen de la alerta, actualmente el telefono del dispositivo
    */
   @Basic(optional = false)
-  String origin;
+  private String origin;
   @Basic(optional = false, fetch = FetchType.EAGER)
   @Lob
-  String rawData;
+  private String rawData;
 
   public String getOrigin() {
     return origin;

@@ -24,8 +24,13 @@ import javax.xml.bind.annotation.XmlRootElement;
   @NamedQuery(name = "Alert.findByPriority", query = "SELECT a FROM Alert a WHERE a.priority = :priority"),
   @NamedQuery(name = "Alert.findByType", query = "SELECT a FROM Alert a WHERE a.type = :type"),
   @NamedQuery(name = "Alert.findByUpdated", query = "SELECT a FROM Alert a WHERE a.updated = :updated"),
-  @NamedQuery(name = "Alert.findByVersion", query = "SELECT a FROM Alert a WHERE a.version = :version")})
+  @NamedQuery(name = "Alert.findByVersion", query = "SELECT a FROM Alert a WHERE a.version = :version"),
+  @NamedQuery(name = Alert.FIND_BY_AFFECTED, query = "SELECT a FROM Alert a WHERE a.affected = :affected"),
+  @NamedQuery(name = Alert.FIND_ACTIVED, query = "SELECT a FROM Alert a WHERE a.closedIntervention IS NULL")})
 public class Alert extends BaseEntity {
+  
+  public static final String FIND_ACTIVED = "Alert.findActived";
+  public static final String FIND_BY_AFFECTED = "Alert.findByAffected";
 
   // FIXME no puede cambiarse el orden del enumerado
   // http://duydo.com/effective-jpa-persist-an-enumerationeffectively/
@@ -45,11 +50,21 @@ public class Alert extends BaseEntity {
   private Device origin;
   @ManyToOne
   private Person affected;
-  @OneToOne(optional = false, fetch = FetchType.LAZY)
+  @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(unique = true, nullable = false, updatable = false)
   private AlertRaw raw;
-  @OneToMany(mappedBy = "alert", cascade= CascadeType.ALL)
+  @OneToMany(mappedBy = "alert", cascade = CascadeType.ALL)
   private List<Intervention> interventions;
+  @OneToOne(optional = true)
+  private Intervention closedIntervention;
+
+  public Intervention getClosedIntervention() {
+    return closedIntervention;
+  }
+
+  public void setClosedIntervention(Intervention closedIntervention) {
+    this.closedIntervention = closedIntervention;
+  }
 
   public List<Intervention> getInterventions() {
     return interventions;
@@ -97,6 +112,7 @@ public class Alert extends BaseEntity {
 
   public void setRaw(AlertRaw raw) {
     this.raw = raw;
+    raw.setAlert(this);
   }
 
   public AlarmType getType() {

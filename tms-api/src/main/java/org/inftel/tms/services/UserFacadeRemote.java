@@ -27,4 +27,6 @@ public interface UserFacadeRemote {
   int count();
 
   List<Device> getDevices();
+
+  User currentUser();
 }

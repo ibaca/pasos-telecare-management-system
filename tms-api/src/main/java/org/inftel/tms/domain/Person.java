@@ -34,6 +34,7 @@ public class Person extends BaseEntity {
   private String firstName;
   private String lastName;
   @Basic(optional = false)
+  @Column(nullable = false, unique = true)
   private String email;
   private String mobileNumber;
   @Latitude

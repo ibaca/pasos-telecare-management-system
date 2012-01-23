@@ -3,6 +3,7 @@ package org.inftel.tms.services;
 import java.util.List;
 import javax.ejb.Remote;
 import org.inftel.tms.domain.Alert;
+import org.inftel.tms.domain.Person;
 
 /**
  *
@@ -24,4 +25,8 @@ public interface AlertFacadeRemote {
   List<Alert> findRange(int[] range);
 
   int count();
+
+  List<Alert> findActiveAlerts();
+
+  List<Alert> findAlertsByAffected(Person affected);
 }
