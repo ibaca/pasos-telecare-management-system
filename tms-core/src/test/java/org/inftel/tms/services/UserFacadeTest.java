@@ -4,12 +4,17 @@
  */
 package org.inftel.tms.services;
 
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import org.inftel.tms.domain.Device;
 import org.inftel.tms.domain.User;
 import static org.junit.Assert.*;
 import org.junit.*;
+import org.mockito.Mockito;
 
 /**
  *
@@ -17,23 +22,15 @@ import org.junit.*;
  */
 public class UserFacadeTest {
 
-  private static EJBContainer container;
-  private static Context context;
-  private static UserFacadeRemote userFacade;
-
   public UserFacadeTest() {
   }
 
   @BeforeClass
   public static void setUpClass() throws Exception {
-    container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
-    context = container.getContext();
-    userFacade = (UserFacadeRemote) context.lookup("java:global/classes/UserFacade");
   }
 
   @AfterClass
   public static void tearDownClass() throws Exception {
-    container.close();
   }
 
   @Before
@@ -45,11 +42,23 @@ public class UserFacadeTest {
   }
 
   /**
-   * Test of create method, of class UserFacade.
+   * Este test arranca una instancia de Glassfish y llama a los EJB a traves de su interfaz remoto.
+   * Esto debe considerarse un test de integracion. El principal problema, instanciar el servidor y
+   * desplegar los beans es muy pesado, y el test dura mas de 30s. Es poco practico como test
+   * durante el desarrollo.
+   *
+   * En teoria podria ser mas rapido como se comenta aqui (pero no se ha conseguido)
+   * http://www.adam-bien.com/roller/abien/entry/embedding_ejb_3_1_container
+   * 
+   * FIXME lo dejo con la etiqueta @Ignore para que no se ejectue! tarda demasiado!
    */
-  @Test
-  public void testCreate() throws Exception {
-    System.out.println("create");
+  @Test @Ignore
+  public void testEmbeddedContainer() throws Exception {
+    System.out.println("embeddable test");
+    EJBContainer container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
+    Context context = container.getContext();
+    UserFacadeRemote userFacade = (UserFacadeRemote) context.lookup("java:global/classes/UserFacade");
+
     User entity = new User();
     entity.setName("test-user");
     entity.setPassword("secreta");
@@ -57,95 +66,37 @@ public class UserFacadeTest {
     instance.create(entity);
 
     assertNotNull(entity);
+    
+    container.close();
   }
 
-  /**
-   * Test of edit method, of class UserFacade.
-   */
   @Test
-  @Ignore
-  public void testEdit() throws Exception {
-    System.out.println("edit");
-    User entity = null;
-    UserFacadeRemote instance = userFacade;
-    instance.edit(entity);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
-  }
+  public void testMockedServices() throws Exception {
+    // Se crear una entitymanager q usaran los ejbs
+    final EntityManager testEm = Persistence.createEntityManagerFactory("tms-persistence-mocked").createEntityManager();
 
-  /**
-   * Test of remove method, of class UserFacade.
-   */
-  @Test
-  @Ignore
-  public void testRemove() throws Exception {
-    System.out.println("remove");
-    User entity = null;
-    UserFacadeRemote instance = userFacade;
-    instance.remove(entity);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
-  }
+    // Se simulan los otros ejbs
+    final DeviceFacadeRemote mockedDeviceService = Mockito.mock(DeviceFacadeRemote.class);
+    // como sabemos q solo vamos a probar este metodo, solo configuramos ese metodo
+    Mockito.when(mockedDeviceService.findAll()).thenReturn(Collections.<Device>emptyList());
 
-  /**
-   * Test of find method, of class UserFacade.
-   */
-  @Test
-  @Ignore
-  public void testFind() throws Exception {
-    System.out.println("find");
-    Object id = null;
-    UserFacadeRemote instance = userFacade;
-    User expResult = null;
-    User result = instance.find(id);
-    assertEquals(expResult, result);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
-  }
+    // Se crea un ejb y configuramos los recursos que deberia inyectar el contenedor
+    UserFacade service = new UserFacade() {
 
-  /**
-   * Test of findAll method, of class UserFacade.
-   */
-  @Test
-  @Ignore
-  public void testFindAll() throws Exception {
-    System.out.println("findAll");
-    UserFacadeRemote instance = userFacade;
-    List expResult = null;
-    List result = instance.findAll();
-    assertEquals(expResult, result);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
-  }
+      @Override
+      protected EntityManager getEntityManager() {
+        return testEm;
+      }
 
-  /**
-   * Test of findRange method, of class UserFacade.
-   */
-  @Test
-  @Ignore
-  public void testFindRange() throws Exception {
-    System.out.println("findRange");
-    int[] range = null;
-    UserFacadeRemote instance = userFacade;
-    List expResult = null;
-    List result = instance.findRange(range);
-    assertEquals(expResult, result);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
-  }
+      @Override
+      protected DeviceFacadeRemote getDeviceFacade() {
+        return mockedDeviceService;
+      }
+    };
 
-  /**
-   * Test of count method, of class UserFacade.
-   */
-  @Test
-  @Ignore
-  public void testCount() throws Exception {
-    System.out.println("count");
-    UserFacadeRemote instance = userFacade;
-    int expResult = 0;
-    int result = instance.count();
-    assertEquals(expResult, result);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
+    // Una vez esta todo configurado, se lanza el test
+    List<Device> deviceList = service.getDevices();
+    assertEquals("el usuario no debe tener dispositivos", true, deviceList.isEmpty());
   }
+  
 }
