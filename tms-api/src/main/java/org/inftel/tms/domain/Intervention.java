@@ -4,9 +4,8 @@
  */
 package org.inftel.tms.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Representa una reaccion ante una alerta por un usuario del sistema de teleasistencia. Por ahora
@@ -17,6 +16,15 @@ import javax.persistence.ManyToOne;
  * @author ibaca
  */
 @Entity
+@Table(name = "interventions", catalog = "", schema = "tms")
+@XmlRootElement
+@NamedQueries({
+  @NamedQuery(name = "Intervention.findAll", query = "SELECT i FROM Intervention i"),
+  @NamedQuery(name = "Intervention.findById", query = "SELECT i FROM Intervention i WHERE i.id = :id"),
+  @NamedQuery(name = "Intervention.findByCreated", query = "SELECT i FROM Intervention i WHERE i.created = :created"),
+  @NamedQuery(name = "Intervention.findByDescription", query = "SELECT i FROM Intervention i WHERE i.description = :description"),
+  @NamedQuery(name = "Intervention.findByUpdated", query = "SELECT i FROM Intervention i WHERE i.updated = :updated"),
+  @NamedQuery(name = "Intervention.findByVersion", query = "SELECT i FROM Intervention i WHERE i.version = :version")})
 public class Intervention extends BaseEntity {
 
   @ManyToOne(optional = false)

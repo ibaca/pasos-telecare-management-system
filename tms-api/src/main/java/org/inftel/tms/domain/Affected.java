@@ -3,6 +3,7 @@ package org.inftel.tms.domain;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Son los afectados, deben tener dispositivos, aunque no es un requisito del modelo. Los
@@ -13,7 +14,15 @@ import javax.persistence.*;
  *
  * @author ibaca
  */
-@Entity(name="affected")
+@Entity
+@Table(name = "affected", catalog = "", schema = "tms")
+@XmlRootElement
+@NamedQueries({
+  @NamedQuery(name = "Affected.findAll", query = "SELECT a FROM Affected a"),
+  @NamedQuery(name = "Affected.findById", query = "SELECT a FROM Affected a WHERE a.id = :id"),
+  @NamedQuery(name = "Affected.findByCreated", query = "SELECT a FROM Affected a WHERE a.created = :created"),
+  @NamedQuery(name = "Affected.findByUpdated", query = "SELECT a FROM Affected a WHERE a.updated = :updated"),
+  @NamedQuery(name = "Affected.findByVersion", query = "SELECT a FROM Affected a WHERE a.version = :version")})
 public class Affected extends BaseEntity {
 
   @OneToOne(fetch = FetchType.EAGER)

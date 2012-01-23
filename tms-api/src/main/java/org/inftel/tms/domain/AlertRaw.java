@@ -1,6 +1,7 @@
 package org.inftel.tms.domain;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Representa las alertas tal cual llegan de los dispositivos. Puede considerarse inecesario esta
@@ -10,7 +11,16 @@ import javax.persistence.*;
  *
  * @author ibaca
  */
-@Entity(name = "alerts_raw")
+@Entity
+@Table(name = "alerts_raw", catalog = "", schema = "tms")
+@XmlRootElement
+@NamedQueries({
+  @NamedQuery(name = "AlertRaw.findAll", query = "SELECT a FROM AlertRaw a"),
+  @NamedQuery(name = "AlertRaw.findById", query = "SELECT a FROM AlertRaw a WHERE a.id = :id"),
+  @NamedQuery(name = "AlertRaw.findByCreated", query = "SELECT a FROM AlertRaw a WHERE a.created = :created"),
+  @NamedQuery(name = "AlertRaw.findByOrigin", query = "SELECT a FROM AlertRaw a WHERE a.origin = :origin"),
+  @NamedQuery(name = "AlertRaw.findByUpdated", query = "SELECT a FROM AlertRaw a WHERE a.updated = :updated"),
+  @NamedQuery(name = "AlertRaw.findByVersion", query = "SELECT a FROM AlertRaw a WHERE a.version = :version")})
 public class AlertRaw extends BaseEntity {
 
   @OneToOne(optional = true, mappedBy = "raw", fetch = FetchType.LAZY)

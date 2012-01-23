@@ -1,8 +1,7 @@
 package org.inftel.tms.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Usuarios del sistema. Se usan para acceder a la pagina web y poder gestionar a los afectados y
@@ -10,7 +9,20 @@ import javax.persistence.Entity;
  *
  * @author ibaca
  */
-@Entity(name = "users")
+@Entity
+@Table(name = "users", catalog = "", schema = "tms")
+@XmlRootElement
+@NamedQueries({
+  @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+  @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+  @NamedQuery(name = "User.findByCreated", query = "SELECT u FROM User u WHERE u.created = :created"),
+  @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+  @NamedQuery(name = "User.findByFullname", query = "SELECT u FROM User u WHERE u.fullName = :fullname"),
+  @NamedQuery(name = "User.findByNickname", query = "SELECT u FROM User u WHERE u.nickname = :nickname"),
+  @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
+  @NamedQuery(name = "User.findByUpdated", query = "SELECT u FROM User u WHERE u.updated = :updated"),
+  @NamedQuery(name = "User.findByUserrole", query = "SELECT u FROM User u WHERE u.userRole = :userrole"),
+  @NamedQuery(name = "User.findByVersion", query = "SELECT u FROM User u WHERE u.version = :version")})
 public class User extends BaseEntity {
 
   public static enum Role {

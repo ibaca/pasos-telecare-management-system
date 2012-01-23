@@ -6,6 +6,7 @@ import com.beoui.geocell.annotations.Longitude;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 /**
@@ -13,7 +14,21 @@ import static org.apache.commons.lang.StringUtils.isBlank;
  *
  * @author ibaca
  */
-@Entity(name = "people")
+@Entity
+@Table(name = "people", catalog = "", schema = "tms")
+@XmlRootElement
+@NamedQueries({
+  @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
+  @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id"),
+  @NamedQuery(name = "Person.findByCreated", query = "SELECT p FROM Person p WHERE p.created = :created"),
+  @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
+  @NamedQuery(name = "Person.findByFirstname", query = "SELECT p FROM Person p WHERE p.firstName = :firstname"),
+  @NamedQuery(name = "Person.findByLastname", query = "SELECT p FROM Person p WHERE p.lastName = :lastname"),
+  @NamedQuery(name = "Person.findByLatitude", query = "SELECT p FROM Person p WHERE p.latitude = :latitude"),
+  @NamedQuery(name = "Person.findByLongitude", query = "SELECT p FROM Person p WHERE p.longitude = :longitude"),
+  @NamedQuery(name = "Person.findByMobileNumber", query = "SELECT p FROM Person p WHERE p.mobileNumber = :mobilenumber"),
+  @NamedQuery(name = "Person.findByUpdated", query = "SELECT p FROM Person p WHERE p.updated = :updated"),
+  @NamedQuery(name = "Person.findByVersion", query = "SELECT p FROM Person p WHERE p.version = :version")})
 public class Person extends BaseEntity {
 
   private String firstName;

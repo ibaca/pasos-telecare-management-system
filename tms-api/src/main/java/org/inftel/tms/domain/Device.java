@@ -1,11 +1,8 @@
 package org.inftel.tms.domain;
 
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Representa a los dispositivos asiciados al sistema. Cada afectado debe tener almenos un
@@ -13,7 +10,20 @@ import javax.persistence.TemporalType;
  *
  * @author ibaca
  */
-@Entity(name = "devices")
+@Entity
+@Table(name = "devices", catalog = "", schema = "tms")
+@XmlRootElement
+@NamedQueries({
+  @NamedQuery(name = "Device.findAll", query = "SELECT d FROM Device d"),
+  @NamedQuery(name = "Device.findById", query = "SELECT d FROM Device d WHERE d.id = :id"),
+  @NamedQuery(name = "Device.findByBatery", query = "SELECT d FROM Device d WHERE d.batery = :batery"),
+  @NamedQuery(name = "Device.findByCreated", query = "SELECT d FROM Device d WHERE d.created = :created"),
+  @NamedQuery(name = "Device.findByLastconnection", query = "SELECT d FROM Device d WHERE d.lastConnection = :lastconnection"),
+  @NamedQuery(name = "Device.findByMobilenumber", query = "SELECT d FROM Device d WHERE d.mobileNumber = :mobilenumber"),
+  @NamedQuery(name = "Device.findBySimcard", query = "SELECT d FROM Device d WHERE d.simCard = :simcard"),
+  @NamedQuery(name = "Device.findByTemperature", query = "SELECT d FROM Device d WHERE d.temperature = :temperature"),
+  @NamedQuery(name = "Device.findByUpdated", query = "SELECT d FROM Device d WHERE d.updated = :updated"),
+  @NamedQuery(name = "Device.findByVersion", query = "SELECT d FROM Device d WHERE d.version = :version")})
 public class Device extends BaseEntity {
 
   private String mobileNumber;

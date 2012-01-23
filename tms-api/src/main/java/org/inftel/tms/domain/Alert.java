@@ -2,6 +2,7 @@ package org.inftel.tms.domain;
 
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Representan las alertas recibidas de los dispositivos.
@@ -12,7 +13,18 @@ import javax.persistence.*;
  *
  * @author ibaca
  */
-@Entity(name = "alerts")
+@Entity
+@Table(name = "alerts", catalog = "", schema = "tms")
+@XmlRootElement
+@NamedQueries({
+  @NamedQuery(name = "Alert.findAll", query = "SELECT a FROM Alert a"),
+  @NamedQuery(name = "Alert.findById", query = "SELECT a FROM Alert a WHERE a.id = :id"),
+  @NamedQuery(name = "Alert.findByCause", query = "SELECT a FROM Alert a WHERE a.cause = :cause"),
+  @NamedQuery(name = "Alert.findByCreated", query = "SELECT a FROM Alert a WHERE a.created = :created"),
+  @NamedQuery(name = "Alert.findByPriority", query = "SELECT a FROM Alert a WHERE a.priority = :priority"),
+  @NamedQuery(name = "Alert.findByType", query = "SELECT a FROM Alert a WHERE a.type = :type"),
+  @NamedQuery(name = "Alert.findByUpdated", query = "SELECT a FROM Alert a WHERE a.updated = :updated"),
+  @NamedQuery(name = "Alert.findByVersion", query = "SELECT a FROM Alert a WHERE a.version = :version")})
 public class Alert extends BaseEntity {
 
   // FIXME no puede cambiarse el orden del enumerado
