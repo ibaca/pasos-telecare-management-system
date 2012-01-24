@@ -1,12 +1,15 @@
 package org.inftel.tms.devices;
 
-import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.security.auth.login.Configuration;
+import org.apache.commons.lang.StringUtils;
+import org.inftel.tms.domain.AlertRaw;
+import org.inftel.tms.services.AlertFacadeRemote;
+import org.inftel.tms.services.AlertRawFacadeRemote;
 
 /**
  * Se encarga de la comunicacion entre los dispositivos y el servidor. Su principal funcion es la de
@@ -18,7 +21,7 @@ import javax.security.auth.login.Configuration;
  * se haga persistente como AlertRaw estado 'no procesado'. Y que el resto del procesamiento se haga
  * de forma asincrona. Aunque esto no es obligatorio. Ademas, el proceso puede necesitar parsear el
  * mensaje para decidir como responder.
- * 
+ *
  * La captura HTTP se realiza en {@link org.inftel.tms.web.DeviceConnectorDelegatorServlet}.
  *
  * @author ibaca
@@ -26,52 +29,55 @@ import javax.security.auth.login.Configuration;
 @Stateless
 public class DeviceConnector implements DeviceConnectorRemote {
 
+  @EJB
+  private AlertFacadeRemote alertFacade;
+  @EJB
+  private AlertRawFacadeRemote alertRawFacade;
   private static final Logger logger = Logger.getLogger(DeviceConnector.class.getName());
-  /*remote parameters programming
-   * key               123456
-   * call number       911234567
-   * id(ACK)           1000
-   * transport         2:TCP
-   * ip                01:12700000000108080
+  /*
+   * remote parameters programming key 123456 call number 911234567 id(ACK) 1000 transport 2:TCP ip
+   * 01:12700000000108080
    */
   private static final String key = "&RK123456";
-  private static final String call ="&RV1911234567";
+  private static final String call = "&RV1911234567";
   private static final String sms = "&RS1601234567";
   private static final String id = "&KO1000";
-  private static final String transport="&RT2:TCP";
+  private static final String transport = "&RT2:TCP";
   private static final String ip = "&RI01:12700000000108080";
 
-
   /**
-   * Comprueba si la trama recibida del terminal es una Alarma técnica   
+   * Comprueba si la trama recibida del terminal es una Alarma técnica
+   *
    * @param message el contenido del mensaje en formato paSOS
    * @return boolean
    */
   private boolean isTechnicalAlarm(String message) {
-        Pattern pattern = null;
-        return Pattern.matches("^$AT",message);
-    }
+    Pattern pattern = null;
+    return Pattern.matches("^$AT", message);
+  }
 
-    /**
-   * Comprueba si la trama recibida del terminal es una Alarma del usuario   
+  /**
+   * Comprueba si la trama recibida del terminal es una Alarma del usuario
+   *
    * @param message el contenido del mensaje en formato paSOS
    * @return boolean
    */
   private boolean isUserAlarm(String message) {
-        Pattern pattern = null;
-        return Pattern.matches("^$AU",message);
-    }
-    
-    /**
-   * Comprueba si la trama recibida del terminal es una Alarma del dispositivo   
+    Pattern pattern = null;
+    return Pattern.matches("^$AU", message);
+  }
+
+  /**
+   * Comprueba si la trama recibida del terminal es una Alarma del dispositivo
+   *
    * @param message el contenido del mensaje en formato paSOS
    * @return boolean
    */
   private boolean isDeviceAlarm(String message) {
-        Pattern pattern = null;
-        return Pattern.matches("^$AD",message);
-    }
-  
+    Pattern pattern = null;
+    return Pattern.matches("^$AD", message);
+  }
+
   /**
    * Recibe los mensajes desde el servlet.
    *
@@ -85,34 +91,36 @@ public class DeviceConnector implements DeviceConnectorRemote {
   @Override
   public CharSequence processAlertMessage(String from, String message) {
     logger.log(Level.INFO, "procesando mensaje de {0}: {1}", new Object[]{from, message});
-        
-    //remote parameters programming
-    if( (message == null) || (message.isEmpty()) ){
-        return "*$RP06"
-                + key + key
-                + call
-                +sms
-                +id
-                +transport
-                +ip
-                +"#";
+
+    if (StringUtils.isBlank(from) || StringUtils.isBlank("message")) {
+      throw new IllegalArgumentException("el origen y el contenido de una alerta no pueden ser nulos o cadenas vacias");
     }
-    else if (isTechnicalAlarm(message)){
-        //System.out.println("ERROR!");
-        return null;
-    }    
-    else if (isUserAlarm(message)){
-        //crear alert y alertRaw con ejb
-        return null;
-    }    
-    else if (isDeviceAlarm(message)){
-        //crear alert y alertRaw con ejb
-        return null;
-    }    
-    else{
-        return null;
+
+    AlertRaw raw = new AlertRaw();
+    raw.setOrigin(from);
+    raw.setRawData(message);
+    alertRawFacade.create(raw);
+
+    //remote parameters programming
+    if ((message == null) || (message.isEmpty())) {
+      return "*$RP06" + key + key + call + sms + id + transport + ip + "#";
+    } else if (isTechnicalAlarm(message)) {
+      //System.out.println("ERROR!");
+      return null;
+    } else if (isUserAlarm(message)) {
+      //crear alert y alertRaw con ejb
+      return null;
+    } else if (isDeviceAlarm(message)) {
+      //crear alert y alertRaw con ejb
+      return null;
+    } else {
+      return null;
     }
   }
 
-
+  // Internal Test Usage
+  DeviceConnector(AlertFacadeRemote alertFacade, AlertRawFacadeRemote alertRawFacade) {
+    this.alertFacade = alertFacade;
+    this.alertRawFacade = alertRawFacade;
+  }
 }
