@@ -1,7 +1,11 @@
 package org.inftel.tms.simulator;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -27,6 +31,17 @@ public class Main {
 
   public static final String USER_FACADE_JNDI = "java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/tms-core-1.0-SNAPSHOT/UserFacade!org.inftel.tms.services.UserFacadeRemote";
 
+    //Prueba mandar mensaje vacío al servlet
+  public static HttpResponse sendEmptyMessage() throws URISyntaxException, IOException{    
+    HttpClient client = new DefaultHttpClient();
+    HttpPost post = new HttpPost();    
+    post.setHeader("sender-mobile-number", "666123456");
+    URI uri = new URI("http://localhost:8080/tms-web/connector");
+    post.setURI(uri);
+    return client.execute(post);
+    
+  }  
+  
   public static String readStreamAsString(InputStream in) {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
@@ -63,28 +78,16 @@ public class Main {
 
     // Se ininializa el contexto apuntando a nuestro servidor glassfish
     Context context = new InitialContext(env);
-
-    // Se llama a algun metodo para ver que todo va bien!
-//    UserFacadeRemote userService = (UserFacadeRemote) context.lookup(USER_FACADE_JNDI);
-//    System.out.println("remote user service count response: " + userService.count());
         
-    //Prueba mandar mensaje vacío al servlet
-    HttpClient client = new DefaultHttpClient();
-    HttpPost post = new HttpPost();    
-    post.setHeader("sender-mobile-number", "666123456");
-    URI uri = new URI("http://localhost:8080/tms-web/connector");
-    post.setURI(uri);
-    HttpResponse response = client.execute(post);
-
-    String contents = readStreamAsString(response.getEntity().getContent());
-    System.out.println(contents);
-    
-//    if (200 == response.getStatusLine().getStatusCode()) {
-//        String contents = readStreamAsString(response.getEntity().getContent());
-//        System.out.println(contents);
-//    }
-//    else{
-//        System.out.println("ERROR!");
-//    }    
+    //Prueba mandar mensaje vacío al servlet    
+    HttpResponse response = sendEmptyMessage();
+        
+    if (200 == response.getStatusLine().getStatusCode()) {
+        String contents = readStreamAsString(response.getEntity().getContent());
+        System.out.println(contents);
+    }
+    else{
+        System.out.println("ERROR!");
+    }    
   }
 }
