@@ -1,5 +1,7 @@
 package org.inftel.tms.statistics;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.Message;
@@ -22,5 +24,13 @@ public class ProcessableStatisticMessage implements MessageListener {
 
   @Override
   public void onMessage(Message message) {
+  }
+  
+  @PreDestroy
+  public void flush() {
+    // Se podrian acumular las estadisticas en queues en memoria, de forma q se acumulasen por tipo
+    // y solo cada cierto tiempo se volcasen a la base de datos, en esta situacion de tener mensajes
+    // en memoria, deberia asegurarse en este metodo PreDestroy que las colas de memoria estan vacia
+    // y en caso contrario escribirlas en la tabla.
   }
 }
