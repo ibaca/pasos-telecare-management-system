@@ -4,14 +4,11 @@
  */
 package org.inftel.tms.domain;
 
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
-import org.inftel.tms.domain.Alert.AlarmPriority;
-import org.inftel.tms.domain.Alert.AlarmType;
 import org.junit.*;
 import static org.junit.Assert.*;
 

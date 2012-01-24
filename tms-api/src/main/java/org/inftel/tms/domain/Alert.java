@@ -26,25 +26,15 @@ import javax.xml.bind.annotation.XmlRootElement;
   @NamedQuery(name = "Alert.findByUpdated", query = "SELECT a FROM Alert a WHERE a.updated = :updated"),
   @NamedQuery(name = "Alert.findByVersion", query = "SELECT a FROM Alert a WHERE a.version = :version"),
   @NamedQuery(name = Alert.FIND_BY_AFFECTED, query = "SELECT a FROM Alert a WHERE a.affected = :affected"),
-  @NamedQuery(name = Alert.FIND_ACTIVED, query = "SELECT a FROM Alert a WHERE a.closedIntervention IS NULL")})
+  @NamedQuery(name = Alert.FIND_ACTIVED, query = "SELECT a FROM Alert a WHERE a.closedIntervention IS NULL"),
+  @NamedQuery(name = Alert.COUNT_BY_TYPE, query = "SELECT count(a) FROM Alert a WHERE a.type = :type AND a.created BETWEEN :fromDate AND :toDate")})
 public class Alert extends BaseEntity {
 
   public static final String FIND_ACTIVED = "Alert.findActived";
   public static final String FIND_BY_AFFECTED = "Alert.findByAffected";
-
-  // FIXME no puede cambiarse el orden del enumerado
-  // http://duydo.com/effective-jpa-persist-an-enumerationeffectively/
-  public static enum AlarmType {
-
-    USER, DEVICE, TECHNICAL
-  };
-
-  public static enum AlarmPriority {
-
-    CRITICAL, IMPORTANT, HIGH, NORMAL, LOW, INFO;
-  }
-  private AlarmType type;
-  private AlarmPriority priority;
+  public static final String COUNT_BY_TYPE = "Alert.countByType";
+  private AlertType type;
+  private AlertPriority priority;
   private String cause;
   @OneToOne
   private Device origin;
@@ -153,7 +143,7 @@ public class Alert extends BaseEntity {
    *
    * @return la prioridad de la alerta
    */
-  public AlarmPriority getPriority() {
+  public AlertPriority getPriority() {
     return priority;
   }
 
@@ -162,7 +152,7 @@ public class Alert extends BaseEntity {
    *
    * @param priority prioridad de la alerta
    */
-  public void setPriority(AlarmPriority priority) {
+  public void setPriority(AlertPriority priority) {
     this.priority = priority;
   }
 
@@ -190,7 +180,7 @@ public class Alert extends BaseEntity {
    *
    * @return tipo de alerta
    */
-  public AlarmType getType() {
+  public AlertType getType() {
     return type;
   }
 
@@ -199,7 +189,7 @@ public class Alert extends BaseEntity {
    *
    * @param type el tipo de alerta
    */
-  public void setType(AlarmType type) {
+  public void setType(AlertType type) {
     this.type = type;
   }
 }
