@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import junit.framework.Assert;
+import static junit.framework.Assert.*;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -51,6 +51,26 @@ public class UserTest {
     tx.begin();
     em.persist(user);
     tx.commit();
-    Assert.assertNotNull("ID should not be null", user.getId());
+    assertNotNull("ID should not be null", user.getId());
+  }
+
+  @Test
+  public void updateUser() throws Exception {
+    User user = new User();
+    user.setFullName("update-user");
+    user.setPassword("update-user-clave");
+    user.setEmail("update-user@mail.com");
+    tx.begin();
+    em.persist(user);
+    tx.commit();
+
+    String expectedResult;
+
+    expectedResult = "update-user-modified";
+    tx.begin();
+    user.setFullName(expectedResult);
+    tx.commit();
+
+    assertEquals(expectedResult, em.find(User.class, user.getId()).getFullName());
   }
 }
