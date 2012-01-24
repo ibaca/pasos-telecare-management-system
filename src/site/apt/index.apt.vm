@@ -1,0 +1,20 @@
+ ------
+ Introduction
+ ------
+ Ignacio Baca
+ ------
+ 2012-01-23
+ ------
+
+
+${project.name}
+
+ Telecare Management System es un servidor para la gestion de alertas de sistemas de teleasistencia.
+ El servidor cumple el protocolo de comunicacion paSOS.
+ 
+ {{{http://www.pasosproject.org}Proyecto paSOS}}.
+
+* Objetivos
+
+ Realizar un buen trabajo.
+

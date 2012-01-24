@@ -10,7 +10,7 @@
   <groupId>org.inftel.tms</groupId>
   <artifactId>tms-api</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Telecare Management System :: API</name>
+  <name>TMS :: API</name>
   <url>http://maven.apache.org</url>
   <repositories>
     <repository>
