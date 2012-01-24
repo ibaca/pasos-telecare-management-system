@@ -75,12 +75,16 @@ public class Main {
     URI uri = new URI("http://localhost:8080/tms-web/connector");
     post.setURI(uri);
     HttpResponse response = client.execute(post);
-    if (200 == response.getStatusLine().getStatusCode()) {
-        String contents = readStreamAsString(response.getEntity().getContent());
-        System.out.println(contents);
-    }
-    else{
-        System.out.println("ERROR!");
-    }    
+
+    String contents = readStreamAsString(response.getEntity().getContent());
+    System.out.println(contents);
+    
+//    if (200 == response.getStatusLine().getStatusCode()) {
+//        String contents = readStreamAsString(response.getEntity().getContent());
+//        System.out.println(contents);
+//    }
+//    else{
+//        System.out.println("ERROR!");
+//    }    
   }
 }
