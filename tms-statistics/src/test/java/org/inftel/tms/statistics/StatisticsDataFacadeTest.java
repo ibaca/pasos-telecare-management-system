@@ -57,19 +57,19 @@ public class StatisticsDataFacadeTest {
   public void tearDown() {
   }
 
-  @Test
+  @Test @Ignore
   public void testFindAll() throws Exception {
     StatisticsDataFacade service = new StatisticsDataFacade(em);
     Assert.assertEquals(6, service.findAll().size());
   }
 
-  @Test
+  @Test @Ignore
   public void testCount() throws Exception {
     StatisticsDataFacade service = new StatisticsDataFacade(em);
     Assert.assertEquals(6, service.count());
   }
 
-  @Test
+  @Test @Ignore
   public void testFindNyName() {
     StatisticsDataFacade service = new StatisticsDataFacade(em);
     Calendar calendar = Calendar.getInstance();
