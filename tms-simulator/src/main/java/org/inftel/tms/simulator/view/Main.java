@@ -22,7 +22,9 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         fachada = new Fachada();
-        initComponents();        
+        initComponents();      
+        btnDeviceAlarm.setVisible(false);
+        btnUserAlarm.setVisible(false);
     }
 
     /**
@@ -50,8 +52,18 @@ public class Main extends javax.swing.JFrame {
         });
 
         btnUserAlarm.setText("User Alarm");
+        btnUserAlarm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserAlarmActionPerformed(evt);
+            }
+        });
 
         btnDeviceAlarm.setText("Device Alarm");
+        btnDeviceAlarm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeviceAlarmActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -101,6 +113,9 @@ public class Main extends javax.swing.JFrame {
             String contents = fachada.readStreamAsString(response.getEntity().getContent());
             //parsear trama y obtener parametros individuales
             fachada.setParameters(contents);
+            btnDeviceAlarm.setVisible(true);
+            btnUserAlarm.setVisible(true);
+            btnIniciar.setVisible(false);
             //enviar ACK
             response = fachada.enviarACK();
             if (200 == response.getStatusLine().getStatusCode()) {;}
@@ -119,6 +134,27 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
+
+    private void btnUserAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserAlarmActionPerformed
+        try {
+            HttpResponse response = fachada.enviarUserAlarm();            
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUserAlarmActionPerformed
+
+    private void btnDeviceAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeviceAlarmActionPerformed
+        try {
+            HttpResponse response = fachada.enviarDeviceAlarm();            
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnDeviceAlarmActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,7 +194,7 @@ public class Main extends javax.swing.JFrame {
 
             @Override
             public void run() {
-                new Main().setVisible(true);
+                new Main().setVisible(true);               
             }
         });
     }

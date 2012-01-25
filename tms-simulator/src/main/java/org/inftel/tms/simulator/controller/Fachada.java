@@ -29,8 +29,7 @@ import org.inftel.tms.simulator.model.Parameters;
  */
 public class Fachada {
 
-  public static final String USER_FACADE_JNDI = "java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/tms-core-1.0-SNAPSHOT/UserFacade!org.inftel.tms.services.UserFacadeRemote";
-  private String trama;
+  public static final String USER_FACADE_JNDI = "java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/tms-core-1.0-SNAPSHOT/UserFacade!org.inftel.tms.services.UserFacadeRemote";  
   private Parameters parameters;
   private String senderMobileNumber;
     
@@ -48,14 +47,6 @@ public class Fachada {
     
     public void setParameters(String trama) {
         this.parameters = parseTrama(trama);
-    }
-
-    public String getTrama() {
-        return trama;
-    }
-
-    public void setTrama(String trama) {
-        this.trama = trama;
     }
 
   public String getSenderMobileNumber() {
@@ -103,10 +94,9 @@ public class Fachada {
     private Parameters parseTrama(String trama) {
         //*$RP06 &RK123456 &RK123456 &RV1911234567 &KO1000 &RT2:TCP &RI01:12700000000108080#
         Parameters param = new Parameters();
-        StringTokenizer tokens = new StringTokenizer(trama, "&#*");        
+        StringTokenizer tokens = new StringTokenizer(trama.trim(), "&#*$");        
     
-        //$RP06 RK123456 RV1911234567 &RS1601234567 KO1000 RT2:TCP RI01:12700000000108080
-                
+        //$RP06 RK123456 RV1911234567 RS1601234567 KO1000 RT2:TCP RI01:12700000000108080        
         while(tokens.hasMoreTokens()){
             String token = tokens.nextToken();
             if(token.contains("RK"))        param.setKey(token);
@@ -129,5 +119,38 @@ public class Fachada {
         post.setURI(uri);
         post.setEntity(new StringEntity("*$SR0&"+parameters.getId().substring(2, 5)));
         return client.execute(post);
+    }
+
+    public HttpResponse enviarUserAlarm() throws URISyntaxException, IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost();    
+        post.setHeader("sender-mobile-number", senderMobileNumber);
+        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        post.setURI(uri);
+        post.setEntity(new StringEntity("*$AU11&"
+                +parameters.getKey()
+                +"&LD20160303"
+                +"&LH060654"
+                +"&LN1008052067"
+                +"&LT153052067"
+                +"#"));
+        return client.execute(post);        
+    }
+    
+    //$AD31&LD20160303&LH060654&LN1008052067&LT153052067&DT75#
+    public HttpResponse enviarDeviceAlarm() throws URISyntaxException, UnsupportedEncodingException, IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost();    
+        post.setHeader("sender-mobile-number", senderMobileNumber);
+        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        post.setURI(uri);
+        post.setEntity(new StringEntity("*$AD31&"
+                +parameters.getKey()
+                +"&LD20160303"
+                +"&LH060654"
+                +"&LN1008052067"
+                +"&LT153052067"
+                +"&DT75#"));
+        return client.execute(post);  
     }
 }
