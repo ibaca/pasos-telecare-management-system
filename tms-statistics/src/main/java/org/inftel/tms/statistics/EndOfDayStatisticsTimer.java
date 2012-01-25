@@ -30,7 +30,7 @@ public class EndOfDayStatisticsTimer {
         int countDaily;
         Date yesterday = getYesterday();
 
-        System.out.println("Timer event: " + yesterday);
+        System.out.println("Timer event: " + new Date());
 
         //Actualización de diarios de Alertas
         for (AlertType t : AlertType.values()) {
