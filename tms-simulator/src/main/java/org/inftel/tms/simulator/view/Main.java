@@ -92,30 +92,32 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-             fachada.setParameters("*$RP06&RK123456&RV1911234567&KO1000&RT2:TCP&RI01:12700000000108080#");
-        
-        //        try {
-//            fachada.setSenderMobileNumber("666123456");
-//            HttpResponse response = fachada.sendEmptyMessage();
-//            
-//        if (200 == response.getStatusLine().getStatusCode()) {
+       //FIXME cambiar println por logging
+        try {
+            fachada.setSenderMobileNumber("666123456");
+            HttpResponse response = fachada.sendEmptyMessage();
+            
+        if (200 == response.getStatusLine().getStatusCode()) {
+            String contents = fachada.readStreamAsString(response.getEntity().getContent());
+            //parsear trama y obtener parametros individuales
+            fachada.setParameters(contents);
+            //enviar ACK
+            response = fachada.enviarACK();
+            if (200 == response.getStatusLine().getStatusCode()) {;}
+            else{System.out.println("ERROR!");}
+            
+        }
+        else{
+            System.out.println("ERROR!");
 //            String contents = fachada.readStreamAsString(response.getEntity().getContent());
-//            //TODO parsear trama
-//            fachada.setParameters(contents);
-//            //TODO enviar ACK
 //            System.out.println(contents);
-//        }
-//        else{
-//            System.out.println("ERROR!");
-//            String contents = fachada.readStreamAsString(response.getEntity().getContent());
-//            System.out.println(contents);
-//        }    
-//    }
-//        catch (URISyntaxException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        }    
+    }
+        catch (URISyntaxException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     /**

@@ -67,5 +67,10 @@ public class Parameters {
         this.transport = transport;
     }
 
+    @Override
+    public String toString() {
+        return "Parameters{" + "key=" + key + ", call=" + call + ", sms=" + sms + ", id=" + id + ", transport=" + transport + ", ip=" + ip + '}';
+    }
+
 
 }

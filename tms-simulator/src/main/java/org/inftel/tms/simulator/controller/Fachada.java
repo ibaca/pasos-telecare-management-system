@@ -6,9 +6,11 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.StringTokenizer;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.inftel.tms.services.UserFacadeRemote;
 import org.inftel.tms.simulator.model.Parameters;
@@ -99,14 +101,33 @@ public class Fachada {
     }
 
     private Parameters parseTrama(String trama) {
-        //*$RP06&RK123456&RV1911234567&KO1000&RT2:TCP&RI01:12700000000108080#
-        String[] tokens = trama.split("&");
-        for(String token : tokens){
-            System.out.println(token);
-        }
-        
-        return null;
+        //*$RP06 &RK123456 &RK123456 &RV1911234567 &KO1000 &RT2:TCP &RI01:12700000000108080#
+        Parameters param = new Parameters();
+        StringTokenizer tokens = new StringTokenizer(trama, "&#*");        
+    
+        //$RP06 RK123456 RV1911234567 &RS1601234567 KO1000 RT2:TCP RI01:12700000000108080
+                
+        while(tokens.hasMoreTokens()){
+            String token = tokens.nextToken();
+            if(token.contains("RK"))        param.setKey(token);
+            else if (token.contains("RV"))  param.setCall(token);
+            else if (token.contains("KO"))  param.setId(token);
+            else if (token.contains("RT"))  param.setTransport(token);
+            else if (token.contains("RI"))  param.setIp(token);
+            else if (token.contains("RS"))  param.setSms(token);
+            else if (token.contains("RP"))  {;}
+            else throw new RuntimeException("Trama incorrecta: "+ token);
+        }        
+        return param; 
     }
-  
-  
+
+    public HttpResponse enviarACK() throws URISyntaxException, IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost();    
+        post.setHeader("sender-mobile-number", senderMobileNumber);
+        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        post.setURI(uri);
+        post.setEntity(new StringEntity("*$SR0&"+parameters.getId().substring(2, 5)));
+        return client.execute(post);
+    }
 }
