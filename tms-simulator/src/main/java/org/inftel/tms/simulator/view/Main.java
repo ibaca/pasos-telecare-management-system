@@ -35,8 +35,8 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         btnIniciar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnUserAlarm = new javax.swing.JButton();
+        btnDeviceAlarm = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
@@ -49,9 +49,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("jButton2");
+        btnUserAlarm.setText("User Alarm");
 
-        jButton3.setText("jButton3");
+        btnDeviceAlarm.setText("Device Alarm");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -63,11 +63,11 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2)
+                    .addComponent(btnDeviceAlarm)
+                    .addComponent(btnUserAlarm)
                     .addComponent(btnIniciar))
                 .addGap(22, 22, 22))
         );
@@ -79,9 +79,9 @@ public class Main extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(btnIniciar)
                         .addGap(45, 45, 45)
-                        .addComponent(jButton2)
+                        .addComponent(btnUserAlarm)
                         .addGap(44, 44, 44)
-                        .addComponent(jButton3))
+                        .addComponent(btnDeviceAlarm))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -92,24 +92,30 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        try {
-            HttpResponse response = fachada.sendEmptyMessage();
-            
-        if (200 == response.getStatusLine().getStatusCode()) {
-            String contents = fachada.readStreamAsString(response.getEntity().getContent());
-            System.out.println(contents);
-        }
-        else{
-            System.out.println("ERROR!");
-            String contents = fachada.readStreamAsString(response.getEntity().getContent());
-            System.out.println(contents);
-        }    
-    }
-        catch (URISyntaxException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+             fachada.setParameters("*$RP06&RK123456&RV1911234567&KO1000&RT2:TCP&RI01:12700000000108080#");
+        
+        //        try {
+//            fachada.setSenderMobileNumber("666123456");
+//            HttpResponse response = fachada.sendEmptyMessage();
+//            
+//        if (200 == response.getStatusLine().getStatusCode()) {
+//            String contents = fachada.readStreamAsString(response.getEntity().getContent());
+//            //TODO parsear trama
+//            fachada.setParameters(contents);
+//            //TODO enviar ACK
+//            System.out.println(contents);
+//        }
+//        else{
+//            System.out.println("ERROR!");
+//            String contents = fachada.readStreamAsString(response.getEntity().getContent());
+//            System.out.println(contents);
+//        }    
+//    }
+//        catch (URISyntaxException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     /**
@@ -155,9 +161,9 @@ public class Main extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeviceAlarm;
     private javax.swing.JButton btnIniciar;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnUserAlarm;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
