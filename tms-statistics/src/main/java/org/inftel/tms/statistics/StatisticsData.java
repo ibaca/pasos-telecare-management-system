@@ -27,15 +27,15 @@ public class StatisticsData implements Serializable {
     private String name;
     private statisticPeriod dataPeriod;
     @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date dataDate;
+    private java.util.Date lastDate;
     private Long dataValue;
 
-    public Date getDataDate() {
-        return dataDate;
+    public Date getLastDate() {
+        return lastDate;
     }
 
-    public void setDataDate(Date dataDate) {
-        this.dataDate = dataDate;
+    public void setLastDate(Date lastDate) {
+        this.lastDate = lastDate;
     }
 
     public statisticPeriod getDataPeriod() {

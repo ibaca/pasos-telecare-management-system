@@ -6,8 +6,10 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
+import org.apache.commons.lang.time.DateUtils;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AlertFacadeRemote;
+import org.inftel.tms.utils.StatisticsDateUtil;
 
 /**
  * Algunas estadisticas podrian generarse en el End Of Day, por ejemplo podrian
@@ -28,8 +30,9 @@ public class EndOfDayStatisticsTimer {
 
         boolean changeMonth = false;
         int countDaily;
-        Date yesterday = getYesterday();
 
+        Date yesterday = StatisticsDateUtil.getYesterday();
+        DateUtils.truncate(yesterday, Calendar.MONTH);
         System.out.println("Timer event: " + new Date());
 
         //Actualización de diarios de Alertas
@@ -40,7 +43,7 @@ public class EndOfDayStatisticsTimer {
 
             sd.setName("Alert.type." + t.name().toLowerCase());
             sd.setDataPeriod(StatisticsData.statisticPeriod.DAYLY);
-            sd.setDataDate(yesterday);
+            sd.setLastDate(yesterday);
             sd.setDataValue((long) countDaily);
 
             statisticsDataFacade.create(sd);
@@ -50,56 +53,34 @@ public class EndOfDayStatisticsTimer {
 
 
         if (changeMonth) {
+
+            //pensar: si el mes actual no tiene anotación mounthly calcular mes anterior, sino el cálculo ya se hizo para ese mes.
+            Date firstDayMonth = new Date(); //calcular el primer día del mes
+            Date lastDayMonth = new Date(); // calcular el ultimo día del mes
+            int sum;
+
+            //Actualización de estadísticas mensuales para cada tipo de alarma.    
+            for (AlertType t : AlertType.values()) {
+
+                sum = statisticsDataFacade.sumStatictics("Alert.type."+t.name(), StatisticsData.statisticPeriod.DAYLY, firstDayMonth, lastDayMonth);
+
+                StatisticsData sd = new StatisticsData();
+
+                sd.setName("Alert.type.user");
+                sd.setDataPeriod(StatisticsData.statisticPeriod.MONTHLY);
+                sd.setLastDate(lastDayMonth);
+                sd.setDataValue((long) sum);
+
+                statisticsDataFacade.create(sd);
+
+            }
+
+
+
+
         }
 
 
 
-    }
-
-    /**
-     * Obtiene el primer día del mes actual
-     *
-     * @return fecha del primer día del mes actual
-     */
-    private Date getFirstDayToMonth() {
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.getActualMinimum(Calendar.DAY_OF_MONTH),
-                cal.getMinimum(Calendar.HOUR_OF_DAY),
-                cal.getMinimum(Calendar.MINUTE),
-                cal.getMinimum(Calendar.SECOND));
-        return cal.getTime();
-    }
-
-    /**
-     * Obtiene el último día del mes actual
-     *
-     * @return fecha del último día del mes actual
-     */
-    private Date getLastDayToMonth() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.getActualMaximum(Calendar.DAY_OF_MONTH),
-                cal.getMaximum(Calendar.HOUR_OF_DAY),
-                cal.getMaximum(Calendar.MINUTE),
-                cal.getMaximum(Calendar.SECOND));
-        return cal.getTime();
-    }
-
-    /**
-     * Calcula la fecha 1 día anterior a la fecha del sistema
-     *
-     * @return fecha de ayer
-     */
-    public Date getYesterday() {
-        int DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
-
-        Date toDay = Calendar.getInstance().getTime();
-        Date prev = new Date(toDay.getTime() - DAY_IN_MILLIS);
-
-        return prev;
     }
 }
