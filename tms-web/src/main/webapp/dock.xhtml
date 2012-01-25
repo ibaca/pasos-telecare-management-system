@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ppctu="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+  <h:head>
+    <title>Telecare Alarm Center</title>
+    <link href="#{request.contextPath}/resources/img/favicon.ico" rel="shortcut icon" />    
+  <h:outputStylesheet name="css/mainstyle.css"/>
+  </h:head>
+  <h:body>
+      <div id="head">
+            <div class="contenedor960">
+                <span> Telecare Alarm Center </span>
+            </div> <!-- fin contenedor960 -->
+        </div> <!-- fin menu -->
+        
+    <ppctu:growl id="growl" showDetail="true" life="3000" />         
+    <div id="tableList" class="contenedor960">     
+        <h:form id="form">
+            <ppctu:dataList value="#{tableBean.cars}" var="car"  
+                paginator="true" rows="5" effectSpeed="fast"  
+                paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                rowsPerPageTemplate="5,10,15">  
+
+                <f:facet name="header">  
+                    Cars  
+                </f:facet>  
+
+                <ppctu:column>  
+    <!--                <ppctu:commandLink update=":form:carDetail" oncomplete="carDialog.show()" title="View Detail">  
+                        <ppctu:graphicImage value="./resources/img/search.png"/>   
+                        <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />  
+                    </ppctu:commandLink>  -->
+
+                    <h:outputText value="#{car.manufacturer}, #{car.year}" style="margin-left:10px" />  
+
+                </ppctu:column>  
+            </ppctu:dataList>  
+
+
+
+ <!--           <ppctu:dialog header="Car Detail" widgetVar="carDialog" modal="true" showEffect="fade">  
+                <ppctu:outputPanel id="carDetail" style="text-align:center;" layout="block">  
+                    <ppctu:graphicImage value="/images/cars/#{tableBean.selectedCar.manufacturer}.jpg"/>  
+                    <h:panelGrid  columns="2" cellpadding="5">  
+                        <h:outputLabel for="modelNo" value="Model No: " />  
+                        <h:outputText id="modelNo" value="#{tableBean.selectedCar.model}" />  
+
+                        <h:outputLabel for="year" value="Year: " />  
+                        <h:outputText id="year" value="#{tableBean.selectedCar.year}" />  
+
+                        <h:outputLabel for="color" value="Color: " />  
+                        <h:outputText id="color" value="#{tableBean.selectedCar.color}" style="color:#{tableBean.selectedCar.color}"/>  
+                    </h:panelGrid>  
+                </ppctu:outputPanel>  
+            </ppctu:dialog>  -->
+
+        </h:form>  
+    </div> <!-- fin contenedor960 -->  
+        
+        
+        
+        
+        
+        
+<ppctu:dock>  
+    <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="#"/>  
+    <ppctu:menuitem value="Email" icon="./resources/img/dock/email.png" url="#"/>  
+    <ppctu:menuitem value="Portfolio" icon="./resources/img/dock/portfolio.png" url="#"/>  
+    <ppctu:menuitem value="RSS" icon="./resources/img/dock/rss.png" url="#"/>  
+    <ppctu:menuitem value="History" icon="./resources/img/dock/history.png" url="#"/>  
+</ppctu:dock> 
+</h:body>
+
+
+</html>
+

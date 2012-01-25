@@ -15,9 +15,20 @@
       <default-locale>en</default-locale>
     </locale-config>
   </application>
-  <managed-bean>
-   <managed-bean-name>TableBean</managed-bean-name>
-   <managed-bean-class>org.inftel.tms.web.jspbean.TableBean</managed-bean-class>
-   <managed-bean-scope>session</managed-bean-scope>
-</managed-bean>
+    <managed-bean>
+        <managed-bean-name>loginBean</managed-bean-name>
+        <managed-bean-class>org.inftel.tms.web.jspbean.LoginBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>bad-login</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>success-login</from-outcome>
+            <to-view-id>/dock.xhtml</to-view-id>
+        </navigation-case>
+   </navigation-rule>
 </faces-config>
