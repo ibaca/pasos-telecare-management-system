@@ -1,4 +1,4 @@
-package org.inftel.tms.simulator;
+package org.inftel.tms.simulator.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,12 +27,15 @@ import org.inftel.tms.services.UserFacadeRemote;
  * glassfish. La aplicacion se despliega a traves del proyecto tms-bundle.
  *
  */
-public class Main {
+public class Fachada {
 
   public static final String USER_FACADE_JNDI = "java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/tms-core-1.0-SNAPSHOT/UserFacade!org.inftel.tms.services.UserFacadeRemote";
 
+    public Fachada() {
+    }
+
     //Prueba mandar mensaje vacío al servlet
-  public static HttpResponse sendEmptyMessage() throws URISyntaxException, IOException{    
+  public HttpResponse sendEmptyMessage() throws URISyntaxException, IOException{    
     HttpClient client = new DefaultHttpClient();
     HttpPost post = new HttpPost();    
     post.setHeader("sender-mobile-number", "666123456");
@@ -42,7 +45,7 @@ public class Main {
     
   }  
   
-  public static String readStreamAsString(InputStream in) {
+  public String readStreamAsString(InputStream in) {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
             byte[] buffer = new byte[1024];
@@ -64,30 +67,7 @@ public class Main {
             } catch (IOException ignored) {
             }
         }
-    }
+    }     
   
   
-  public static void main(String[] args) throws Exception {
-    
-    // Configuraciones, ahora no hace falta porque por defecto busca en localhost! pero cuando
-    // se usa en diferentes maquinas el host debe ser un parametro configurable
-    // mas info en: http://docs.oracle.com/cd/E19651-01/817-2150-10/dccorba.html
-    Properties env = new Properties();
-    env.setProperty("org.omg.CORBA.ORBInitialHost", "localhost");
-    //env.setProperty("java.naming.provider.url", "iiop://hostname:port");
-
-    // Se ininializa el contexto apuntando a nuestro servidor glassfish
-    Context context = new InitialContext(env);
-        
-    //Prueba mandar mensaje vacío al servlet    
-    HttpResponse response = sendEmptyMessage();
-        
-    if (200 == response.getStatusLine().getStatusCode()) {
-        String contents = readStreamAsString(response.getEntity().getContent());
-        System.out.println(contents);
-    }
-    else{
-        System.out.println("ERROR!");
-    }    
-  }
 }
