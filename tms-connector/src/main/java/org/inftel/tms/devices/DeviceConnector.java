@@ -34,9 +34,9 @@ public class DeviceConnector implements DeviceConnectorRemote {
   @EJB
   private AlertRawFacadeRemote alertRawFacade;
   private static final Logger logger = Logger.getLogger(DeviceConnector.class.getName());
+  
   /*
-   * remote parameters programming key 123456 call number 911234567 id(ACK) 1000 transport 2:TCP ip
-   * 01:12700000000108080
+   * remote parameters programming   
    */
   private static final String key = "&RK123456";
   private static final String call = "&RV1911234567";
@@ -44,6 +44,9 @@ public class DeviceConnector implements DeviceConnectorRemote {
   private static final String id = "&KO1000";
   private static final String transport = "&RT2:TCP";
   private static final String ip = "&RI01:12700000000108080";
+
+    public DeviceConnector() {
+    }
 
   /**
    * Comprueba si la trama recibida del terminal es una Alarma técnica
@@ -101,19 +104,20 @@ public class DeviceConnector implements DeviceConnectorRemote {
     raw.setRawData(message);
     alertRawFacade.create(raw);
 
-    //remote parameters programming
     if ((message == null) || (message.isEmpty())) {
+       //return remote parameteres
       return "*$RP06" + key + key + call + sms + id + transport + ip + "#";
-    } else if (isTechnicalAlarm(message)) {
-      //System.out.println("ERROR!");
+    } 
+    else if (isUserAlarm(message)) {
+      //TODO crear alert y alertRaw con EJB
       return null;
-    } else if (isUserAlarm(message)) {
-      //crear alert y alertRaw con ejb
+    }
+    else if (isDeviceAlarm(message)) {
+      //TODO crear alert y alertRaw con EJB
       return null;
-    } else if (isDeviceAlarm(message)) {
-      //crear alert y alertRaw con ejb
-      return null;
-    } else {
+    } 
+    else {
+        //TODO Error
       return null;
     }
   }
