@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Las personas registradas en el sistema. Pueden ser tanto afectados como falmiliares.

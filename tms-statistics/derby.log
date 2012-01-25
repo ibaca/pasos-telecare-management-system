@@ -1,8 +1,0 @@
-----------------------------------------------------------------
-2012-01-25 01:45:27.281 GMT:
- Arrancando Derby versión The Apache Software Foundation - Apache Derby - 10.6.2.1 - (999685): instancia a816c00e-0135-1289-fb74-0000033aeef0 
-en el directorio de base de datos C:\Users\ibaca\Documents\NetBeansProjects\tms\tms-statistics\target\derby-test-db  con el cargador de clases sun.misc.Launcher$AppClassLoader@3326b249
-
-java.vendor=Sun Microsystems Inc.
-java.runtime.version=1.6.0_29-b11
-Cargador de clases de base de datos iniciado - derby.database.classpath=''

@@ -68,7 +68,7 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
      * pasados
      */
     public Map<String, Long> findStatistics(String startWith, StatisticsData.statisticPeriod period, Date date) {
-        TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.dataDate = :date", StatisticsData.class);
+        TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.lastDate = :date", StatisticsData.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
         query.setParameter("date", date);

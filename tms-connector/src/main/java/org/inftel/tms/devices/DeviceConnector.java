@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.inftel.tms.domain.AlertRaw;
 import org.inftel.tms.services.AlertFacadeRemote;
 import org.inftel.tms.services.AlertRawFacadeRemote;

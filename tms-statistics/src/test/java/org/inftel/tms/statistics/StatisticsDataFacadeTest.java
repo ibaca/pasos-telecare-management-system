@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import org.apache.commons.lang.time.DateUtils;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
@@ -57,19 +56,19 @@ public class StatisticsDataFacadeTest {
   public void tearDown() {
   }
 
-  @Test @Ignore
+  @Test
   public void testFindAll() throws Exception {
     StatisticsDataFacade service = new StatisticsDataFacade(em);
     Assert.assertEquals(6, service.findAll().size());
   }
 
-  @Test @Ignore
+  @Test
   public void testCount() throws Exception {
     StatisticsDataFacade service = new StatisticsDataFacade(em);
     Assert.assertEquals(6, service.count());
   }
 
-  @Test @Ignore
+  @Test
   public void testFindNyName() {
     StatisticsDataFacade service = new StatisticsDataFacade(em);
     Calendar calendar = Calendar.getInstance();
