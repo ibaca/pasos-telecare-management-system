@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <statistics id='1000' name='alert.counter' dataperiod='0' datadate='2011-12-01' dataValue='3'/>
+  <statistics id='1001' name='alert.counter' dataperiod='0' datadate='2011-12-02' dataValue='5'/>
+  <statistics id='1002' name='alert.counter' dataperiod='0' datadate='2011-12-03' dataValue='2'/>
+  <statistics id='1003' name='alert.counter' dataperiod='1' datadate='2011-12-01' dataValue='10'/>
+  <statistics id='1004' name='alert.counter' dataperiod='2' datadate='2011-01-01' dataValue='10'/>
+  <statistics id='1005' name='alert.type.user' dataperiod='2' datadate='2011-01-01' dataValue='10'/>
+</dataset>

@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author agumpg
  */
 @Entity
-@Table(name = "statistic_data")
+@Table(name = "statistics")
 public class StatisticsData implements Serializable {
 
     public static enum statisticPeriod {
