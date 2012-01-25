@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Administrador
+ * @author inftel
  */
 public class TableBean implements Serializable {  
       

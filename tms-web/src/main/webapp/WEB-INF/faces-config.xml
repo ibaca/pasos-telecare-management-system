@@ -31,4 +31,9 @@
             <to-view-id>/dock.xhtml</to-view-id>
         </navigation-case>
    </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>tableBean</managed-bean-name>
+        <managed-bean-class>org.inftel.tms.web.jspbean.TableBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
