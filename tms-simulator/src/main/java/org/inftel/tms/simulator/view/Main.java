@@ -40,7 +40,7 @@ public class Main extends javax.swing.JFrame {
         btnUserAlarm = new javax.swing.JButton();
         btnDeviceAlarm = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,9 +65,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        jScrollPane1.setViewportView(textArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,8 +75,8 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDeviceAlarm)
                     .addComponent(btnUserAlarm)
@@ -96,8 +96,8 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(btnDeviceAlarm))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,8 +108,10 @@ public class Main extends javax.swing.JFrame {
         try {
             fachada.setSenderMobileNumber("666123456");
             HttpResponse response = fachada.sendEmptyMessage();
+            textArea.append("Requesting remote parameters...\n");
             
         if (200 == response.getStatusLine().getStatusCode()) {
+            textArea.append("Parameters OK \n");
             String contents = fachada.readStreamAsString(response.getEntity().getContent());
             //parsear trama y obtener parametros individuales
             fachada.setParameters(contents);
@@ -123,9 +125,7 @@ public class Main extends javax.swing.JFrame {
             
         }
         else{
-            System.out.println("ERROR!");
-//            String contents = fachada.readStreamAsString(response.getEntity().getContent());
-//            System.out.println(contents);
+              textArea.append("ERROR receiving parameters \n");
         }    
     }
         catch (URISyntaxException ex) {
@@ -137,7 +137,14 @@ public class Main extends javax.swing.JFrame {
 
     private void btnUserAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserAlarmActionPerformed
         try {
-            HttpResponse response = fachada.enviarUserAlarm();            
+            textArea.append("Sending User Alarm... \n");
+            HttpResponse response = fachada.enviarUserAlarm(); 
+            if (200 == response.getStatusLine().getStatusCode()) {
+                textArea.append("Sent OK! \n");
+            }
+            else{
+                textArea.append("ERROR sending User Alarm \n");
+            }
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -147,7 +154,14 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDeviceAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeviceAlarmActionPerformed
         try {
-            HttpResponse response = fachada.enviarDeviceAlarm();            
+            textArea.append("Sending Device Alarm... \n");
+            HttpResponse response = fachada.enviarDeviceAlarm();   
+            if (200 == response.getStatusLine().getStatusCode()) {
+                textArea.append("Sent OK! \n");
+            }
+            else{
+                textArea.append("ERROR sending Device Alarm \n");
+            }
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -203,6 +217,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnUserAlarm;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 }
