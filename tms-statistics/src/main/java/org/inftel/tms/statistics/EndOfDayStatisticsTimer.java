@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
+import org.apache.commons.lang.time.DateUtils;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AlertFacadeRemote;
 
@@ -25,21 +26,22 @@ public class EndOfDayStatisticsTimer {
 
     @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "0", dayOfWeek = "*")
     public void myTimer() {
-        boolean changeMonth = false;
-        int countDaily = 0;
-        Date now = new Date();
 
-        System.out.println("Timer event: " + now);
+        boolean changeMonth = false;
+        int countDaily;
+        Date yesterday = getYesterday();
+
+        System.out.println("Timer event: " + yesterday);
 
         //Actualización de diarios de Alertas
         for (AlertType t : AlertType.values()) {
-            countDaily = alertFacade.countByType(t, now, now);
+            countDaily = alertFacade.countByType(t, yesterday, yesterday);
 
             StatisticsData sd = new StatisticsData();
 
-            sd.setName("Alert");
+            sd.setName("Alert.type." + t.name().toLowerCase());
             sd.setDataPeriod(StatisticsData.statisticPeriod.DAYLY);
-            sd.setDataDate(now);
+            sd.setDataDate(yesterday);
             sd.setDataValue((long) countDaily);
 
             statisticsDataFacade.create(sd);
@@ -55,6 +57,10 @@ public class EndOfDayStatisticsTimer {
 
     }
 
+    /**
+     * Obtiene el primer día del mes actual
+     * @return fecha del primer día del mes actual
+     */
     private Date getFirstDayToMonth() {
 
         Calendar cal = Calendar.getInstance();
@@ -67,6 +73,10 @@ public class EndOfDayStatisticsTimer {
         return cal.getTime();
     }
 
+    /**
+     * Obtiene el último día del mes actual
+     * @return fecha del último día del mes actual
+     */
     private Date getLastDayToMonth() {
         Calendar cal = Calendar.getInstance();
         cal.set(cal.get(Calendar.YEAR),
@@ -78,15 +88,19 @@ public class EndOfDayStatisticsTimer {
         return cal.getTime();
     }
 
-    private Date getFirstDayToAnnual() {
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.getActualMinimum(Calendar.DAY_OF_MONTH),
-                cal.getMinimum(Calendar.HOUR_OF_DAY),
-                cal.getMinimum(Calendar.MINUTE),
-                cal.getMinimum(Calendar.SECOND));
-        return cal.getTime();
+
+    /**
+     * Calcula la fecha 1 día anterior a la fecha del sistema
+     *
+     * @return fecha de ayer
+     */
+    public Date getYesterday() {
+        int DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
+
+        Date toDay = Calendar.getInstance().getTime();
+        Date prev = new Date(toDay.getTime() - DAY_IN_MILLIS);
+
+        return prev;
     }
 }
