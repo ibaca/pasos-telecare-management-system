@@ -6,7 +6,6 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
-import org.apache.commons.lang.time.DateUtils;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AlertFacadeRemote;
 
@@ -59,6 +58,7 @@ public class EndOfDayStatisticsTimer {
 
     /**
      * Obtiene el primer día del mes actual
+     *
      * @return fecha del primer día del mes actual
      */
     private Date getFirstDayToMonth() {
@@ -75,6 +75,7 @@ public class EndOfDayStatisticsTimer {
 
     /**
      * Obtiene el último día del mes actual
+     *
      * @return fecha del último día del mes actual
      */
     private Date getLastDayToMonth() {
@@ -87,8 +88,6 @@ public class EndOfDayStatisticsTimer {
                 cal.getMaximum(Calendar.SECOND));
         return cal.getTime();
     }
-
-
 
     /**
      * Calcula la fecha 1 día anterior a la fecha del sistema
