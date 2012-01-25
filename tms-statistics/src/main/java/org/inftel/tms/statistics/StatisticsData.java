@@ -10,7 +10,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "statistics")
+@NamedQueries({
+    @NamedQuery(name = StatisticsData.LAST_MONTH, query = "")})
 public class StatisticsData implements Serializable {
+
+    public static final String LAST_MONTH = "StatisticsData.LastMonth";
 
     public static enum statisticPeriod {
 
