@@ -78,8 +78,8 @@ public class StatisticsDataFacadeTest {
     Date date = calendar.getTime();
     System.out.println("date: " + date.getTime() + "=" + date);
     for (StatisticsData data : service.findAll()) {
-      System.out.println(data.getName() + " > " + data.getDataPeriod() + " > " + data.getDataDate().getTime() + "="
-              + data.getDataDate() + " :: " + data.getDataValue());
+      System.out.println(data.getName() + " > " + data.getDataPeriod() + " > " + data.getLastDate().getTime() + "="
+              + data.getLastDate() + " :: " + data.getDataValue());
     }
     Map<String, Long> result = service.findStatistics("alert.type", StatisticsData.statisticPeriod.ANNUAL, date);
     Assert.assertEquals(new Long(10), result.get("alert.type.user"));
