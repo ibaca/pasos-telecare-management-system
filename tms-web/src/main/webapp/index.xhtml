@@ -46,10 +46,12 @@
         function handleLoginRequest(xhr, status, args) {  
             if(args.validationFailed || !args.loggedIn) {  
                 jQuery('#dialog').effect("shake", { times:3 }, 100);  
-            } else {  
+            } else {
+                window.location="faces/dock.xhtml";
                 //dlg.hide();  
                 //jQuery('#loginLink').fadeOut();  
                 //jQuery('#loginPanel').load("/dock.xhtml #tableList");
+                //windows.location.assign("/dock.xhtml");
             }  
         }  
     </script> 
