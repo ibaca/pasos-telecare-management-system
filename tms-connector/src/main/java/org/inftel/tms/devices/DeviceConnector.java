@@ -91,13 +91,23 @@ public class DeviceConnector implements DeviceConnectorRemote {
     boolean isACK = matcher.find();
     return ( (isStatusReport) && (isACK) ) ;
   }
-  
-  //TODO checkACK
+    
   private boolean checkKey(String message) {
     Pattern pattern = Pattern.compile("(\\&RK[0-9]{6})");
     Matcher matcher = pattern.matcher(message);    
     if (matcher.find()){
         return matcher.group(1).equals(key);        
+    }
+    else{
+        return false;
+    }
+  }
+  
+  private boolean checkACK(String message) {
+    Pattern pattern = Pattern.compile("(\\&KO[0-9]{4})");
+    Matcher matcher = pattern.matcher(message);    
+    if (matcher.find()){
+        return matcher.group(1).equals(id);        
     }
     else{
         return false;
@@ -135,6 +145,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
     else if (isACK(message)) {      
       logger.log(Level.INFO, "ACK received");
       if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
+      else if (!checkACK(message)) throw new RuntimeException("ERROR, codigo de 'ACK' incorrecto.");
       return null;
     }
     else if (isUserAlarm(message)) {
