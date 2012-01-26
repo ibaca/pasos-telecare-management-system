@@ -8,13 +8,22 @@ package org.inftel.tms.web.jsfbean;
  *
  * @author Administrador
  */
-import java.io.Serializable;  
+import java.io.Serializable;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.ejb.EJB;
+
+import org.inftel.tms.domain.AffectedType;
+import org.inftel.tms.services.AffectedFacadeRemote;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartSeries;
   
-import org.primefaces.model.chart.CartesianChartModel;  
-import org.primefaces.model.chart.ChartSeries;  
-import org.primefaces.model.chart.LineChartSeries;  
-  
-public class ChartBean implements Serializable {  
+public class ChartBean implements Serializable { 
+    
+    @EJB
+    private AffectedFacadeRemote affectedFacade;
   
     private CartesianChartModel categoryModel;  
   
@@ -82,5 +91,25 @@ public class ChartBean implements Serializable {
   
         linearModel.addSeries(series1);  
         linearModel.addSeries(series2);  
-    }  
+    } 
+    
+    /**
+     * Devuelve la lista de tipos de afectados junto el valor porcentual registrados en el sistema.
+     */
+    private Map<String, Long> calculateAffectedPieData() {
+        Map<String, Long> result = new TreeMap<String, Long>();
+        Long total = 0l;
+        for (AffectedType type : AffectedType.values()) {
+            long count = affectedFacade.countByType(type);
+            total = total + count;
+            result.put(type.name().toLowerCase(), count);
+        }
+        if (total > 0) {
+            for (String name : result.keySet()) {
+                result.put(name, result.get(name) / total);
+
+            }
+        }
+        return result;
+    }
 }  

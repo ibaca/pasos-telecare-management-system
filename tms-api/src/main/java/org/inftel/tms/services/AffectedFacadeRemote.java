@@ -1,27 +1,32 @@
 package org.inftel.tms.services;
 
 import java.util.List;
+
 import javax.ejb.Remote;
+
 import org.inftel.tms.domain.Affected;
+import org.inftel.tms.domain.AffectedType;
 
 /**
- *
+ * 
  * @author ibaca
  */
 @Remote
 public interface AffectedFacadeRemote {
 
-  void create(Affected affected);
+    void create(Affected affected);
 
-  void edit(Affected affected);
+    void edit(Affected affected);
 
-  void remove(Affected affected);
+    void remove(Affected affected);
 
-  Affected find(Object id);
+    Affected find(Object id);
 
-  List<Affected> findAll();
+    List<Affected> findAll();
 
-  List<Affected> findRange(int[] range);
+    List<Affected> findRange(int[] range);
 
-  int count();
+    int count();
+
+    int countByType(AffectedType type);
 }
