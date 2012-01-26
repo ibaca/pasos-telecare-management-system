@@ -29,7 +29,7 @@ import org.inftel.tms.utils.StatisticsDateUtil;
 public class EndOfDayStatisticsTimer {
 
     @EJB
-    private StatisticsDataFacade statisticsDataFacade;
+    private StatisticDataFacade statisticsDataFacade;
     @EJB
     private AlertFacadeRemote alertFacade;
 
@@ -120,12 +120,12 @@ public class EndOfDayStatisticsTimer {
     }
 
     private void create(String name, StatisticDataPeriod period, Date toDay, long value) {
-        StatisticsData sd = new StatisticsData();
+        StatisticData sd = new StatisticData();
 
         sd.setName(name);
-        sd.setDataPeriod(period);
-        sd.setLastDate(toDay);
-        sd.setDataValue(value);
+        sd.setPeriodType(period);
+        sd.setPeriodDate(toDay);
+        sd.setDataCount(value);
 
         statisticsDataFacade.create(sd);
     }

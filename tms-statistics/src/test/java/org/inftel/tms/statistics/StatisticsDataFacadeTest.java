@@ -65,27 +65,27 @@ public class StatisticsDataFacadeTest {
 
     @Test
     public void testFindAll() throws Exception {
-        StatisticsDataFacade service = new StatisticsDataFacade(em);
+        StatisticDataFacade service = new StatisticDataFacade(em);
         Assert.assertEquals(65, service.findAll().size());
     }
 
     @Test
     public void testCount() throws Exception {
-        StatisticsDataFacade service = new StatisticsDataFacade(em);
+        StatisticDataFacade service = new StatisticDataFacade(em);
         Assert.assertEquals(65, service.count());
     }
 
     @Test
     public void testFindNyName() {
-        StatisticsDataFacade service = new StatisticsDataFacade(em);
+        StatisticDataFacade service = new StatisticDataFacade(em);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(0);
         calendar.set(2011, 0, 1, 0, 0, 0);
         Date date = calendar.getTime();
         System.out.println("date: " + date.getTime() + "=" + date);
-        for (StatisticsData data : service.findAll()) {
-            System.out.println(data.getName() + " > " + data.getDataPeriod() + " > " + data.getLastDate().getTime() + "="
-                    + data.getLastDate() + " :: " + data.getDataValue());
+        for (StatisticData data : service.findAll()) {
+            System.out.println(data.getName() + " > " + data.getPeriodType() + " > " + data.getPeriodDate().getTime() + "="
+                    + data.getPeriodDate() + " :: " + data.getDataValue());
         }
         Map<String, Long> result = service.findStatistics("alert.type", ANNUAL, date);
         Assert.assertEquals(new Long(10), result.get("alert.type.user"));
@@ -93,7 +93,7 @@ public class StatisticsDataFacadeTest {
 
     @Test
     public void testFindStatistics() {
-        StatisticsDataFacade service = new StatisticsDataFacade(em);
+        StatisticDataFacade service = new StatisticDataFacade(em);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(0);
         calendar.set(2012, 0, 1, 0, 0, 0);
@@ -103,12 +103,12 @@ public class StatisticsDataFacadeTest {
         System.out.println("First date: " + firstDay.getTime() + "=" + firstDay);
         System.out.println("Last date: " + lastDay.getTime() + "=" + lastDay);
 
-        List<StatisticsData> result = service.findStatistics("alert.type." + AlertType.USER.name().toLowerCase(), DAYLY, firstDay, lastDay);
-        for (StatisticsData data : result) {
+        List<StatisticData> result = service.findStatistics("alert.type." + AlertType.USER.name().toLowerCase(), DAYLY, firstDay, lastDay);
+        for (StatisticData data : result) {
             System.out.println(data.getName() + " > "
-                    + data.getDataPeriod() + " > "
-                    + data.getLastDate().getTime() + "="
-                    + data.getLastDate() + " :: "
+                    + data.getPeriodType() + " > "
+                    + data.getPeriodDate().getTime() + "="
+                    + data.getPeriodDate() + " :: "
                     + data.getDataValue());
         }
         Assert.assertEquals(new Integer(18), new Integer(result.size()));
@@ -116,7 +116,7 @@ public class StatisticsDataFacadeTest {
 
     @Test
     public void testSumStatictics() {
-        StatisticsDataFacade service = new StatisticsDataFacade(em);
+        StatisticDataFacade service = new StatisticDataFacade(em);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(0);
         calendar.set(2012, 1, 1, 0, 0, 0);

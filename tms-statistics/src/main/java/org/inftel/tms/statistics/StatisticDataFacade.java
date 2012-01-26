@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
  * @author agumpg
  */
 @Stateless
-public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
+public class StatisticDataFacade extends AbstractFacade<StatisticData> {
 
     @PersistenceContext(unitName = "tms-statistic-unit")
     private EntityManager em;
@@ -21,8 +21,8 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
         return em;
     }
 
-    public StatisticsDataFacade() {
-        super(StatisticsData.class);
+    public StatisticDataFacade() {
+        super(StatisticData.class);
     }
 
     /**
@@ -36,16 +36,17 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
      * @return sumatorio de los estadísticos
      */
     public int sumStatictics(String startWith, StatisticDataPeriod period, Date fromDate, Date toDate) {
-        TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.lastDate BETWEEN :fromDate AND :toDate", StatisticsData.class);
+        TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o WHERE o.name LIKE :name AND o.periodType = :period AND o.periodDate BETWEEN :fromDate AND :toDate", StatisticData.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
         query.setParameter("fromDate", fromDate);
         query.setParameter("toDate", toDate);
 
-        List<StatisticsData> result = query.getResultList();
+        List<StatisticData> result = query.getResultList();
         int sum = 0;
-        for (StatisticsData s : result) {
-            sum += s.getDataValue();
+        for (StatisticData s : result) {
+            // FIXME de nuevo, esto deberia ser BigDecimal
+            sum += s.getDataValue().intValue();
         }
 
         return sum;
@@ -63,13 +64,14 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
      * pasados
      */
     public Map<String, Long> findStatistics(String startWith, StatisticDataPeriod period, Date date) {
-        TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.lastDate = :date", StatisticsData.class);
+        TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o WHERE o.name LIKE :name AND o.periodType = :period AND o.periodDate = :date", StatisticData.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
         query.setParameter("date", date);
         Map<String, Long> result = new TreeMap<String, Long>();
-        for (StatisticsData data : query.getResultList()) {
-            result.put(data.getName(), data.getDataValue());
+        for (StatisticData data : query.getResultList()) {
+            // FIXME deberia devolverse BigDecimal
+            result.put(data.getName(), data.getDataValue().longValue());
         }
         return result;
     }
@@ -86,22 +88,22 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
      * @param toDate fin de intervalo
      * @return
      */
-    public List<StatisticsData> findStatistics(String startWith, StatisticDataPeriod period, Date fromDate, Date toDate) {
-        TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.lastDate BETWEEN :fromDate AND :toDate", StatisticsData.class);
+    public List<StatisticData> findStatistics(String startWith, StatisticDataPeriod period, Date fromDate, Date toDate) {
+        TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o WHERE o.name LIKE :name AND o.periodType = :period AND o.periodDate BETWEEN :fromDate AND :toDate", StatisticData.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
         query.setParameter("fromDate", fromDate);
         query.setParameter("toDate", toDate);
 
-        List<StatisticsData> result = new ArrayList<StatisticsData>();
-        for (StatisticsData data : query.getResultList()) {
+        List<StatisticData> result = new ArrayList<StatisticData>();
+        for (StatisticData data : query.getResultList()) {
             result.add(data);
         }
         return result;
     }
 
-    StatisticsDataFacade(EntityManager em) {
-        super(StatisticsData.class);
+    StatisticDataFacade(EntityManager em) {
+        super(StatisticData.class);
         this.em = em;
     }
 }
