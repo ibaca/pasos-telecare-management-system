@@ -1,5 +1,6 @@
 package org.inftel.tms.statistics;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -81,17 +82,28 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
 
     /**
      * Busca el intervalo de datos estadisticos para los nombres de estadisticas
-     * que comiencen con el nombre pasado como parametro.
+     * que comiencen con el nombre pasado como parametro en un rango de fechas
      *
-     * @param startWith nombre estadistico que filtra los tipos que se quieren
-     * obtener
+     * @param startWith nombre del estadistico que filtra los tipos que se
+     * quieren obtener (i.e. alert.type.user), patrón nombre%
      * @param period periodo estadistico que se quiere obtener
+     * [DAILY|MOUNTHLY|ANNUAL]
      * @param fromDate inicio de intervalo
      * @param toDate fin de intervalo
      * @return
      */
-    public Map<String, Map<Date, Long>> findStatistics(String startWith, StatisticsData.statisticPeriod period, Date fromDate, Date toDate) {
-        return Collections.emptyMap();
+    public List<StatisticsData> findStatistics(String startWith, StatisticsData.statisticPeriod period, Date fromDate, Date toDate) {
+        TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.lastDate BETWEEN :fromDate AND :toDate", StatisticsData.class);
+        query.setParameter("name", startWith + "%");
+        query.setParameter("period", period);
+        query.setParameter("fromDate", fromDate);
+        query.setParameter("toDate", toDate);
+
+        List<StatisticsData> result = new ArrayList<StatisticsData>();
+        for (StatisticsData data : query.getResultList()) {
+            result.add(data);
+        }
+        return result;
     }
 
     StatisticsDataFacade(EntityManager em) {
