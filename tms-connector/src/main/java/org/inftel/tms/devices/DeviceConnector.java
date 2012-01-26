@@ -3,9 +3,11 @@ package org.inftel.tms.devices;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.soap.SOAPBinding;
 import org.apache.commons.lang3.StringUtils;
 import org.inftel.tms.domain.AlertRaw;
 import org.inftel.tms.services.AlertFacadeRemote;
@@ -56,7 +58,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
    */
   private boolean isTechnicalAlarm(String message) {
     Pattern pattern = null;
-    return Pattern.matches("^$AT", message);
+    return Pattern.matches("^\\*\\$AT.*$", message);
   }
 
   /**
@@ -67,7 +69,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
    */
   private boolean isUserAlarm(String message) {
     Pattern pattern = null;
-    return Pattern.matches("^$AU", message);
+    return Pattern.matches("^\\*\\$AU.*$", message);
   }
 
   /**
@@ -78,7 +80,28 @@ public class DeviceConnector implements DeviceConnectorRemote {
    */
   private boolean isDeviceAlarm(String message) {
     Pattern pattern = null;
-    return Pattern.matches("^$AD", message);
+    return Pattern.matches("^\\*\\$AD.*$", message);
+  }
+  
+  private boolean isACK(String message) {
+    boolean isStatusReport = Pattern.matches("^\\*\\$SR0.*$", message);
+    
+    Pattern pattern = Pattern.compile("\\&KO[0-9]{4}");
+    Matcher matcher = pattern.matcher(message);    
+    boolean isACK = matcher.find();
+    return ( (isStatusReport) && (isACK) ) ;
+  }
+  
+  //TODO checkACK
+  private boolean checkKey(String message) {
+    Pattern pattern = Pattern.compile("(\\&RK[0-9]{6})");
+    Matcher matcher = pattern.matcher(message);    
+    if (matcher.find()){
+        return matcher.group(1).equals(key);        
+    }
+    else{
+        return false;
+    }
   }
 
   /**
@@ -93,33 +116,51 @@ public class DeviceConnector implements DeviceConnectorRemote {
    */
   @Override
   public CharSequence processAlertMessage(String from, String message) {
-    logger.log(Level.INFO, "procesando mensaje de {0}: {1}", new Object[]{from, message});
-
+    logger.log(Level.INFO, "procesando mensaje de {0}: {1}", new Object[]{from, message});    
+    
     if (StringUtils.isBlank(from) || StringUtils.isBlank("message")) {
       throw new IllegalArgumentException("el origen y el contenido de una alerta no pueden ser nulos o cadenas vacias");
     }
 
-    AlertRaw raw = new AlertRaw();
-    raw.setOrigin(from);
-    raw.setRawData(message);
-    alertRawFacade.create(raw);
-
+// FIXME ANTES NO PETABA ESTO Y AHORA SI?    
+//    AlertRaw raw = new AlertRaw();
+//    raw.setOrigin(from);
+//    raw.setRawData(message);
+//    alertRawFacade.create(raw); 
+    
     if ((message == null) || (message.isEmpty())) {
-       //return remote parameteres
+      logger.log(Level.INFO, "empty message received");
       return "*$RP06" + key + key + call + sms + id + transport + ip + "#";
     } 
+    else if (isACK(message)) {      
+      logger.log(Level.INFO, "ACK received");
+      if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
+      return null;
+    }
     else if (isUserAlarm(message)) {
       //TODO crear alert y alertRaw con EJB
+      logger.log(Level.INFO, "User Alarm received");
+      if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
       return null;
     }
     else if (isDeviceAlarm(message)) {
       //TODO crear alert y alertRaw con EJB
+      logger.log(Level.INFO, "Device Alarm received");
+      if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
+      return null;
+    } 
+    else if (isTechnicalAlarm(message)) {
+      //TODO crear alert y alertRaw con EJB
+      logger.log(Level.INFO, "Technical Alarm received");
+      if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
       return null;
     } 
     else {
-        //TODO Error
-      return null;
+      //TODO Error
+      logger.log(Level.SEVERE, "ERROR: trama no soportada");
+      throw new RuntimeException("ERROR: trama no soporteda");            
     }
+    
   }
 
   // Internal Test Usage
