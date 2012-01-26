@@ -6,6 +6,9 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>TMS</name>
+  <properties>
+  	<maven.compiler.source>1.6</maven.compiler.source>
+  </properties>
   <modules>
     <module>tms-api</module>
     <module>tms-bundle</module>
