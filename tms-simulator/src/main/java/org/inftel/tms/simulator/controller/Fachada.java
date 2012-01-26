@@ -117,7 +117,7 @@ public class Fachada {
         post.setHeader("sender-mobile-number", senderMobileNumber);
         URI uri = new URI("http://localhost:8080/tms-web/connector");
         post.setURI(uri);
-        post.setEntity(new StringEntity("*$SR0&"+parameters.getId().substring(2, 5)));
+        post.setEntity(new StringEntity("*$SR0&"+parameters.getKey()+"&"+parameters.getId()+"#"));
         return client.execute(post);
     }
 
