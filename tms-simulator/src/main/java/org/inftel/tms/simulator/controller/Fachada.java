@@ -31,23 +31,14 @@ import org.inftel.tms.simulator.model.Parameters;
 public class Fachada {
 
   public static final String USER_FACADE_JNDI = "java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/tms-core-1.0-SNAPSHOT/UserFacade!org.inftel.tms.services.UserFacadeRemote";  
-  private Parameters parameters;
-  private String URLservlet="";
-  private String senderMobileNumber;
+  protected Parameters parameters;
     
   public Fachada() {
-        
+        parameters = new Parameters();
   }
 
-    public String getURLservlet() {
-        return URLservlet;
-    }
-
-    public void setURLservlet(String URLservlet) {
-        this.URLservlet = URLservlet;
-    }
-
-    public Parameters getParameters() {
+  
+  public Parameters getParameters() {
         return parameters;
     }
 
@@ -56,23 +47,15 @@ public class Fachada {
     }
     
     public void setParameters(String trama) {
-        this.parameters = parseTrama(trama);
+        parseTrama(trama);
     }
-
-  public String getSenderMobileNumber() {
-      return senderMobileNumber;
-  }
-
-  public void setSenderMobileNumber(String number) {
-      this.senderMobileNumber = number;
-  }
-
+  
   //Manda un mensaje vacío al servlet para solicitar los Remote Parameters  
   public HttpResponse sendEmptyMessage() throws URISyntaxException, IOException{    
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
-        post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI(URLservlet);
+        post.setHeader("sender-mobile-number", parameters.getSenderMobileNumber());
+        URI uri = new URI(parameters.getURLservlet());
         post.setURI(uri);
         return client.execute(post);
   }  
@@ -101,31 +84,29 @@ public class Fachada {
         }
     }
 
-    private Parameters parseTrama(String trama) {
-        //*$RP06 &RK123456 &RK123456 &RV1911234567 &KO1000 &RT2:TCP &RI01:12700000000108080#
-        Parameters param = new Parameters();
+    private void parseTrama(String trama) {
+        //*$RP06 &RK123456 &RK123456 &RV1911234567 &KO1000 &RT2:TCP &RI01:12700000000108080#        
         StringTokenizer tokens = new StringTokenizer(trama.trim(), "&#*$");        
     
         //$RP06 RK123456 RV1911234567 RS1601234567 KO1000 RT2:TCP RI01:12700000000108080        
         while(tokens.hasMoreTokens()){
             String token = tokens.nextToken();
-            if(token.contains("RK"))        param.setKey(token);
-            else if (token.contains("RV"))  param.setCall(token);
-            else if (token.contains("KO"))  param.setId(token);
-            else if (token.contains("RT"))  param.setTransport(token);
-            else if (token.contains("RI"))  param.setIp(token);
-            else if (token.contains("RS"))  param.setSms(token);
+            if(token.contains("RK"))        parameters.setKey(token);
+            else if (token.contains("RV"))  parameters.setCall(token);
+            else if (token.contains("KO"))  parameters.setId(token);
+            else if (token.contains("RT"))  parameters.setTransport(token);
+            else if (token.contains("RI"))  parameters.setIp(token);
+            else if (token.contains("RS"))  parameters.setSms(token);
             else if (token.contains("RP"))  {;}
             else throw new RuntimeException("Trama incorrecta: "+ token);
-        }        
-        return param; 
+        }               
     }
 
     public HttpResponse enviarACK() throws URISyntaxException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
-        post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI(URLservlet);
+        post.setHeader("sender-mobile-number", parameters.getSenderMobileNumber());
+        URI uri = new URI(parameters.getURLservlet());
         post.setURI(uri);
         post.setEntity(new StringEntity("*$SR0&"+parameters.getKey()+"&"+parameters.getId()+"#"));
         return client.execute(post);
@@ -135,8 +116,8 @@ public class Fachada {
     public HttpResponse enviarUserAlarm() throws URISyntaxException, IOException {                
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
-        post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI(URLservlet);
+        post.setHeader("sender-mobile-number", parameters.getSenderMobileNumber());
+        URI uri = new URI(parameters.getURLservlet());
         post.setURI(uri);
         parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AU11&"
@@ -152,8 +133,8 @@ public class Fachada {
     public HttpResponse enviarDeviceAlarm() throws URISyntaxException, UnsupportedEncodingException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
-        post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI(URLservlet);
+        post.setHeader("sender-mobile-number", parameters.getSenderMobileNumber());
+        URI uri = new URI(parameters.getURLservlet());
         post.setURI(uri);
         parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AD31&"
@@ -162,7 +143,7 @@ public class Fachada {
                 +parameters.getTime()
                 +"&LN1008052067"
                 +"&LT153052067"
-                +"&DT75#"));
+                +"&DT"+parameters.getTemperature()+"#"));
         return client.execute(post);  
     }
     
@@ -171,8 +152,8 @@ public class Fachada {
     public HttpResponse enviarTechnicalAlarm() throws URISyntaxException, UnsupportedEncodingException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
-        post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI(URLservlet);
+        post.setHeader("sender-mobile-number", parameters.getSenderMobileNumber());
+        URI uri = new URI(parameters.getURLservlet());
         post.setURI(uri);
         parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AT2&"
@@ -181,7 +162,7 @@ public class Fachada {
                 +parameters.getTime()
                 +"&LN1008052067"
                 +"&LT153052067"
-                +"&PB05"
+                +"&PB"+parameters.getBattery()
                 +"PC000#"));
         return client.execute(post);  
     }

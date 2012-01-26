@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.HttpResponse;
 import org.inftel.tms.simulator.controller.Fachada;
+import org.inftel.tms.simulator.model.Parameters;
 
 /**
  *
@@ -45,10 +46,19 @@ public class Main extends javax.swing.JFrame {
         btnTechnicalAlarm = new javax.swing.JButton();
         txtURL = new javax.swing.JTextField();
         labelURL = new javax.swing.JLabel();
+        txtTemp = new javax.swing.JTextField();
+        txtBattery = new javax.swing.JTextField();
+        labelTemp = new javax.swing.JLabel();
+        labelBattery = new javax.swing.JLabel();
+        txtnumber = new javax.swing.JTextField();
+        labelnumber = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Samsung Galaxy Nexus");
+        setResizable(false);
 
         btnIniciar.setText("Iniciar");
+        btnIniciar.setPreferredSize(new java.awt.Dimension(120, 23));
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIniciarActionPerformed(evt);
@@ -56,6 +66,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btnUserAlarm.setText("User Alarm");
+        btnUserAlarm.setPreferredSize(new java.awt.Dimension(120, 23));
         btnUserAlarm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUserAlarmActionPerformed(evt);
@@ -63,6 +74,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btnDeviceAlarm.setText("Device Alarm");
+        btnDeviceAlarm.setPreferredSize(new java.awt.Dimension(120, 23));
         btnDeviceAlarm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeviceAlarmActionPerformed(evt);
@@ -70,10 +82,12 @@ public class Main extends javax.swing.JFrame {
         });
 
         textArea.setColumns(20);
+        textArea.setEditable(false);
         textArea.setRows(5);
         jScrollPane1.setViewportView(textArea);
 
         btnTechnicalAlarm.setText("Technical Alarm");
+        btnTechnicalAlarm.setPreferredSize(new java.awt.Dimension(120, 23));
         btnTechnicalAlarm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTechnicalAlarmActionPerformed(evt);
@@ -84,6 +98,18 @@ public class Main extends javax.swing.JFrame {
 
         labelURL.setText("URL del servlet:");
 
+        txtTemp.setText("55");
+
+        txtBattery.setText("5");
+
+        labelTemp.setText("Temperatura (celsius)");
+
+        labelBattery.setText("Bateria %");
+
+        txtnumber.setText("666123456");
+
+        labelnumber.setText("Número de móvil");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,51 +118,74 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtBattery)
+                            .addComponent(txtnumber)
+                            .addComponent(txtTemp)
+                            .addComponent(labelTemp)
+                            .addComponent(labelBattery)
+                            .addComponent(txtURL, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
+                        .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addComponent(txtURL, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnDeviceAlarm)
-                            .addComponent(btnUserAlarm)
-                            .addComponent(btnIniciar)
-                            .addComponent(btnTechnicalAlarm))
-                        .addGap(22, 22, 22))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelURL)
-                        .addContainerGap())))
+                            .addComponent(btnUserAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeviceAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTechnicalAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(labelURL)
+                    .addComponent(labelnumber)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(btnIniciar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUserAlarm)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDeviceAlarm)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnTechnicalAlarm))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelURL)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnUserAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelnumber)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtnumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDeviceAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(labelTemp)))
+                .addGap(18, 18, 18)
+                .addComponent(labelBattery)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBattery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTechnicalAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-       //FIXME cambiar println por logging
         try {
-            fachada.setSenderMobileNumber("666123456");
-            fachada.setURLservlet(txtURL.getText());
+            Parameters param = fachada.getParameters();
+            param.setBattery(txtBattery.getText());
+            param.setSenderMobileNumber(txtnumber.getText());
+            param.setTemperature(txtTemp.getText());
+            param.setURLservlet(txtURL.getText());
+            fachada.setParameters(param);   
+            
             HttpResponse response = fachada.sendEmptyMessage();
             textArea.append("Requesting remote parameters...\n");
             
@@ -168,7 +217,13 @@ public class Main extends javax.swing.JFrame {
 
     private void btnUserAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserAlarmActionPerformed
         try {
-            fachada.setURLservlet(txtURL.getText());
+            Parameters param = fachada.getParameters();
+            param.setBattery(txtBattery.getText());
+            param.setSenderMobileNumber(txtnumber.getText());
+            param.setTemperature(txtTemp.getText());
+            param.setURLservlet(txtURL.getText());
+            fachada.setParameters(param); 
+            
             textArea.append("Sending User Alarm... \n");
             HttpResponse response = fachada.enviarUserAlarm(); 
             if (200 == response.getStatusLine().getStatusCode()) {
@@ -186,7 +241,13 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDeviceAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeviceAlarmActionPerformed
         try {
-            fachada.setURLservlet(txtURL.getText());
+            Parameters param = fachada.getParameters();
+            param.setBattery(txtBattery.getText());
+            param.setSenderMobileNumber(txtnumber.getText());
+            param.setTemperature(txtTemp.getText());
+            param.setURLservlet(txtURL.getText());
+            fachada.setParameters(param); 
+            
             textArea.append("Sending Device Alarm... \n");
             HttpResponse response = fachada.enviarDeviceAlarm();   
             if (200 == response.getStatusLine().getStatusCode()) {
@@ -205,7 +266,13 @@ public class Main extends javax.swing.JFrame {
 
     private void btnTechnicalAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTechnicalAlarmActionPerformed
         try {
-            fachada.setURLservlet(txtURL.getText());
+            Parameters param = fachada.getParameters();
+            param.setBattery(txtBattery.getText());
+            param.setSenderMobileNumber(txtnumber.getText());
+            param.setTemperature(txtTemp.getText());
+            param.setURLservlet(txtURL.getText());
+            fachada.setParameters(param); 
+            
             textArea.append("Sending Technical Alarm... \n");
             HttpResponse response = fachada.enviarTechnicalAlarm();   
             if (200 == response.getStatusLine().getStatusCode()) {
@@ -270,8 +337,14 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnTechnicalAlarm;
     private javax.swing.JButton btnUserAlarm;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelBattery;
+    private javax.swing.JLabel labelTemp;
     private javax.swing.JLabel labelURL;
+    private javax.swing.JLabel labelnumber;
     private javax.swing.JTextArea textArea;
+    private javax.swing.JTextField txtBattery;
+    private javax.swing.JTextField txtTemp;
     private javax.swing.JTextField txtURL;
+    private javax.swing.JTextField txtnumber;
     // End of variables declaration//GEN-END:variables
 }

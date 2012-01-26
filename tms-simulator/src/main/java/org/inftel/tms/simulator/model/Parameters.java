@@ -5,6 +5,7 @@
 package org.inftel.tms.simulator.model;
 
 import java.util.Calendar;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -19,8 +20,45 @@ public class Parameters {
   private String ip = "";
   private String date="";
   private String time="";
+  private String URLservlet="";
+  private String senderMobileNumber="";
+  private String temperature;
+  private String battery;
+
+  public String getURLservlet() {
+        return URLservlet;
+    }
+
+  public void setURLservlet(String URLservlet) {
+        this.URLservlet = URLservlet;
+    }
+
+  public String getBattery() {
+        return battery;
+    }
+
+  public void setBattery(String battery) {
+        this.battery = StringUtils.leftPad(battery, 2, '0');
+    }
+
+  public String getSenderMobileNumber() {
+        return senderMobileNumber;
+    }
+
+  public void setSenderMobileNumber(String senderMobileNumber) {
+        this.senderMobileNumber = senderMobileNumber;
+    }
+
+  public String getTemperature() {
+        return temperature;
+    }
+
+  public void setTemperature(String temperature) {
+        this.temperature = StringUtils.leftPad(temperature, 2, '0');
+    }
   
-    public Parameters() {
+  
+  public Parameters() {
                               
     }
 
@@ -124,8 +162,10 @@ public class Parameters {
 
     @Override
     public String toString() {
-        return "Parameters{" + "key=" + key + ", call=" + call + ", sms=" + sms + ", id=" + id + ", transport=" + transport + ", ip=" + ip + '}';
+        return "Parameters{" + "key=" + key + ", call=" + call + ", sms=" + sms + ", id=" + id + ", transport=" + transport + ", ip=" + ip + ", date=" + date + ", time=" + time + ", URLservlet=" + URLservlet + ", senderMobileNumber=" + senderMobileNumber + ", temperature=" + temperature + ", battery=" + battery + '}';
     }
+
+    
 
 
 }
