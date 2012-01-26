@@ -8,61 +8,57 @@
     <title>Telecare Alarm Center</title>
     <link href="#{request.contextPath}/resources/img/favicon.ico" rel="shortcut icon" />    
     <h:outputStylesheet name="css/mainstyle.css"/>
-    <script type="text/javascript">
-        function handlePublish(response) {
-            $('#display').append(response.data + '<br/>');
-        }
-    </script>
   </h:head>
   <h:body>
-      <div id="head">
-            <div class="contenedor960">
-                <span> Telecare Alarm Center </span>
-            </div> <!-- fin contenedor960 -->
-        </div> <!-- fin menu -->
-        
-  <!--  <ppctu:growl id="growl" showDetail="true" life="3000" />         -->
-    <div class="contenedor960">      
-        
-<ppctu:growl id="growl" showDetail="true" />  
-              
-<h:form>  
-  
-    <ppctu:fieldset id="container" legend="PrimeChat">  
-  
-        <h:panelGroup rendered="#{chatController.loggedIn}" >  
-            <ppctu:outputPanel layout="block" style="width:600px;height:200px;overflow:auto" styleClass="chatroom" /> 
-            <ppctu:separator />  
-            <ppctu:inputText value="#{chatController.message}" styleClass="messageInput" />  
-            <ppctu:spacer width="5" />  
-            <ppctu:commandButton value="Send" actionListener="#{chatController.send}" global="false" oncomplete="$('.messageInput').val('').focus()"/>  
-            <ppctu:spacer width="5" />  
-            <ppctu:commandButton value="Disconnect" actionListener="#{chatController.disconnect}" global="false"   
-                                oncomplete="chatAgent.close()" update="container" />
+    <div id="head">
+        <div class="contenedor960">
+            <span> Telecare Alarm Center </span>
+        </div> <!-- fin contenedor960 -->
+    </div> <!-- fin menu -->    
+    <ppctu:growl id="growl" showDetail="true" life="3000" /> 
+    
+    <div class="contenedor960">                   
+        <h:form>  
 
-        </h:panelGroup>  
-  
-        <h:panelGroup rendered="#{!chatController.loggedIn}" >  
-            Username: <ppctu:inputText value="#{chatController.username}" />  
-            <ppctu:spacer width="5" />  
-            <ppctu:commandButton value="Login" actionListener="#{chatController.login}" update="container" />  
-        </h:panelGroup>  
-  
-    </ppctu:fieldset>  
-  
-</h:form>  
-  
-<ppctu:push onpublish="handleMessage" channel="chat" widgetVar="chatAgent" /> 
-  
-<script type="text/javascript">  
-   // function handleMessage(evt, data) {  
-function handlePublish(response) {
-    $('#display').append(response.data + '<br/>');
-}
-        //keep scroll  
-     //   chatContent.scrollTop(chatContent.height());  
-    //}  
-</script>
+            <ppctu:fieldset id="container" legend="Telecare Alarm Center: Chat">  
+
+                <h:panelGroup rendered="#{chatController.loggedIn}" >  
+                    <ppctu:outputPanel layout="block" style="width:600px;height:200px;overflow:auto"   
+                            styleClass="chatroom" />  
+
+                    <ppctu:separator />  
+
+                    <ppctu:inputText value="#{chatController.message}" styleClass="messageInput" />  
+                    <ppctu:spacer width="5" />  
+                    <ppctu:commandButton value="Send" actionListener="#{chatController.send}" global="false" oncomplete="$('.messageInput').val('').focus()"/>  
+                    <ppctu:spacer width="5" />  
+                    <ppctu:commandButton value="Disconnect" actionListener="#{chatController.disconnect}" global="false"   
+                                        oncomplete="chatAgent.close()" update="container" />  
+                </h:panelGroup>  
+
+                <h:panelGroup rendered="#{not chatController.loggedIn}" >  
+                    Username: <ppctu:inputText value="#{chatController.username}" />  
+
+                    <ppctu:spacer width="5" />  
+                    <ppctu:commandButton value="Login" actionListener="#{chatController.login}" update="container"   
+                                    icon="ui-icon-person"/>  
+                </h:panelGroup>  
+
+            </ppctu:fieldset>  
+
+        </h:form>  
+
+        <ppctu:push onmessage="handleMessage" channel="chat" widgetVar="chatAgent" />  
+
+        <script type="text/javascript">  
+            function handleMessage(evt, data) {  
+                var chatContent = $('.chatContent');  
+                chatContent.append(data + '<br />');  
+
+                //keep scroll  
+                chatContent.scrollTop(chatContent.height());  
+            }  
+        </script>  
            
         
     </div> <!-- fin contenedor960 -->               
@@ -70,7 +66,7 @@ function handlePublish(response) {
     <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="./dock.xhtml"/>  
     <ppctu:menuitem value="Email" icon="./resources/img/dock/email.png" url="#"/>  
     <ppctu:menuitem value="Chat" icon="./resources/img/dock/portfolio.png" url="./chat.xhtml"/>  
-    <ppctu:menuitem value="RSS" icon="./resources/img/dock/rss.png" url="#"/>  
+    <ppctu:menuitem value="Chart" icon="./resources/img/dock/chart.png" url="./chart.xhtml"/> 
     <ppctu:menuitem value="History" icon="./resources/img/dock/history.png" url="#"/>  
 </ppctu:dock> 
 </h:body>

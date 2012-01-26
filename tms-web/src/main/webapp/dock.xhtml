@@ -17,8 +17,10 @@
         </div> <!-- fin menu -->
         
     <ppctu:growl id="growl" showDetail="true" life="3000" />         
-    <div id="tableList" class="contenedor960">     
-        <h:form id="form">
+    <div class="contenedor960">
+        <ppctu:fieldset id="container" legend="Telecare Alarm Center: Administration"> 
+        <h:panelGroup rendered="#{tableBean.show}" >
+        <h:form id="form"> 
             <ppctu:dataList value="#{tableBean.alerts}" var="alert"  
                 paginator="true" rows="5" effectSpeed="fast"  
                 paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
@@ -32,13 +34,13 @@
                     <ppctu:commandLink update=":form:alertDetail" oncomplete="alertDialog.show()" title="View Detail">  
                         <ppctu:graphicImage value="./resources/img/search.png"/>   
                         <f:setPropertyActionListener value="#{alert}" target="#{tableBean.selectedAlert}" />  
-                    </ppctu:commandLink> 
-
-                    <h:outputText value="#{alert.created}, #{alert.id}" style="margin-left:10px" />  
-
+                    </ppctu:commandLink>
+                    
+                    <h:outputText value="#{alert.created}, #{alert.id}" style="margin-left:10px; margin-right: 10px" /> 
+                    
+                    <ppctu:commandButton value=">>" actionListener="#{tableBean.hide}" update="container" /> 
                 </ppctu:column>  
             </ppctu:dataList>  
-
 
 
             <ppctu:dialog header="alert Detail" widgetVar="alertDialog" modal="true" showEffect="fade">  
@@ -57,7 +59,11 @@
                 </ppctu:outputPanel>  
             </ppctu:dialog> 
 
-        </h:form>  
+        </h:form> 
+        </h:panelGroup>
+            
+            
+        </ppctu:fieldset>
     </div> <!-- fin contenedor960 -->  
         
         
@@ -69,7 +75,7 @@
     <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="./dock.xhtml"/>  
     <ppctu:menuitem value="Email" icon="./resources/img/dock/email.png" url="#"/>  
     <ppctu:menuitem value="Chat" icon="./resources/img/dock/portfolio.png" url="./chat.xhtml"/>  
-    <ppctu:menuitem value="RSS" icon="./resources/img/dock/rss.png" url="#"/>  
+    <ppctu:menuitem value="Chart" icon="./resources/img/dock/chart.png" url="./chart.xhtml"/>  
     <ppctu:menuitem value="History" icon="./resources/img/dock/history.png" url="#"/>  
 </ppctu:dock> 
 </h:body>

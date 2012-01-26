@@ -17,22 +17,18 @@
         </div> <!-- fin menu -->
         
     <ppctu:growl id="growl" showDetail="true" life="3000" />         
-    <div class="contenedor960">     
-        <ppctu:tab title=""></ppctu:tab>  
-        
-        
-    </div> <!-- fin contenedor960 -->  
-        
-        
-        
-        
-        
-        
+    <div class="contenedor960">
+        <ppctu:lineChart value="#{chartBean.linearModel}" legendPosition="e"  
+     title="Linear Chart" minY="0" maxY="10" style="height:300px"/>  
+  
+        <ppctu:lineChart value="#{chartBean.categoryModel}" legendPosition="e"  
+            title="Category Chart" minY="0" maxY="200" style="height:300px;margin-top:20px"/>
+    </div> <!-- fin contenedor960 -->       
 <ppctu:dock>  
     <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="./dock.xhtml"/>  
     <ppctu:menuitem value="Email" icon="./resources/img/dock/email.png" url="#"/>  
     <ppctu:menuitem value="Chat" icon="./resources/img/dock/portfolio.png" url="./chat.xhtml"/>  
-    <ppctu:menuitem value="RSS" icon="./resources/img/dock/rss.png" url="#"/>  
+    <ppctu:menuitem value="Chart" icon="./resources/img/dock/chart.png" url="./chart.xhtml"/>  
     <ppctu:menuitem value="History" icon="./resources/img/dock/history.png" url="#"/>  
 </ppctu:dock> 
 </h:body>
