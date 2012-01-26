@@ -36,5 +36,5 @@ public enum AlertPriority {
    * por el interventor, y su principal funcion es mantener un registro de falsas alertas para temas
    * estadisticos.
    */
-  FLASE;
+  FALSE;
 }
