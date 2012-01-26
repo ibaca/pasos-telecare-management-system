@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Calendar;
 import java.util.StringTokenizer;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -57,7 +58,7 @@ public class Fachada {
       this.senderMobileNumber = number;
   }
 
-  //Manda un mensaje vacío al servlet para solicitar los Remote Parameters
+  //Manda un mensaje vacío al servlet para solicitar los Remote Parameters  
   public HttpResponse sendEmptyMessage() throws URISyntaxException, IOException{    
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
@@ -121,33 +122,35 @@ public class Fachada {
         return client.execute(post);
     }
 
-    public HttpResponse enviarUserAlarm() throws URISyntaxException, IOException {
+    //TODO si da tiempo usar la fecha del sistema al enviar
+    public HttpResponse enviarUserAlarm() throws URISyntaxException, IOException {                
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", senderMobileNumber);
         URI uri = new URI("http://localhost:8080/tms-web/connector");
         post.setURI(uri);
+        parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AU11&"
                 +parameters.getKey()
-                +"&LD20160303"
-                +"&LH060654"
+                +parameters.getDate()
+                +parameters.getTime()
                 +"&LN1008052067"
                 +"&LT153052067"
                 +"#"));
         return client.execute(post);        
     }
     
-    //$AD31&LD20160303&LH060654&LN1008052067&LT153052067&DT75#
     public HttpResponse enviarDeviceAlarm() throws URISyntaxException, UnsupportedEncodingException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", senderMobileNumber);
         URI uri = new URI("http://localhost:8080/tms-web/connector");
         post.setURI(uri);
+        parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AD31&"
                 +parameters.getKey()
-                +"&LD20160303"
-                +"&LH060654"
+                +parameters.getDate()
+                +parameters.getTime()
                 +"&LN1008052067"
                 +"&LT153052067"
                 +"&DT75#"));
@@ -155,16 +158,18 @@ public class Fachada {
     }
     
     //Alarma tecnica: 5% de batería y no está conectado al cargador.
+    //TODO si da tiempo usar la fecha del sistema al enviar
     public HttpResponse enviarTechnicalAlarm() throws URISyntaxException, UnsupportedEncodingException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", senderMobileNumber);
         URI uri = new URI("http://localhost:8080/tms-web/connector");
         post.setURI(uri);
+        parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AT2&"
                 +parameters.getKey()
-                +"&LD20160303"
-                +"&LH060654"
+                +parameters.getDate()
+                +parameters.getTime()
                 +"&LN1008052067"
                 +"&LT153052067"
                 +"&PB05"
