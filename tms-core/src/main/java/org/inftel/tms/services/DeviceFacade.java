@@ -27,7 +27,8 @@ public class DeviceFacade extends AbstractFacade<Device> implements DeviceFacade
     public DeviceFacade() {
         super(Device.class);
     }
-
+    
+    @Override
     public Device findByMobile(String mobile) {
         TypedQuery<Device> query = em.createNamedQuery(FIND_BY_MOBILE, Device.class);
         query.setParameter("mobile", mobile);
