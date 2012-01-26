@@ -9,7 +9,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.soap.SOAPBinding;
 import org.apache.commons.lang3.StringUtils;
+import org.inftel.tms.domain.AlertPriority;
 import org.inftel.tms.domain.AlertRaw;
+import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AlertFacadeRemote;
 import org.inftel.tms.services.AlertRawFacadeRemote;
 
@@ -132,7 +134,6 @@ public class DeviceConnector implements DeviceConnectorRemote {
       throw new IllegalArgumentException("el origen y el contenido de una alerta no pueden ser nulos o cadenas vacias");
     }
 
-// FIXME ANTES NO PETABA ESTO Y AHORA SI?    
     AlertRaw raw = new AlertRaw();
     raw.setOrigin(from);
     raw.setRawData(message);
@@ -172,6 +173,10 @@ public class DeviceConnector implements DeviceConnectorRemote {
       throw new RuntimeException("ERROR: trama no soporteda");            
     }
     
+  }
+  //TODO create alarm with EJB
+  public void createAlarm(AlertType type, AlertPriority priority,String cause, AlertRaw raw){
+      
   }
 
   // Internal Test Usage
