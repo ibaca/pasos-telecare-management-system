@@ -1,11 +1,17 @@
 package org.inftel.tms.statistics;
 
+import static org.inftel.tms.statistics.StatisticDataPeriod.ANNUAL;
+import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
+import static org.inftel.tms.statistics.StatisticDataPeriod.MONTHLY;
+
 import java.util.Calendar;
 import java.util.Date;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
+
 import org.apache.commons.lang3.time.DateUtils;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AlertFacadeRemote;
@@ -61,14 +67,7 @@ public class EndOfDayStatisticsTimer {
         for (AlertType t : AlertType.values()) {
             countDaily = alertFacade.countByType(t, day, day);
 
-            StatisticsData sd = new StatisticsData();
-
-            sd.setName("Alert.type." + t.name().toLowerCase());
-            sd.setDataPeriod(StatisticsData.statisticPeriod.DAYLY);
-            sd.setLastDate(day);
-            sd.setDataValue((long) countDaily);
-
-            statisticsDataFacade.create(sd);
+            create("alert.type." + t.name().toLowerCase(), DAYLY, day, (long) countDaily );
         }
 
     }
@@ -83,18 +82,11 @@ public class EndOfDayStatisticsTimer {
         int sum;
         for (AlertType t : AlertType.values()) {
             sum = statisticsDataFacade.sumStatictics("Alert.type." + t.name(),
-                    StatisticsData.statisticPeriod.DAYLY,
+                    StatisticDataPeriod.DAYLY,
                     toDate,
                     fromDate);
 
-            StatisticsData sd = new StatisticsData();
-
-            sd.setName("Alert.type." + t.name());
-            sd.setDataPeriod(StatisticsData.statisticPeriod.MONTHLY);
-            sd.setLastDate(new Date());
-            sd.setDataValue((long) sum);
-
-            statisticsDataFacade.create(sd);
+            create("alert.type." + t.name(), MONTHLY,  new Date(), (long) sum);
         }
 
     }
@@ -119,18 +111,22 @@ public class EndOfDayStatisticsTimer {
         int sumAnnual;
         for (AlertType t : AlertType.values()) {
             sumAnnual = statisticsDataFacade.sumStatictics("Alert.type." + t.name(),
-                    StatisticsData.statisticPeriod.MONTHLY,
+                    StatisticDataPeriod.MONTHLY,
                     oldDay,
                     toDay);
 
-            StatisticsData sd = new StatisticsData();
-
-            sd.setName("Alert.type." + t.name());
-            sd.setDataPeriod(StatisticsData.statisticPeriod.ANNUAL);
-            sd.setLastDate(toDay);
-            sd.setDataValue((long) sumAnnual);
-
-            statisticsDataFacade.create(sd);
+            create("alert.type." + t.name(), ANNUAL, toDay, (long) sumAnnual);
         }
+    }
+
+    private void create(String name, StatisticDataPeriod period, Date toDay, long value) {
+        StatisticsData sd = new StatisticsData();
+
+        sd.setName(name);
+        sd.setDataPeriod(period);
+        sd.setLastDate(toDay);
+        sd.setDataValue(value);
+
+        statisticsDataFacade.create(sd);
     }
 }

@@ -1,5 +1,8 @@
 package org.inftel.tms.statistics;
 
+import static org.inftel.tms.statistics.StatisticDataPeriod.ANNUAL;
+import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -84,7 +87,7 @@ public class StatisticsDataFacadeTest {
             System.out.println(data.getName() + " > " + data.getDataPeriod() + " > " + data.getLastDate().getTime() + "="
                     + data.getLastDate() + " :: " + data.getDataValue());
         }
-        Map<String, Long> result = service.findStatistics("alert.type", StatisticsData.statisticPeriod.ANNUAL, date);
+        Map<String, Long> result = service.findStatistics("alert.type", ANNUAL, date);
         Assert.assertEquals(new Long(10), result.get("alert.type.user"));
     }
 
@@ -100,7 +103,7 @@ public class StatisticsDataFacadeTest {
         System.out.println("First date: " + firstDay.getTime() + "=" + firstDay);
         System.out.println("Last date: " + lastDay.getTime() + "=" + lastDay);
 
-        List<StatisticsData> result = service.findStatistics("alert.type." + AlertType.USER.name().toLowerCase(), StatisticsData.statisticPeriod.DAYLY, firstDay, lastDay);
+        List<StatisticsData> result = service.findStatistics("alert.type." + AlertType.USER.name().toLowerCase(), DAYLY, firstDay, lastDay);
         for (StatisticsData data : result) {
             System.out.println(data.getName() + " > "
                     + data.getDataPeriod() + " > "
@@ -124,9 +127,7 @@ public class StatisticsDataFacadeTest {
         System.out.println("Last date: " + lastDay.getTime() + "=" + lastDay);
 
         int sum = service.sumStatictics("alert.type." + AlertType.USER.name().toLowerCase(),
-                StatisticsData.statisticPeriod.DAYLY,
-                firstDay,
-                lastDay);
+                DAYLY, firstDay, lastDay);
 
         Assert.assertEquals(60, sum);
 

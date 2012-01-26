@@ -14,16 +14,12 @@ public class StatisticsData implements Serializable {
 
     public static final String LAST_MONTH = "StatisticsData.LastMonth";
 
-    public static enum statisticPeriod {
-
-        DAYLY, MONTHLY, ANNUAL
-    };
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private statisticPeriod dataPeriod;
+    private StatisticDataPeriod dataPeriod;
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date lastDate;
     private Long dataValue;
@@ -36,11 +32,11 @@ public class StatisticsData implements Serializable {
         this.lastDate = lastDate;
     }
 
-    public statisticPeriod getDataPeriod() {
+    public StatisticDataPeriod getDataPeriod() {
         return dataPeriod;
     }
 
-    public void setDataPeriod(statisticPeriod dataPeriod) {
+    public void setDataPeriod(StatisticDataPeriod dataPeriod) {
         this.dataPeriod = dataPeriod;
     }
 

@@ -35,7 +35,7 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
      * @param toDate fecha fin del sumatorio
      * @return sumatorio de los estadísticos
      */
-    public int sumStatictics(String startWith, StatisticsData.statisticPeriod period, Date fromDate, Date toDate) {
+    public int sumStatictics(String startWith, StatisticDataPeriod period, Date fromDate, Date toDate) {
         TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.lastDate BETWEEN :fromDate AND :toDate", StatisticsData.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
@@ -62,7 +62,7 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
      * @return parejas de nombre de estadistica y valor para el periodo y facha
      * pasados
      */
-    public Map<String, Long> findStatistics(String startWith, StatisticsData.statisticPeriod period, Date date) {
+    public Map<String, Long> findStatistics(String startWith, StatisticDataPeriod period, Date date) {
         TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.lastDate = :date", StatisticsData.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
@@ -86,7 +86,7 @@ public class StatisticsDataFacade extends AbstractFacade<StatisticsData> {
      * @param toDate fin de intervalo
      * @return
      */
-    public List<StatisticsData> findStatistics(String startWith, StatisticsData.statisticPeriod period, Date fromDate, Date toDate) {
+    public List<StatisticsData> findStatistics(String startWith, StatisticDataPeriod period, Date fromDate, Date toDate) {
         TypedQuery<StatisticsData> query = em.createQuery("SELECT o FROM StatisticsData o WHERE o.name LIKE :name AND o.dataPeriod = :period AND o.lastDate BETWEEN :fromDate AND :toDate", StatisticsData.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
