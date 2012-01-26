@@ -5,5 +5,66 @@
   <statistics id='1002' name='alert.counter' dataperiod='0' lastdate='2011-12-03' dataValue='2'/>
   <statistics id='1003' name='alert.counter' dataperiod='1' lastdate='2011-12-01' dataValue='10'/>
   <statistics id='1004' name='alert.counter' dataperiod='2' lastdate='2011-01-01' dataValue='10'/>
+  
   <statistics id='1005' name='alert.type.user' dataperiod='2' lastdate='2011-01-01' dataValue='10'/>
+  <statistics id='2000' name='alert.type.user' dataperiod='0' lastdate='2012-01-01' dataValue='10'/>
+  <statistics id='2001' name='alert.type.user' dataperiod='0' lastdate='2012-01-02' dataValue='20'/>
+  <statistics id='2002' name='alert.type.user' dataperiod='0' lastdate='2012-01-03' dataValue='15'/>
+  <statistics id='2003' name='alert.type.user' dataperiod='0' lastdate='2012-01-04' dataValue='30'/>
+  <statistics id='2004' name='alert.type.user' dataperiod='0' lastdate='2012-01-05' dataValue='50'/>
+  <statistics id='2005' name='alert.type.user' dataperiod='0' lastdate='2012-01-06' dataValue='55'/>
+  <statistics id='2006' name='alert.type.user' dataperiod='0' lastdate='2012-01-07' dataValue='40'/>
+  <statistics id='2007' name='alert.type.user' dataperiod='0' lastdate='2012-01-08' dataValue='25'/>
+  <statistics id='2008' name='alert.type.user' dataperiod='0' lastdate='2012-01-09' dataValue='15'/>
+  <statistics id='2009' name='alert.type.user' dataperiod='0' lastdate='2012-01-10' dataValue='12'/>
+  <statistics id='2010' name='alert.type.user' dataperiod='0' lastdate='2012-01-11' dataValue='10'/>
+  <statistics id='2011' name='alert.type.user' dataperiod='0' lastdate='2012-01-12' dataValue='28'/>
+  <statistics id='2012' name='alert.type.user' dataperiod='0' lastdate='2012-01-13' dataValue='30'/>
+  <statistics id='2013' name='alert.type.user' dataperiod='0' lastdate='2012-01-14' dataValue='45'/>
+  <statistics id='2014' name='alert.type.user' dataperiod='0' lastdate='2012-01-15' dataValue='58'/>
+  <statistics id='2015' name='alert.type.user' dataperiod='0' lastdate='2012-01-16' dataValue='62'/>
+  <statistics id='2016' name='alert.type.user' dataperiod='0' lastdate='2012-01-17' dataValue='40'/>
+  <statistics id='2017' name='alert.type.user' dataperiod='0' lastdate='2012-01-18' dataValue='30'/>
+  
+  <statistics id='1005' name='alert.type.device' dataperiod='2' lastdate='2011-01-01' dataValue='10'/>
+  <statistics id='2000' name='alert.type.device' dataperiod='0' lastdate='2012-01-01' dataValue='5'/>
+  <statistics id='2001' name='alert.type.device' dataperiod='0' lastdate='2012-01-02' dataValue='8'/>
+  <statistics id='2002' name='alert.type.device' dataperiod='0' lastdate='2012-01-03' dataValue='11'/>
+  <statistics id='2003' name='alert.type.device' dataperiod='0' lastdate='2012-01-04' dataValue='14'/>
+  <statistics id='2004' name='alert.type.device' dataperiod='0' lastdate='2012-01-05' dataValue='12'/>
+  <statistics id='2005' name='alert.type.device' dataperiod='0' lastdate='2012-01-06' dataValue='16'/>
+  <statistics id='2006' name='alert.type.device' dataperiod='0' lastdate='2012-01-07' dataValue='20'/>
+  <statistics id='2007' name='alert.type.device' dataperiod='0' lastdate='2012-01-08' dataValue='15'/>
+  <statistics id='2008' name='alert.type.device' dataperiod='0' lastdate='2012-01-09' dataValue='13'/>
+  <statistics id='2009' name='alert.type.device' dataperiod='0' lastdate='2012-01-10' dataValue='12'/>
+  <statistics id='2010' name='alert.type.device' dataperiod='0' lastdate='2012-01-11' dataValue='6'/>
+  <statistics id='2011' name='alert.type.device' dataperiod='0' lastdate='2012-01-12' dataValue='8'/>
+  <statistics id='2012' name='alert.type.device' dataperiod='0' lastdate='2012-01-13' dataValue='5'/>
+  <statistics id='2013' name='alert.type.device' dataperiod='0' lastdate='2012-01-14' dataValue='6'/>
+  <statistics id='2014' name='alert.type.device' dataperiod='0' lastdate='2012-01-15' dataValue='10'/>
+  <statistics id='2015' name='alert.type.device' dataperiod='0' lastdate='2012-01-16' dataValue='12'/>
+  <statistics id='2016' name='alert.type.device' dataperiod='0' lastdate='2012-01-17' dataValue='8'/>
+  <statistics id='2017' name='alert.type.device' dataperiod='0' lastdate='2012-01-18' dataValue='4'/>
+  
+  <statistics id='1005' name='alert.type.technical' dataperiod='2' lastdate='2011-01-01' dataValue='3'/>
+  <statistics id='2000' name='alert.type.technical' dataperiod='0' lastdate='2012-01-01' dataValue='6'/>
+  <statistics id='2001' name='alert.type.technical' dataperiod='0' lastdate='2012-01-02' dataValue='8'/>
+  <statistics id='2002' name='alert.type.technical' dataperiod='0' lastdate='2012-01-03' dataValue='10'/>
+  <statistics id='2003' name='alert.type.technical' dataperiod='0' lastdate='2012-01-04' dataValue='12'/>
+  <statistics id='2004' name='alert.type.technical' dataperiod='0' lastdate='2012-01-05' dataValue='16'/>
+  <statistics id='2005' name='alert.type.technical' dataperiod='0' lastdate='2012-01-06' dataValue='20'/>
+  <statistics id='2006' name='alert.type.technical' dataperiod='0' lastdate='2012-01-07' dataValue='25'/>
+  <statistics id='2007' name='alert.type.technical' dataperiod='0' lastdate='2012-01-08' dataValue='22'/>
+  <statistics id='2008' name='alert.type.technical' dataperiod='0' lastdate='2012-01-09' dataValue='30'/>
+  <statistics id='2009' name='alert.type.technical' dataperiod='0' lastdate='2012-01-10' dataValue='20'/>
+  <statistics id='2010' name='alert.type.technical' dataperiod='0' lastdate='2012-01-11' dataValue='15'/>
+  <statistics id='2011' name='alert.type.technical' dataperiod='0' lastdate='2012-01-12' dataValue='10'/>
+  <statistics id='2012' name='alert.type.technical' dataperiod='0' lastdate='2012-01-13' dataValue='12'/>
+  <statistics id='2013' name='alert.type.technical' dataperiod='0' lastdate='2012-01-14' dataValue='8'/>
+  <statistics id='2014' name='alert.type.technical' dataperiod='0' lastdate='2012-01-15' dataValue='7'/>
+  <statistics id='2015' name='alert.type.technical' dataperiod='0' lastdate='2012-01-16' dataValue='9'/>
+  <statistics id='2016' name='alert.type.technical' dataperiod='0' lastdate='2012-01-17' dataValue='8'/>
+  <statistics id='2017' name='alert.type.technical' dataperiod='0' lastdate='2012-01-18' dataValue='6'/>
+  
+  
 </dataset>

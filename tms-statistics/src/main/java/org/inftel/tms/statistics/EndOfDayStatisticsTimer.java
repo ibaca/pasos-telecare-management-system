@@ -1,12 +1,11 @@
 package org.inftel.tms.statistics;
 
-import java.util.Calendar;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
-import org.apache.commons.lang3.time.DateUtils;
+//import org.apache.commons.lang3.time.DateUtils;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AlertFacadeRemote;
 import org.inftel.tms.utils.StatisticsDateUtil;
@@ -32,7 +31,7 @@ public class EndOfDayStatisticsTimer {
         int countDaily;
 
         Date yesterday = StatisticsDateUtil.getYesterday();
-        DateUtils.truncate(yesterday, Calendar.MONTH);
+        //DateUtils.truncate(yesterday, Calendar.MONTH);
         System.out.println("Timer event: " + new Date());
 
         //Actualización de diarios de Alertas
@@ -52,35 +51,29 @@ public class EndOfDayStatisticsTimer {
 
 
 
-        if (changeMonth) {
-
-            //pensar: si el mes actual no tiene anotación mounthly calcular mes anterior, sino el cálculo ya se hizo para ese mes.
-            Date firstDayMonth = new Date(); //calcular el primer día del mes
-            Date lastDayMonth = new Date(); // calcular el ultimo día del mes
-            int sum;
-
-            //Actualización de estadísticas mensuales para cada tipo de alarma.    
-            for (AlertType t : AlertType.values()) {
-
-                sum = statisticsDataFacade.sumStatictics("Alert.type."+t.name(), StatisticsData.statisticPeriod.DAYLY, firstDayMonth, lastDayMonth);
-
-                StatisticsData sd = new StatisticsData();
-
-                sd.setName("Alert.type.user");
-                sd.setDataPeriod(StatisticsData.statisticPeriod.MONTHLY);
-                sd.setLastDate(lastDayMonth);
-                sd.setDataValue((long) sum);
-
-                statisticsDataFacade.create(sd);
-
-            }
-
-
-
-
-        }
-
-
-
-    }
+//        if (changeMonth) {
+//
+//            //pensar: si el mes actual no tiene anotación mounthly calcular mes anterior, sino el cálculo ya se hizo para ese mes.
+//            Date firstDayMonth = new Date(); //calcular el primer día del mes
+//            Date lastDayMonth = new Date(); // calcular el ultimo día del mes
+//            int sum;
+//
+//            //Actualización de estadísticas mensuales para cada tipo de alarma.    
+//            for (AlertType t : AlertType.values()) {
+//
+//                sum = statisticsDataFacade.sumStatictics("Alert.type."+t.name(), StatisticsData.statisticPeriod.DAYLY, firstDayMonth, lastDayMonth);
+//
+//                StatisticsData sd = new StatisticsData();
+//
+//                sd.setName("Alert.type.user");
+//                sd.setDataPeriod(StatisticsData.statisticPeriod.MONTHLY);
+//                sd.setLastDate(lastDayMonth);
+//                sd.setDataValue((long) sum);
+//
+//                statisticsDataFacade.create(sd);
+//
+//            }
+//
+//    }
+}
 }

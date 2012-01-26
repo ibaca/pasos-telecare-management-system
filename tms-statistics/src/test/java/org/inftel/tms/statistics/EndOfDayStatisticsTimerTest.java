@@ -61,7 +61,7 @@ public class EndOfDayStatisticsTimerTest {
    */
   @Test
   public void testMyTimer() throws Exception {
-    
+ 
     
   }
 }
