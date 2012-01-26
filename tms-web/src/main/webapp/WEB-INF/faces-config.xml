@@ -36,4 +36,14 @@
         <managed-bean-class>org.inftel.tms.web.jspbean.TableBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>chatController</managed-bean-name>
+        <managed-bean-class>org.inftel.tms.web.jspbean.ChatController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>chartBean</managed-bean-name>
+        <managed-bean-class>org.inftel.tms.web.jspbean.ChartBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
