@@ -7,11 +7,11 @@ import javax.persistence.*;
 
 /**
  * Los valores estadisticos quedan definidos por dos atributos, sum y count. Sum indica el sumatorio
- * de los valores en el intervalo que representa la instancia. Count representa el numero de muestras
- * usadas en el intervalo.
+ * de los valores en el intervalo que representa la instancia. Count representa el numero de
+ * muestras usadas en el intervalo.
  * 
  * Existen valores que solo usaran uno de los atributos, por ejemplo, si se guarda una estadistica
- * de mensajes procesados se registrara únicamente el count, que represnta el numero de menjsajes, 
+ * de mensajes procesados se registrara únicamente el count, que represnta el numero de menjsajes,
  * dejando sum igual a null.
  * 
  * Se ha creado un metodo de conveniencia getDataValue, que permite obtener el valor estadistico
@@ -35,18 +35,18 @@ public class StatisticData implements Serializable {
     private Date periodDate;
     private Double dataSum;
     private Long dataCount;
-    
+
     public StatisticData() {
     }
-    
+
     public StatisticData(String name, StatisticDataPeriod period, Date date, Long count) {
-        this(name, period, date, 1d, count);
+        this(name, period, date, null, count);
     }
-    
+
     public StatisticData(String name, StatisticDataPeriod period, Date date, Double sum) {
         this(name, period, date, sum, null);
     }
-    
+
     public StatisticData(String name, StatisticDataPeriod period, Date date, Double sum, Long count) {
         this.name = name;
         this.periodType = period;
@@ -54,21 +54,23 @@ public class StatisticData implements Serializable {
         this.dataSum = sum;
         this.dataCount = count; // Salta la restriccion de valores negativos o nulos
     }
-    
+
     public BigDecimal getDataValue() {
         if (dataSum == null) {
             // Si sum es null se devuelve el valor del contador
             return new BigDecimal(getDataCount());
+        } else if (dataCount == null) {
+            return new BigDecimal(getDataSum());
         } else {
             // Si no, se devolvera el valor de sum divido entre el contador
             return new BigDecimal(getDataSum()).divide(new BigDecimal(getDataCount()));
         }
     }
-    
+
     public Long getDataCount() {
         return (dataCount == null) ? 1l : dataCount;
     }
-    
+
     public void setDataCount(Long dataCount) {
         if (dataCount == null || dataCount < 0) {
             // Si dataCount == 0 podria dar una excepcion al llamar a getDataValue (division por 0)
@@ -76,7 +78,7 @@ public class StatisticData implements Serializable {
         }
         this.dataCount = dataCount;
     }
-    
+
     public Date getPeriodDate() {
         return periodDate;
     }

@@ -1,5 +1,7 @@
 package org.inftel.tms.statistics;
 
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
 import static org.inftel.tms.statistics.StatisticDataPeriod.ANNUAL;
 import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
 import static org.inftel.tms.statistics.StatisticDataPeriod.MONTHLY;
@@ -36,95 +38,51 @@ public class EndOfDayStatisticsTimer {
     @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "0", dayOfWeek = "*")
     public void myTimer() {
 
-        Date toDay = new Date();
-        Date yesterday = StatisticsDateUtil.getYesterday();
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.setTime(StatisticsDateUtil.getYesterday());
+        
+        System.out.println("Timer event: " + new Date());
 
-        System.out.println("Timer event: " + toDay);
+        for (AlertType t : AlertType.values()) {
+            
+            // Se obtiene el contador desde el inicio hasta el fin de yesterday
+            int statCount = alertFacade.countByType(t, DAYLY.beginsAt(yesterday).getTime(), 
+                    DAYLY.endsAt(yesterday).getTime());
+            String statName = "alert.type." + t.name().toLowerCase(); 
 
+            updateStatistic(statName, t, yesterday, statCount);
+        }
+
+    }
+
+    private void updateStatistic(String statisticName, AlertType period, Calendar date, int value) {
+        // Se calcula el dia de hoy para comparar
+        Calendar today = Calendar.getInstance();
+        
         //Actualización de diarios de Alertas
-        processDiary(yesterday);
-
-        //Si es el primer dia del mes lanzamos la actualización mensual de históricos de alertas
-        Date firstDayToMonth = DateUtils.truncate(new Date(), Calendar.MONTH);
-        if (DateUtils.isSameDay(firstDayToMonth, toDay)) {
-            processMounthly(DateUtils.truncate(yesterday, Calendar.MONTH), yesterday);
+        saveStatisticData(statisticName, DAYLY, date, value );
+   
+        //Si ayer fue un mes diferente
+        if (today.get(MONTH) != date.get(MONTH)) {
+            int count = statisticsDataFacade.sumStatictics(statisticName, DAYLY, 
+                    MONTHLY.endsAt(date).getTime(), MONTHLY.beginsAt(date).getTime());
+            saveStatisticData(statisticName, MONTHLY,  date, (long) count);
         }
-
+   
         //Si se ha producido un cambio de año actualizamos históricos anuales
-        if (!StatisticsDateUtil.isEqualsYear(yesterday, toDay)) {
-            processAnnual(toDay);
-        }
-
-    }
-
-    /**
-     * Cálculo del acumulado diario de los distintos tipos de alertas
-     *
-     * @param day fecha de cálculo
-     */
-    private void processDiary(Date day) {
-        int countDaily;
-        for (AlertType t : AlertType.values()) {
-            countDaily = alertFacade.countByType(t, day, day);
-
-            create("alert.type." + t.name().toLowerCase(), DAYLY, day, (long) countDaily );
-        }
-
-    }
-
-    /**
-     * Procesamiento mensual de los distintos tipos de alertas
-     *
-     * @param toDate fecha límite inferior
-     * @param fromDate fecha límite superior
-     */
-    private void processMounthly(Date toDate, Date fromDate) {
-        int sum;
-        for (AlertType t : AlertType.values()) {
-            sum = statisticsDataFacade.sumStatictics("Alert.type." + t.name(),
-                    StatisticDataPeriod.DAYLY,
-                    toDate,
-                    fromDate);
-
-            create("alert.type." + t.name(), MONTHLY,  new Date(), (long) sum);
-        }
-
-    }
-
-    /**
-     * Sumamos los acumulados mensuales (statisticPeriod.MONTHLY, desde
-     * Febrero-Diciembre del año anterior mas el mes de Enero del año actual, ya
-     * que Enero siempre contiene el sumatorio mensual del mes anterior, osea,
-     * Diciembre.
-     *
-     * @param toDay fecha límite
-     */
-    private void processAnnual(Date toDay) {
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.YEAR, -1);
-        cal.add(Calendar.MONTH, 1);
-        Date oldDay = cal.getTime();
-
-
-        int sumAnnual;
-        for (AlertType t : AlertType.values()) {
-            sumAnnual = statisticsDataFacade.sumStatictics("Alert.type." + t.name(),
-                    StatisticDataPeriod.MONTHLY,
-                    oldDay,
-                    toDay);
-
-            create("alert.type." + t.name(), ANNUAL, toDay, (long) sumAnnual);
+        if (today.get(YEAR) != date.get(YEAR)) {
+            int count = statisticsDataFacade.sumStatictics(statisticName, MONTHLY,
+                    ANNUAL.endsAt(date).getTime(), ANNUAL.beginsAt(date).getTime());
+            saveStatisticData(statisticName, ANNUAL, date, (long) count);
         }
     }
 
-    private void create(String name, StatisticDataPeriod period, Date toDay, long value) {
+    private void saveStatisticData(String name, StatisticDataPeriod period, Calendar date, long value) {
         StatisticData sd = new StatisticData();
 
         sd.setName(name);
         sd.setPeriodType(period);
-        sd.setPeriodDate(toDay);
+        sd.setPeriodDate(period.beginsAt(date).getTime());
         sd.setDataCount(value);
 
         statisticsDataFacade.create(sd);
