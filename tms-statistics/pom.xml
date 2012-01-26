@@ -25,6 +25,7 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>tms-api</artifactId>
       <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.glassfish.extras</groupId>

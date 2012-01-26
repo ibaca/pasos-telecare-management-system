@@ -8,6 +8,7 @@
   <name>TMS</name>
   <properties>
   	<maven.compiler.source>1.6</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <modules>
     <module>tms-api</module>
