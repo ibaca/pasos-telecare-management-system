@@ -32,11 +32,20 @@ public class Fachada {
 
   public static final String USER_FACADE_JNDI = "java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/tms-core-1.0-SNAPSHOT/UserFacade!org.inftel.tms.services.UserFacadeRemote";  
   private Parameters parameters;
+  private String URLservlet="";
   private String senderMobileNumber;
     
   public Fachada() {
         
   }
+
+    public String getURLservlet() {
+        return URLservlet;
+    }
+
+    public void setURLservlet(String URLservlet) {
+        this.URLservlet = URLservlet;
+    }
 
     public Parameters getParameters() {
         return parameters;
@@ -63,7 +72,7 @@ public class Fachada {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        URI uri = new URI(URLservlet);
         post.setURI(uri);
         return client.execute(post);
   }  
@@ -116,7 +125,7 @@ public class Fachada {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        URI uri = new URI(URLservlet);
         post.setURI(uri);
         post.setEntity(new StringEntity("*$SR0&"+parameters.getKey()+"&"+parameters.getId()+"#"));
         return client.execute(post);
@@ -127,7 +136,7 @@ public class Fachada {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        URI uri = new URI(URLservlet);
         post.setURI(uri);
         parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AU11&"
@@ -144,7 +153,7 @@ public class Fachada {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        URI uri = new URI(URLservlet);
         post.setURI(uri);
         parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AD31&"
@@ -163,7 +172,7 @@ public class Fachada {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", senderMobileNumber);
-        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        URI uri = new URI(URLservlet);
         post.setURI(uri);
         parameters.setDateandTime();
         post.setEntity(new StringEntity("*$AT2&"

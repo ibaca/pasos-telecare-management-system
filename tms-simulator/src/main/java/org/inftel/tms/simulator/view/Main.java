@@ -43,6 +43,8 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
         btnTechnicalAlarm = new javax.swing.JButton();
+        txtURL = new javax.swing.JTextField();
+        labelURL = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,20 +80,31 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        txtURL.setText("http://localhost:8080/tms-web/connector");
+
+        labelURL.setText("URL del servlet:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDeviceAlarm)
-                    .addComponent(btnUserAlarm)
-                    .addComponent(btnIniciar)
-                    .addComponent(btnTechnicalAlarm))
-                .addGap(22, 22, 22))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(txtURL, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDeviceAlarm)
+                            .addComponent(btnUserAlarm)
+                            .addComponent(btnIniciar)
+                            .addComponent(btnTechnicalAlarm))
+                        .addGap(22, 22, 22))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelURL)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,16 +113,20 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(btnIniciar)
-                        .addGap(45, 45, 45)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUserAlarm)
-                        .addGap(44, 44, 44)
+                        .addGap(18, 18, 18)
                         .addComponent(btnDeviceAlarm)
-                        .addGap(32, 32, 32)
+                        .addGap(18, 18, 18)
                         .addComponent(btnTechnicalAlarm))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(labelURL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -119,6 +136,7 @@ public class Main extends javax.swing.JFrame {
        //FIXME cambiar println por logging
         try {
             fachada.setSenderMobileNumber("666123456");
+            fachada.setURLservlet(txtURL.getText());
             HttpResponse response = fachada.sendEmptyMessage();
             textArea.append("Requesting remote parameters...\n");
             
@@ -150,6 +168,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnUserAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserAlarmActionPerformed
         try {
+            fachada.setURLservlet(txtURL.getText());
             textArea.append("Sending User Alarm... \n");
             HttpResponse response = fachada.enviarUserAlarm(); 
             if (200 == response.getStatusLine().getStatusCode()) {
@@ -167,6 +186,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDeviceAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeviceAlarmActionPerformed
         try {
+            fachada.setURLservlet(txtURL.getText());
             textArea.append("Sending Device Alarm... \n");
             HttpResponse response = fachada.enviarDeviceAlarm();   
             if (200 == response.getStatusLine().getStatusCode()) {
@@ -185,6 +205,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnTechnicalAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTechnicalAlarmActionPerformed
         try {
+            fachada.setURLservlet(txtURL.getText());
             textArea.append("Sending Technical Alarm... \n");
             HttpResponse response = fachada.enviarTechnicalAlarm();   
             if (200 == response.getStatusLine().getStatusCode()) {
@@ -249,6 +270,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnTechnicalAlarm;
     private javax.swing.JButton btnUserAlarm;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelURL;
     private javax.swing.JTextArea textArea;
+    private javax.swing.JTextField txtURL;
     // End of variables declaration//GEN-END:variables
 }
