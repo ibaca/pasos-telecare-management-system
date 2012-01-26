@@ -9,11 +9,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.soap.SOAPBinding;
 import org.apache.commons.lang3.StringUtils;
-import org.inftel.tms.domain.AlertPriority;
-import org.inftel.tms.domain.AlertRaw;
-import org.inftel.tms.domain.AlertType;
+import org.inftel.tms.domain.*;
 import org.inftel.tms.services.AlertFacadeRemote;
 import org.inftel.tms.services.AlertRawFacadeRemote;
+import org.inftel.tms.services.DeviceFacadeRemote;
 
 /**
  * Se encarga de la comunicacion entre los dispositivos y el servidor. Su principal funcion es la de
@@ -32,6 +31,8 @@ import org.inftel.tms.services.AlertRawFacadeRemote;
  */
 @Stateless
 public class DeviceConnector implements DeviceConnectorRemote {
+  @EJB
+  private DeviceFacadeRemote deviceFacade;
 
   @EJB
   private AlertFacadeRemote alertFacade;
@@ -40,7 +41,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
   private static final Logger logger = Logger.getLogger(DeviceConnector.class.getName());
   
   /*
-   * remote parameters programming   
+   * remote parameters programming  , by default 
    */
   private static final String key = "&RK123456";
   private static final String call = "&RV1911234567";
@@ -147,36 +148,44 @@ public class DeviceConnector implements DeviceConnectorRemote {
       logger.log(Level.INFO, "ACK received");
       if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
       else if (!checkACK(message)) throw new RuntimeException("ERROR, codigo de 'ACK' incorrecto.");
+      else createAlert(AlertType.TECHNICAL, AlertPriority.INFO, "Parametros de configuracion recibidos correctamente", raw, from);
       return null;
     }
     else if (isUserAlarm(message)) {
-      //TODO crear alert y alertRaw con EJB
       logger.log(Level.INFO, "User Alarm received");
       if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
+      createAlert(AlertType.USER, AlertPriority.CRITICAL, "Alerta de usuario", raw, from);
       return null;
     }
     else if (isDeviceAlarm(message)) {
-      //TODO crear alert y alertRaw con EJB
       logger.log(Level.INFO, "Device Alarm received");
       if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
+      createAlert(AlertType.DEVICE, AlertPriority.IMPORTANT, "Problemas de temperatura", raw, from);
       return null;
     } 
     else if (isTechnicalAlarm(message)) {
-      //TODO crear alert y alertRaw con EJB
       logger.log(Level.INFO, "Technical Alarm received");
       if (!checkKey(message))   throw new RuntimeException("ERROR, 'access key' incorrecta.");
+      createAlert(AlertType.TECHNICAL, AlertPriority.NORMAL, "Nivel de bateria bajo", raw, from);
       return null;
     } 
     else {
-      //TODO Error
       logger.log(Level.SEVERE, "ERROR: trama no soportada");
       throw new RuntimeException("ERROR: trama no soporteda");            
     }
-    
   }
-  //TODO create alarm with EJB
-  public void createAlarm(AlertType type, AlertPriority priority,String cause, AlertRaw raw){
-      
+  
+  public void createAlert(AlertType type, AlertPriority priority,String cause, AlertRaw raw,String mobileNumber){
+      Alert alert = new Alert();
+      Device device = deviceFacade.findByMobile(mobileNumber);
+      Person person = device.getOwner().getData();
+      alert.setAffected(person);
+      alert.setCause(cause);
+      alert.setOrigin(device);
+      alert.setPriority(priority);
+      alert.setType(type);
+      alert.setRaw(raw);
+      alertFacade.create(alert);      
   }
 
   // Internal Test Usage
