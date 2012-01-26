@@ -32,31 +32,15 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "Affected.findByCreated", query = "SELECT a FROM Affected a WHERE a.created = :created"),
         @NamedQuery(name = "Affected.findByUpdated", query = "SELECT a FROM Affected a WHERE a.updated = :updated"),
         @NamedQuery(name = "Affected.findByVersion", query = "SELECT a FROM Affected a WHERE a.version = :version"),
-        @NamedQuery(name = "Affected.countByType", query = "SELECT count(a) FROM Affected a WHERE a.type = :type")})
+        @NamedQuery(name = "Affected.countByType", query = "SELECT count(a) FROM Affected a WHERE a.type = :type") })
 public class Affected extends BaseEntity {
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private Person data;
-
-    public Set<Device> getDevices() {
-        return devices;
-    }
-
-    public void setDevices(Set<Device> devices) {
-        this.devices = devices;
-    }
-
-    public AffectedType getType() {
-        return type;
-    }
-
-    public void setType(AffectedType type) {
-        this.type = type;
-    }
-
+    private static final long serialVersionUID = -8798996677273198603L;
     @ManyToMany
     @JoinTable(name = "affected_contacts")
     private List<Person> contacts;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Person data;
     @OneToMany(mappedBy = "owner")
     private Set<Device> devices;
     private AffectedType type;
@@ -65,15 +49,31 @@ public class Affected extends BaseEntity {
         return contacts;
     }
 
-    public void setContacts(List<Person> contacts) {
-        this.contacts = contacts;
-    }
-
     public Person getData() {
         return data;
     }
 
+    public Set<Device> getDevices() {
+        return devices;
+    }
+
+    public AffectedType getType() {
+        return type;
+    }
+
+    public void setContacts(List<Person> contacts) {
+        this.contacts = contacts;
+    }
+
     public void setData(Person data) {
         this.data = data;
+    }
+
+    public void setDevices(Set<Device> devices) {
+        this.devices = devices;
+    }
+
+    public void setType(AffectedType type) {
+        this.type = type;
     }
 }
