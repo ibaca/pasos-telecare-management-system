@@ -24,4 +24,6 @@ public interface DeviceFacadeRemote {
   List<Device> findRange(int[] range);
 
   int count();
+
+  public Device findByMobile(java.lang.String mobile);
 }
