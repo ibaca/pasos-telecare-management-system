@@ -63,13 +63,13 @@ public class StatisticsDataFacadeTest {
     @Test
     public void testFindAll() throws Exception {
         StatisticsDataFacade service = new StatisticsDataFacade(em);
-        Assert.assertEquals(24, service.findAll().size());
+        Assert.assertEquals(65, service.findAll().size());
     }
 
     @Test
     public void testCount() throws Exception {
         StatisticsDataFacade service = new StatisticsDataFacade(em);
-        Assert.assertEquals(24, service.count());
+        Assert.assertEquals(65, service.count());
     }
 
     @Test
@@ -99,8 +99,8 @@ public class StatisticsDataFacadeTest {
         Date lastDay = calendar.getTime();
         System.out.println("First date: " + firstDay.getTime() + "=" + firstDay);
         System.out.println("Last date: " + lastDay.getTime() + "=" + lastDay);
-        
-        List<StatisticsData> result = service.findStatistics("alert.type."+AlertType.USER.name().toLowerCase(), StatisticsData.statisticPeriod.DAYLY, firstDay, lastDay);
+
+        List<StatisticsData> result = service.findStatistics("alert.type." + AlertType.USER.name().toLowerCase(), StatisticsData.statisticPeriod.DAYLY, firstDay, lastDay);
         for (StatisticsData data : result) {
             System.out.println(data.getName() + " > "
                     + data.getDataPeriod() + " > "
@@ -109,5 +109,26 @@ public class StatisticsDataFacadeTest {
                     + data.getDataValue());
         }
         Assert.assertEquals(new Integer(18), new Integer(result.size()));
+    }
+
+    @Test
+    public void testSumStatictics() {
+        StatisticsDataFacade service = new StatisticsDataFacade(em);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(0);
+        calendar.set(2012, 1, 1, 0, 0, 0);
+        Date firstDay = calendar.getTime();
+        calendar.set(2012, 1, 29, 0, 0, 0);
+        Date lastDay = calendar.getTime();
+        System.out.println("First date: " + firstDay.getTime() + "=" + firstDay);
+        System.out.println("Last date: " + lastDay.getTime() + "=" + lastDay);
+
+        int sum = service.sumStatictics("alert.type." + AlertType.USER.name().toLowerCase(),
+                StatisticsData.statisticPeriod.DAYLY,
+                firstDay,
+                lastDay);
+
+        Assert.assertEquals(60, sum);
+
     }
 }

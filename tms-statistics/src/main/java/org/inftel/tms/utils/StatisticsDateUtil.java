@@ -55,4 +55,26 @@ public class StatisticsDateUtil {
 
         return prev;
     }
+
+    /**
+     * Comprueba si dos fechas pertenecen al mismo año
+     *
+     * @param date1 Primera fecha
+     * @param date2 Segunda fecha
+     * @return Verdadero si son fechas del mismo año, falso en caso contrario
+     */
+    public static boolean isEqualsYear(Date date1, Date date2) {
+
+        Calendar calA = Calendar.getInstance();
+        Calendar calB = Calendar.getInstance();
+        calA.setTime(date1);
+        calB.setTime(date2);
+
+        if (calA.get(Calendar.YEAR) == calB.get(Calendar.YEAR)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }
