@@ -6,7 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AlertFacadeRemote;
 import org.inftel.tms.utils.StatisticsDateUtil;
