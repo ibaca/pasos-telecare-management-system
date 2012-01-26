@@ -98,10 +98,10 @@ public class TableBean implements Serializable {
         this.selectedAlert = selectedAlert;
     }
     
-    public static void main(String[] args){
-        List<Alert> talerts = alertFacade.findActiveAlerts();
-        for(Alert i : talerts){
-            System.out.println(i.getAffected().getFirstName());
-        }
-    }
+//    public static void main(String[] args){
+//        List<Alert> talerts = alertFacade.findActiveAlerts();
+//        for(Alert i : talerts){
+//            System.out.println(i.getAffected().getFirstName());
+//        }
+//    }
 } 
