@@ -25,6 +25,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();      
         btnDeviceAlarm.setVisible(false);
         btnUserAlarm.setVisible(false);
+        btnTechnicalAlarm.setVisible(false);
     }
 
     /**
@@ -41,6 +42,7 @@ public class Main extends javax.swing.JFrame {
         btnDeviceAlarm = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
+        btnTechnicalAlarm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,18 +71,26 @@ public class Main extends javax.swing.JFrame {
         textArea.setRows(5);
         jScrollPane1.setViewportView(textArea);
 
+        btnTechnicalAlarm.setText("Technical Alarm");
+        btnTechnicalAlarm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTechnicalAlarmActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDeviceAlarm)
                     .addComponent(btnUserAlarm)
-                    .addComponent(btnIniciar))
+                    .addComponent(btnIniciar)
+                    .addComponent(btnTechnicalAlarm))
                 .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
@@ -93,7 +103,9 @@ public class Main extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addComponent(btnUserAlarm)
                         .addGap(44, 44, 44)
-                        .addComponent(btnDeviceAlarm))
+                        .addComponent(btnDeviceAlarm)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnTechnicalAlarm))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -117,6 +129,7 @@ public class Main extends javax.swing.JFrame {
             fachada.setParameters(contents);
             btnDeviceAlarm.setVisible(true);
             btnUserAlarm.setVisible(true);
+            btnTechnicalAlarm.setVisible(true);
             btnIniciar.setVisible(false);
             //enviar ACK
             response = fachada.enviarACK();
@@ -170,6 +183,24 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnDeviceAlarmActionPerformed
 
+    private void btnTechnicalAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTechnicalAlarmActionPerformed
+        try {
+            textArea.append("Sending Technical Alarm... \n");
+            HttpResponse response = fachada.enviarTechnicalAlarm();   
+            if (200 == response.getStatusLine().getStatusCode()) {
+                textArea.append("Sent OK! \n");
+            }
+            else{
+                textArea.append("ERROR sending Technical Alarm \n");
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnTechnicalAlarmActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -215,6 +246,7 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeviceAlarm;
     private javax.swing.JButton btnIniciar;
+    private javax.swing.JButton btnTechnicalAlarm;
     private javax.swing.JButton btnUserAlarm;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea textArea;

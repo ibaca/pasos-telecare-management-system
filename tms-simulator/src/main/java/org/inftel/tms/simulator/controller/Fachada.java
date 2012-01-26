@@ -153,4 +153,23 @@ public class Fachada {
                 +"&DT75#"));
         return client.execute(post);  
     }
+    
+    //Alarma tecnica: 5% de batería y no está conectado al cargador.
+    public HttpResponse enviarTechnicalAlarm() throws URISyntaxException, UnsupportedEncodingException, IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost();    
+        post.setHeader("sender-mobile-number", senderMobileNumber);
+        URI uri = new URI("http://localhost:8080/tms-web/connector");
+        post.setURI(uri);
+        post.setEntity(new StringEntity("*$AT2&"
+                +parameters.getKey()
+                +"&LD20160303"
+                +"&LH060654"
+                +"&LN1008052067"
+                +"&LT153052067"
+                +"&PB05"
+                +"PC000#"));
+        return client.execute(post);  
+    }
+    
 }
