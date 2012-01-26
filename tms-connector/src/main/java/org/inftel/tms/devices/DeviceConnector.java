@@ -1,5 +1,7 @@
 package org.inftel.tms.devices;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -134,10 +136,11 @@ public class DeviceConnector implements DeviceConnectorRemote {
     if (StringUtils.isBlank(from) || StringUtils.isBlank("message")) {
       throw new IllegalArgumentException("el origen y el contenido de una alerta no pueden ser nulos o cadenas vacias");
     }
-
+    
     AlertRaw raw = new AlertRaw();
     raw.setOrigin(from);
-    raw.setRawData(message);
+    raw.setRawData(message);    
+    raw.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));    
     alertRawFacade.create(raw); 
     
     if ((message == null) || (message.isEmpty())) {
@@ -185,7 +188,8 @@ public class DeviceConnector implements DeviceConnectorRemote {
       alert.setPriority(priority);
       alert.setType(type);
       alert.setRaw(raw);
-      alertFacade.create(alert);      
+      alertFacade.create(alert);   
+      raw.setAlert(alert);
   }
 
   // Internal Test Usage
