@@ -133,10 +133,10 @@ public class DeviceConnector implements DeviceConnectorRemote {
     }
 
 // FIXME ANTES NO PETABA ESTO Y AHORA SI?    
-//    AlertRaw raw = new AlertRaw();
-//    raw.setOrigin(from);
-//    raw.setRawData(message);
-//    alertRawFacade.create(raw); 
+    AlertRaw raw = new AlertRaw();
+    raw.setOrigin(from);
+    raw.setRawData(message);
+    alertRawFacade.create(raw); 
     
     if ((message == null) || (message.isEmpty())) {
       logger.log(Level.INFO, "empty message received");
