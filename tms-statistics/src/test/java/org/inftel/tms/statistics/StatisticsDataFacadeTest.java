@@ -145,10 +145,10 @@ public class StatisticsDataFacadeTest {
         
         StatisticData sd = service.findByDate("alert.reciverProcessTime", calendar.getTime());
         
-        System.out.println("id: "+sd.getId()+">"+sd.getName()+">"+sd.getPeriodDate()+">"+sd.getPeriodType()+">"+sd.getDataCount()+">"+sd.getDataValue()+sd.getDataSum());
+        System.out.println("id: "+sd.getId()+">"+sd.getName()+">"+sd.getPeriodDate()+">"+sd.getPeriodType()+">"+sd.getDataCount()+">"+sd.getDataValue()+">"+sd.getDataSum());
                 
         
-        Assert.assertEquals(new Integer(200), sd.getDataSum());
+        Assert.assertEquals(new Double(200), sd.getDataSum());
         //Assert.assertNull(sd);
 
     }

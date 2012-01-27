@@ -138,6 +138,8 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
         statisticDataFacade.create(sd);
 
     }
+    
+            
 
     @Override
     public Map<Date, Long> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
@@ -153,4 +155,6 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
         return statisticDataFacade.findStatisticsNames(startWith);
     }
 
+    
+    
 }

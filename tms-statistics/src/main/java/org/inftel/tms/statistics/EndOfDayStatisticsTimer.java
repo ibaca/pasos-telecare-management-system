@@ -36,13 +36,14 @@ public class EndOfDayStatisticsTimer {
 
         Calendar yesterday = Calendar.getInstance();
         yesterday.setTime(StatisticsDateUtil.getYesterday());
+        Date from = DAYLY.beginsAt(yesterday).getTime();
+        Date to = DAYLY.endsAt(yesterday).getTime();
 
         System.out.println("Timer event: " + new Date());
 
+
         // Generar estadisticas diarias de tipo de alertas recibidas ayer
         for (AlertType type : AlertType.values()) {
-            Date from = DAYLY.beginsAt(yesterday).getTime();
-            Date to = DAYLY.endsAt(yesterday).getTime();
             int statCount = alertFacade.countByType(type, from, to);
             String statName = "alert.type." + type.name().toLowerCase();
 
