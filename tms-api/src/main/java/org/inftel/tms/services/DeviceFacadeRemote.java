@@ -25,5 +25,5 @@ public interface DeviceFacadeRemote {
 
   int count();
 
-  public Device findByMobile(java.lang.String mobile);
+  public Device findByMobile(String mobile);
 }
