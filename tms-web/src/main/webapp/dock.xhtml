@@ -45,6 +45,7 @@ type="text/javascript"></script>
                         <h:outputText value="#{alert.affected.simpleName}" style="width:100px;white-space:nowrap;display:inline-block;" />
                         <h:outputText value="#{alert.cause}" style="width:275px;white-space:nowrap;display:inline-block;overflow: hidden;margin-right:5px;" />
                         <h:outputText value="#{alert.created}" style="width:198px;white-space:nowrap;display:inline-block;" />
+                        
                         <ppctu:commandLink>
                             <ppctu:commandButton value=">>" actionListener="#{tableBean.hide}" update="container" />
                             <f:setPropertyActionListener value="#{alert}" target="#{tableBean.selectedAlert}" /> 
@@ -105,7 +106,9 @@ type="text/javascript"></script>
                 </ppctu:tab>
                 
                 <ppctu:tab id="tab4" title="Contacs">  
-
+                   <ppctu:dataList value="#{tableBean.contacsOfSelectedAlert}" var="person" itemType="disc">  
+                        #{person.firstName}, #{person.lastName} : #{person.mobileNumber}  
+                    </ppctu:dataList>
                 </ppctu:tab>  
             </ppctu:tabView>  
             <br/><br/>
@@ -113,7 +116,7 @@ type="text/javascript"></script>
               
                 <center>
                     
-                    <ppctu:gmap center="36.890257,30.707417" zoom="13" type="HYBRID" model="#{mapBean.advancedModel}" style="width:600px;height:400px" />  
+                    <ppctu:gmap center="36.890257,30.707417" zoom="13" type="HYBRID" model="#{tableBean.advancedModel}" style="width:600px;height:400px" />  
                   <!--      <ppctu:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}"/>
                         
                     <ppctu:gmapInfoWindow>  

@@ -11,7 +11,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.inftel.tms.domain.Alert;
+import org.inftel.tms.domain.Person;
 import org.inftel.tms.services.AlertFacadeRemote;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 /**
  * 
@@ -77,13 +82,26 @@ public class TableBean implements Serializable {
     }
 
     public Alert getSelectedAlert() {
-        System.out.print("intentando obtener getSelect en " + this);
         return selectedAlert;
     }
 
     public void setSelectedAlert(Alert selectedAlert) {
-        System.out.print("se esta poniendo selected alert " + selectedAlert + " en " + this);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedAlert",selectedAlert);
         this.selectedAlert = selectedAlert;
     }
-
+    
+    public List<Person> getContacsOfSelectedAlert(){
+        return this.selectedAlert.getAffected().getAffected().getContacts();
+    }
+    
+    public MapModel getAdvancedModel() {
+        MapModel advancedModel = new DefaultMapModel();
+        for(Person p: selectedAlert.getAffected().getAffected().getContacts()){
+            LatLng coord = new LatLng(p.getLatitude(),p.getLongitude());
+            advancedModel.addOverlay(new Marker(coord, p.getFirstName(), "konyaalti.png",
+                    "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
+        }
+        
+        return advancedModel;
+    }
 }
