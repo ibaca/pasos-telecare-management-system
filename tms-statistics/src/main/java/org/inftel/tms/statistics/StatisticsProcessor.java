@@ -1,29 +1,42 @@
 package org.inftel.tms.statistics;
 
-import java.io.Serializable;
-import java.util.Calendar;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
+import static java.util.logging.Level.WARNING;
+import static java.util.logging.Logger.getLogger;
+import static org.inftel.tms.statistics.StatisticDataPeriod.ANNUAL;
+import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
+import static org.inftel.tms.statistics.StatisticDataPeriod.MONTHLY;
+
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.jms.*;
-import org.inftel.tms.domain.Alert;
-import org.inftel.tms.domain.Intervention;
-import static org.inftel.tms.statistics.StatisticDataPeriod.*;
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
+import javax.jms.Queue;
+import javax.jms.Session;
 
 /**
- * Debe sacar la informacion necesaria a traves de los metodos expuestos en el
- * interfaz remoto, y poner en la cola de estadisticas los valores concretos que
- * se quieran agregar.
- *
- * La decision de extraer las estadisticas de la entidad concreta (alert,
- * interventio, etc) podria hacerse cuando se lee de la cola.
+ * Debe sacar la informacion necesaria a traves de los metodos expuestos en el interfaz remoto, y
+ * poner en la cola de estadisticas los valores concretos que se quieran agregar.
+ * 
+ * La decision de extraer las estadisticas de la entidad concreta (alert, interventio, etc) podria
+ * hacerse cuando se lee de la cola.
  */
 @Stateless
-public class StatisticsProcessor implements StatisticsProcessorRemote {
+public class StatisticsProcessor implements StatisticsProcessorRemote, StatisticsProcessorLocal {
+
+    private final static Logger logger = getLogger(StatisticsProcessor.class.getName());
 
     @EJB
     private StatisticDataFacade statisticDataFacade;
@@ -33,27 +46,32 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
     private ConnectionFactory statisticsFactory;
 
     @Override
-    public void processAlert(Alert name) {
-    
-        StatisticData sd = new StatisticData();
-        
-        //TODO: ¿¿instanciar sd con los valores de la Alerta recibida??
-        //¿Cual es el tipo de la alarma a tratar? ¿y el valor? 
-        
-        try {
-            sendJMSMessageToStatistics(sd);
-        } catch (JMSException ex) {
-            Logger.getLogger(StatisticsProcessor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    
+    public void process(String name, Date date) {
+        process(name, date, 1);
     }
 
     @Override
-    public void processIntervention(Intervention intervention) {
+    public void process(String name, Date date, long samples) {
+        process(name, date, null, samples);
     }
 
-    private Message createJMSMessageForjmsStatistics(Session session, Serializable messageData) throws JMSException {
-        // TODO create and populate message to send
+    @Override
+    public void process(String name, Date date, double accumulated) {
+        process(name, date, accumulated, null);
+    }
+
+    @Override
+    public void process(String name, Date date, Double accumulated, Long samples) {
+        try {
+            // Crea una StatisticData temporal, es decir, sin periodo definido
+            sendJMSMessageToStatistics(new StatisticData(name, date, accumulated, samples));
+        } catch (JMSException ex) {
+            logger.log(WARNING, "fallo enviando estadistica a la cola de proceso", ex);
+        }
+    }
+
+    private Message createJMSMessageForjmsStatistics(Session session, Serializable messageData)
+            throws JMSException {
         ObjectMessage tm = session.createObjectMessage(messageData);
         return tm;
     }
@@ -71,7 +89,8 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
                 try {
                     session.close();
                 } catch (JMSException e) {
-                    Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Cannot close session", e);
+                    Logger.getLogger(this.getClass().getName()).log(Level.WARNING,
+                            "Cannot close session", e);
                 }
             }
             if (connection != null) {
@@ -79,8 +98,6 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
             }
         }
     }
-    
-    
 
     @Override
     public void updateStatistic(String statisticName, Calendar date, int value) {
@@ -92,8 +109,8 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
 
         // Si ayer fue un mes diferente
         if (today.get(MONTH) != date.get(MONTH)) {
-            int count = statisticDataFacade.sumStatictics(statisticName, DAYLY,
-                    MONTHLY.endsAt(date).getTime(), MONTHLY.beginsAt(date).getTime());
+            int count = statisticDataFacade.sumStatictics(statisticName, DAYLY, MONTHLY
+                    .endsAt(date).getTime(), MONTHLY.beginsAt(date).getTime());
             saveStatisticData(statisticName, MONTHLY, date, (long) count);
         }
 
@@ -115,9 +132,7 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
         sd.setDataCount(value);
 
         statisticDataFacade.create(sd);
-       
+
     }
-    
-    
-    
+
 }

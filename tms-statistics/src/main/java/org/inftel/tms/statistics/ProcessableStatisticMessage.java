@@ -27,7 +27,7 @@ import javax.jms.ObjectMessage;
 public class ProcessableStatisticMessage implements MessageListener {
 
     @EJB
-    private StatisticsProcessorRemote statisticsProcessor;
+    private StatisticsProcessorLocal statisticsProcessor;
 
     public ProcessableStatisticMessage() {
     }

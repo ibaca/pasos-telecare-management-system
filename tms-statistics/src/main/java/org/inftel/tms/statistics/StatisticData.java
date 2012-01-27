@@ -30,6 +30,7 @@ public class StatisticData implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Column(nullable = false)
     private StatisticDataPeriod periodType;
     @Temporal(TemporalType.TIMESTAMP)
     private Date periodDate;
@@ -45,6 +46,11 @@ public class StatisticData implements Serializable {
 
     public StatisticData(String name, StatisticDataPeriod period, Date date, Double sum) {
         this(name, period, date, sum, null);
+    }
+    
+    /** Este metodo crea estadisticas temporales, ya que el periodo es un campo obligatorio. */
+    public StatisticData(String name, Date date, Double sum, Long count) {
+        this(name, null, date, sum, count);
     }
 
     public StatisticData(String name, StatisticDataPeriod period, Date date, Double sum, Long count) {
