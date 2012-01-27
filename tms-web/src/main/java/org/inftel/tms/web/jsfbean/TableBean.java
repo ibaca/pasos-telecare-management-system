@@ -7,9 +7,12 @@ package org.inftel.tms.web.jsfbean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.inftel.tms.domain.Alert;
+import org.inftel.tms.services.AlertFacadeRemote;
 
 
 /**
@@ -21,6 +24,9 @@ public class TableBean implements Serializable {
     private List<Alert> alerts;    
     private Alert selectedAlert;
     private String intervention;
+    
+    @EJB
+    private AlertFacadeRemote alertFacade;
 
     public String getIntervention() {
         return intervention;
@@ -55,13 +61,7 @@ public class TableBean implements Serializable {
     }
     
     public List<Alert> getAlerts() {
-       // alerts=alertFacade.findActiveAlerts(); 
-        alerts = new ArrayList<Alert>();
-        Alert a = new Alert();
-        a.setId(new Long(123123));
-        a.setCause("asdfasdf");
-        alerts.add(a);
-        return alerts;
+        return alertFacade.findActiveAlerts(); 
     }
 
     public void setAlerts(List<Alert> alerts) {
