@@ -25,7 +25,7 @@ import org.inftel.tms.utils.StatisticsDateUtil;
 public class EndOfDayStatisticsTimer {
 
     @EJB
-    private StatisticsProcessorLocal statisticsProcessor;
+    private StatisticsProcessor statisticsProcessor;
     @EJB
     private AlertFacadeRemote alertFacade;
     @EJB

@@ -27,7 +27,7 @@ import javax.jms.ObjectMessage;
 public class ProcessableStatisticMessage implements MessageListener {
 
     @EJB
-    private StatisticsProcessorLocal statisticsProcessor;
+    private StatisticsProcessor statisticsProcessor;
 
     public ProcessableStatisticMessage() {
     }
@@ -41,6 +41,8 @@ public class ProcessableStatisticMessage implements MessageListener {
 
                 StatisticData sd = (StatisticData) content;
                 Calendar c = Calendar.getInstance();
+                
+                System.out.println(">>>>>>>>>>>>>>>>>>>" + statisticsProcessor);
                 
                 statisticsProcessor.updateStatistic(sd.getName(), c, sd.getDataSum().intValue());
 

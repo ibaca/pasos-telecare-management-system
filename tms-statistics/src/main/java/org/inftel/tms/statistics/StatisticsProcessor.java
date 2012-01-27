@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -37,7 +38,8 @@ import javax.jms.Session;
  * hacerse cuando se lee de la cola.
  */
 @Stateless
-public class StatisticsProcessor implements StatisticsProcessorRemote, StatisticsProcessorLocal {
+@LocalBean
+public class StatisticsProcessor implements StatisticsProcessorRemote {
 
     private final static Logger logger = getLogger(StatisticsProcessor.class.getName());
 
@@ -102,7 +104,6 @@ public class StatisticsProcessor implements StatisticsProcessorRemote, Statistic
         }
     }
 
-    @Override
     public void updateStatistic(String statisticName, Calendar date, int value) {
         // Se calcula el dia de hoy para comparar
         Calendar today = Calendar.getInstance();
