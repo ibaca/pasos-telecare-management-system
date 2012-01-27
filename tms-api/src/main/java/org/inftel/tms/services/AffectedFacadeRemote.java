@@ -2,7 +2,7 @@ package org.inftel.tms.services;
 
 import java.util.List;
 
-import javax.ejb.Remote;
+import javax.ejb.Local;
 
 import org.inftel.tms.domain.Affected;
 import org.inftel.tms.domain.AffectedType;
@@ -11,7 +11,7 @@ import org.inftel.tms.domain.AffectedType;
  * 
  * @author ibaca
  */
-@Remote
+@Local
 public interface AffectedFacadeRemote {
 
     void create(Affected affected);

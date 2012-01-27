@@ -2,6 +2,8 @@ package org.inftel.tms.services;
 
 import static org.inftel.tms.domain.Device.FIND_BY_MOBILE;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,11 +29,13 @@ public class DeviceFacade extends AbstractFacade<Device> implements DeviceFacade
     public DeviceFacade() {
         super(Device.class);
     }
-    
+
     @Override
     public Device findByMobile(String mobile) {
         TypedQuery<Device> query = em.createNamedQuery(FIND_BY_MOBILE, Device.class);
         query.setParameter("mobile", mobile);
-        return query.getSingleResult();
+        query.setMaxResults(1);
+        List<Device> result = query.getResultList();
+        return (result.size() > 0) ? result.get(0) : null;
     }
 }

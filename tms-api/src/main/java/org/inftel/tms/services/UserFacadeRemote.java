@@ -1,6 +1,8 @@
 package org.inftel.tms.services;
 
 import java.util.List;
+
+import javax.ejb.Local;
 import javax.ejb.Remote;
 import org.inftel.tms.domain.Device;
 import org.inftel.tms.domain.User;
@@ -9,7 +11,7 @@ import org.inftel.tms.domain.User;
  *
  * @author ibaca
  */
-@Remote
+@Local
 public interface UserFacadeRemote {
 
   void create(User user);

@@ -69,6 +69,23 @@ public class AlertTest {
     instance.setRaw(needed);
     
     tx.begin();
+    Person person = new Person();
+    person.setEmail("mail@mail.com");
+    Affected affected = new Affected();
+    affected.setData(person);
+    em.persist(person);
+    em.persist(affected);
+    tx.commit();
+    
+    tx.begin();
+    Device device = new Device();
+    device.setOwner(affected);
+    em.persist(device);
+    tx.commit();
+    
+    instance.setAffected(device.getOwner().getData());
+    
+    tx.begin();
     em.persist(needed);
     em.persist(instance);
     tx.commit();

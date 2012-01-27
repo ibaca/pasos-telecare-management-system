@@ -1,12 +1,12 @@
 package org.inftel.tms.devices;
 
-import javax.ejb.Remote;
+import javax.ejb.Local;
 
 /**
  *
  * @author ibaca
  */
-@Remote
+@Local
 public interface DeviceConnectorRemote {
 
   CharSequence processAlertMessage(String from, String message);
