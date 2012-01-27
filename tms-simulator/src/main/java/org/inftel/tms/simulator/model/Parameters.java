@@ -123,27 +123,19 @@ public class Parameters {
         int hour=calendar.get(Calendar.HOUR_OF_DAY);
         int minutes=calendar.get(Calendar.MINUTE);
         int seconds=calendar.get(Calendar.SECOND);
-        String yearString="";
-        String dayString="";
-        String monthString="";
-        String hourString="";
-        String minsString="";
-        String secsString="";
+        String yearString;
+        String dayString;
+        String monthString;
+        String hourString;
+        String minsString;
+        String secsString;
         
+        dayString   = StringUtils.leftPad(String.valueOf(day), 2,'0');
+        monthString = StringUtils.leftPad(String.valueOf(month), 2,'0');
+        hourString  = StringUtils.leftPad(String.valueOf(hour), 2,'0');
+        minsString  = StringUtils.leftPad(String.valueOf(minutes), 2,'0');
+        secsString  = StringUtils.leftPad(String.valueOf(seconds), 2,'0');        
         yearString = String.valueOf(year);
-        if(day<10)      dayString = String.format("%02d",day);
-            else        dayString = String.valueOf(day);
-        
-        if(month<10)    monthString = String.format("%02d",month);
-            else        monthString = String.valueOf(month);
-        
-        if(hour<10)     hourString = String.format("%02d",hour);
-            else        hourString = String.valueOf(hour);
-        
-        if(minutes<10)  minsString = String.format("%02d",minutes);
-            else        minsString =  String.valueOf(minutes);
-        if(seconds<10)  secsString = String.format("%02d",seconds);
-            else        secsString =  String.valueOf(seconds);
                 
         this.date = "&LD" + yearString + monthString + dayString;
         this.time = "&LH" + hourString + minsString + secsString;
