@@ -42,7 +42,7 @@ type="text/javascript"></script>
                         <h:outputText value="#{alert.type}" style="width:100px;white-space:nowrap;display:inline-block;" />
                         <h:outputText value="#{alert.priority}" style="width:100px;white-space:nowrap;display:inline-block;" />
                         <h:outputText value="#{alert.affected.simpleName}" style="width:100px;white-space:nowrap;display:inline-block;" />
-                        <h:outputText value="#{alert.cause}" style="width:280px;white-space:nowrap;display:inline-block;" />
+                        <h:outputText value="#{alert.cause}" style="width:275px;white-space:nowrap;display:inline-block;overflow: hidden;margin-right:5px;" />
                         <h:outputText value="#{alert.created}" style="width:198px;white-space:nowrap;display:inline-block;" />
                         
                         <ppctu:commandButton value="intervenir" actionListener="#{tableBean.hide}" update="container" /> 
