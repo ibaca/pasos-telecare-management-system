@@ -73,8 +73,8 @@
   <statistics id='2058' name='alert.type.user' periodtype='0' perioddate='2012-02-3' datacount='30'/>
   
   
-  <statistics id='2059' name='alert.process.time' periodtype='0' perioddate='2012-02-1' datacount='10' datasum='200'/>
-  <statistics id='2060' name='alert.process.time' periodtype='0' perioddate='2012-02-2' datacount='20' datasum='600'/>
+  <statistics id='2059' name='alert.reciverProcessTime' periodtype='0' perioddate='2012-02-27' datacount='10' dataSum='200'/>
+  <statistics id='2060' name='alert.reciverProcessTime' periodtype='0' perioddate='2012-02-28' datacount='20' dataSum='600'/>
     
   
   
