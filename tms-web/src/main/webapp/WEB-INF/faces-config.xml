@@ -2,10 +2,7 @@
 
 <!-- =========== FULL CONFIGURATION FILE ================================== -->
 
-<faces-config version="2.0"
-              xmlns="http://java.sun.com/xml/ns/javaee" 
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
   <application>
     <resource-bundle>
       <base-name>/tms-bundle</base-name>
@@ -15,35 +12,15 @@
       <default-locale>en</default-locale>
     </locale-config>
   </application>
-    <managed-bean>
-        <managed-bean-name>loginBean</managed-bean-name>
-        <managed-bean-class>org.inftel.tms.web.jsfbean.LoginBean</managed-bean-class>
-    
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
-    <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>bad-login</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>success-login</from-outcome>
-            <to-view-id>/dock.xhtml</to-view-id>
-        </navigation-case>
-   </navigation-rule>
-    <managed-bean>
-        <managed-bean-name>tableBean</managed-bean-name>
-        <managed-bean-class>org.inftel.tms.web.jsfbean.TableBean</managed-bean-class>
-    
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
-    <managed-bean>
-        <managed-bean-name>chatController</managed-bean-name>
-        <managed-bean-class>org.inftel.tms.web.jsfbean.ChatController</managed-bean-class>
-    
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
-    <managed-bean>
-        <managed-bean-name>mapBean</managed-bean-name>
-        <managed-bean-class>org.inftel.tms.web.jsfbean.MapBean</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
-    </managed-bean>
+  <navigation-rule>
+    <from-view-id>/index.xhtml</from-view-id>
+    <navigation-case>
+      <from-outcome>bad-login</from-outcome>
+      <to-view-id>/index.xhtml</to-view-id>
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>success-login</from-outcome>
+      <to-view-id>/dock.xhtml</to-view-id>
+    </navigation-case>
+  </navigation-rule>
 </faces-config>
