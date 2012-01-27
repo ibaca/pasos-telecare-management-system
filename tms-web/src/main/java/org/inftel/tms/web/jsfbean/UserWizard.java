@@ -4,21 +4,19 @@
  */
 package org.inftel.tms.web.jsfbean;
 
-import java.awt.event.ActionEvent;
-import java.util.Set;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
 import org.inftel.tms.domain.Affected;
 import org.inftel.tms.domain.Device;
 import org.inftel.tms.domain.Person;
-import org.inftel.tms.domain.User;
 import org.inftel.tms.services.AffectedFacadeRemote;
 import org.inftel.tms.services.DeviceFacadeRemote;
 import org.inftel.tms.services.PeopleFacadeRemote;
@@ -61,7 +59,7 @@ public class UserWizard {
         d=new Device();
         d.setMobileNumber(Mobilenumber);
         a.setData(p);
-        Set<Device> lista = null;
+        List<Device> lista = null;
         lista.add(d);
         a.setDevices(lista);
         //Creamos los dos nuevos objetos
