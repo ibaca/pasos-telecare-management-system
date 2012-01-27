@@ -29,8 +29,11 @@ import org.eclipse.persistence.internal.jpa.EntityManagerImpl;
 public class StartupApplication {
 
   private static final Logger log = Logger.getLogger(StartupApplication.class.getName());
+  
   @PersistenceContext(unitName = "tms-persistence")
   private EntityManager em;
+  
+  private String dataSet = "sample-dataset.xml";
 
   public StartupApplication() {
   }
@@ -46,20 +49,25 @@ public class StartupApplication {
       }
       IDatabaseConnection connection = new DatabaseConnection(wrap);
       FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
-      IDataSet dataset = builder.build(Thread.currentThread().getContextClassLoader().getResourceAsStream("sample-dataset.xml"));
+      IDataSet dataset = builder.build(Thread.currentThread().getContextClassLoader().getResourceAsStream(getDataSet()));
       DatabaseOperation.CLEAN_INSERT.execute(connection, dataset);
     } catch (Exception e) {
       log.log(Level.WARNING, "fallo mientras se intentaba añadir datos iniciales al modelo", e);
     }
   }
 
-  /**
+  private String getDataSet() {
+    return dataSet;
+}
+
+/**
    * Constructor interno usado en los test.
    *
    * @param em gestor de entidades
    */
-  StartupApplication(EntityManager em) {
+  StartupApplication(EntityManager em, String dataSet) {
     this.em = em;
+    this.dataSet = dataSet;
     populateData(); // Imitate PostConstruct
   }
 }

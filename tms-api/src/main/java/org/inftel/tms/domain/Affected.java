@@ -42,7 +42,7 @@ public class Affected extends BaseEntity {
     @OneToOne(fetch = FetchType.EAGER)
     private Person data;
     @OneToMany(mappedBy = "owner")
-    private Set<Device> devices;
+    private List<Device> devices;
     private AffectedType type;
 
     public List<Person> getContacts() {
@@ -53,7 +53,7 @@ public class Affected extends BaseEntity {
         return data;
     }
 
-    public Set<Device> getDevices() {
+    public List<Device> getDevices() {
         return devices;
     }
 
@@ -69,7 +69,7 @@ public class Affected extends BaseEntity {
         this.data = data;
     }
 
-    public void setDevices(Set<Device> devices) {
+    public void setDevices(List<Device> devices) {
         this.devices = devices;
     }
 

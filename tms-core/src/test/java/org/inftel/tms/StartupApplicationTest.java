@@ -34,7 +34,7 @@ public class StartupApplicationTest {
     em = emf.createEntityManager();
     connection = new DatabaseConnection(((EntityManagerImpl) (em.getDelegate())).getServerSession().getAccessor().getConnection());
     FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
-    dataset = builder.build(Thread.currentThread().getContextClassLoader().getResourceAsStream("sample-dataset.xml"));
+    dataset = builder.build(Thread.currentThread().getContextClassLoader().getResourceAsStream("startup-test-dataset.xml"));
   }
 
   @AfterClass
@@ -53,8 +53,8 @@ public class StartupApplicationTest {
 
   @Test
   public void testCount() throws Exception {
-    @SuppressWarnings("unused")
-    StartupApplication service = new StartupApplication(em); // Puebla la tabla
+    @SuppressWarnings("unused")  // Al crear la instancia se puebla la tabla
+    StartupApplication service = new StartupApplication(em, "startup-test-dataset.xml");
     ITable table = connection.createQueryTable("alerts", "select * from alerts");
     assertEquals(5, table.getRowCount());
   }
