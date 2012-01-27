@@ -2,87 +2,70 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ppctu="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-  <h:head>
-    <title>Telecare Alarm Center</title>
-    <link href="#{request.contextPath}/resources/img/favicon.ico" rel="shortcut icon" />    
-  <h:outputStylesheet name="css/mainstyle.css"/>
-  </h:head>
-  <h:body>
-      <div id="head">
+      xmlns:ppctu="http://primefaces.org/ui">
+    <h:head>
+        <title>Telecare Alarm Center</title>
+        <link href="#{request.contextPath}/resources/img/favicon.ico" rel="shortcut icon" />    
+        <h:outputStylesheet name="css/mainstyle.css"/>
+    </h:head>
+    <h:body>
+        <div id="head">
             <div class="contenedor960">
                 <span> Telecare Alarm Center </span>
             </div> <!-- fin contenedor960 -->
         </div> <!-- fin menu -->
-        
-    <ppctu:growl id="growl" showDetail="true" life="3000" />         
-    <div id="tableList" class="contenedor960">     
-          <h:form>  
-  
-    <ppctu:growl id="growl" sticky="true" showDetail="true"/>  
-  
-    <ppctu:wizard widgetVar="wiz"  
-                  flowListener="#{userWizard.onFlowProcess(event)}">  
-      
-        <ppctu:tab title="Informacion Personal" id="personal">  
 
-            <ppctu:panel header="Personal Details">  
-                <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
-                    <h:outputLabel value="#{bundle.CreateUserLabel_name}" for="name" />
-                    <ppctu:inputText id="name" value="#{userController.selected.fullName}" title="#{bundle.CreateUserTitle_name}" />
-                    <h:outputLabel value="#{bundle.CreateUserLabel_password}" for="password" />
-                    <ppctu:password feedback="true" minLength="5" id="password" value="#{userController.selected.password}" title="#{bundle.CreateUserTitle_password}" />
-                    <h:outputLabel value="#{bundle.CreateUserLabel_userRole}" for="userRole" />
-                    <ppctu:inputText id="userRole" value="#{userController.selected.userRole}" title="#{bundle.CreateUserTitle_userRole}" />
-                    <h:outputLabel value="#{bundle.CreateUserLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{userController.selected.id}" title="#{bundle.CreateUserTitle_id}" />
-                </h:panelGrid>
-            </ppctu:panel>  
-        </ppctu:tab>  
-              
-        <ppctu:tab title="Direccion" id="address">  
-            <ppctu:panel header="Adress Details">  
-              
-                
-            </ppctu:panel>  
-        </ppctu:tab>  
-              
-        <ppctu:tab title="contact" id="contact">  
-            <ppctu:panel header="Contact Information">  
-                  
-                 
-            </ppctu:panel>  
-        </ppctu:tab>  
-              
-        <ppctu:tab title="confirm" id="confirm">  
-            <ppctu:panel header="Confirmation">  
-              
-                  
-                <ppctu:commandButton value="Submit" update="growl"   
-                            actionListener="#{userWizard.save}"/>  
-              
-            </ppctu:panel>  
-        </ppctu:tab>  
-          
-    </ppctu:wizard>  
-      
-</h:form> 
-    </div> <!-- fin contenedor960 -->  
-        
-        
-        
-        
-        
-        
-<ppctu:dock>  
-    <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="#"/>  
-    <ppctu:menuitem value="Email" icon="./resources/img/dock/email.png" url="#"/>  
-    <ppctu:menuitem value="Portfolio" icon="./resources/img/dock/portfolio.png" url="#"/>  
-    <ppctu:menuitem value="RSS" icon="./resources/img/dock/rss.png" url="#"/>  
-    <ppctu:menuitem value="History" icon="./resources/img/dock/history.png" url="#"/>  
-</ppctu:dock> 
-</h:body>
+        <ppctu:growl id="growl" showDetail="true" life="3000" />         
+        <div id="tableList" class="contenedor960">     
+
+            <h:form id="register">
+                <ppctu:wizard>
+                    <ppctu:tab title="Datos publicos">
+                        <ppctu:panel id="panel1" header="Personal">
+                            <h:panelGrid>
+                                <h:outputText value="Firstname: " />
+                                <h:inputText value="#{UserWizard.Firstname}"/>
+                                <h:outputText value="Lastname: " />
+                                <h:inputText value="#{UserWizard.Lastname}"/>
+                            </h:panelGrid>
+                        </ppctu:panel>
+                    </ppctu:tab>
+                    <ppctu:tab title="Datos contacto">
+                        <ppctu:panel id="panel2" header="Contacto">
+                            <h:panelGrid>
+                                <h:outputText value="Email: " />
+                                <h:inputText value="#{UserWizard.email}"/>
+                            </h:panelGrid>
+                        </ppctu:panel>
+                    </ppctu:tab>
+                    <ppctu:tab title="Datos Device">
+                        <ppctu:panel id="panel3" header="Dispositivo asociado">
+                            <h:panelGrid>
+                                <h:outputText value="MobileNumber " />
+                                <h:inputText value="#{UserWizard.Mobilenumber}"/>
+                            </h:panelGrid>
+                        </ppctu:panel>
+                    </ppctu:tab>
+                    
+                </ppctu:wizard>
+                <ppctu:commandButton value="Submit" actionListener="#{userWizard.save}"/>
+            </h:form>
+
+        </div> <!-- fin contenedor960 -->  
+
+
+
+
+
+
+        <ppctu:dock>  
+            <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="#"/>  
+            <ppctu:menuitem value="Email" icon="./resources/img/dock/email.png" url="#"/>  
+            <ppctu:menuitem value="Portfolio" icon="./resources/img/dock/portfolio.png" url="#"/>  
+            <ppctu:menuitem value="RSS" icon="./resources/img/dock/rss.png" url="#"/>  
+            <ppctu:menuitem value="History" icon="./resources/img/dock/history.png" url="#"/>  
+        </ppctu:dock> 
+    </h:body>
 
 
 </html>
