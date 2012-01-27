@@ -2,12 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ppctu="http://primefaces.org/ui" 
+      xmlns:ppctu="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
   <h:head>
     <title>Telecare Alarm Center</title>
     <link href="#{request.contextPath}/resources/img/favicon.ico" rel="shortcut icon" />    
   <h:outputStylesheet name="css/mainstyle.css"/>
+  <script src="http://maps.google.com/maps/api/js?sensor=true"
+type="text/javascript"></script>
   </h:head>
   <h:body>
       <div id="head">
@@ -16,61 +18,110 @@
             </div> <!-- fin contenedor960 -->
         </div> <!-- fin menu -->
         
-    <ppctu:growl id="growl" showDetail="true" life="3000" />         
+        
     <div class="contenedor960">
+        
         <ppctu:fieldset id="container" legend="Telecare Alarm Center: Administration"> 
         <h:panelGroup rendered="#{tableBean.show}" >
-        <h:form id="form"> 
-            <ppctu:dataList value="#{tableBean.alerts}" var="alert"  
-                paginator="true" rows="5" effectSpeed="fast"  
-                paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                rowsPerPageTemplate="5,10,15">  
+            <h:form> 
+                <ppctu:dataList value="#{tableBean.alerts}" var="alert"  
+                    paginator="true" rows="5" effectSpeed="fast"  
+                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                    rowsPerPageTemplate="5,10,15">  
 
-                <f:facet name="header">  
-                    Active Alerts  
-                </f:facet>  
+                    <f:facet name="header">  
+                        Active Alerts  
+                    </f:facet>  
 
-                <ppctu:column>  
-                    <ppctu:commandLink update=":form:alertDetail" oncomplete="alertDialog.show()" title="View Detail">  
-                        <ppctu:graphicImage value="./resources/img/search.png"/>   
-                        <f:setPropertyActionListener value="#{alert}" target="#{tableBean.selectedAlert}" />  
-                    </ppctu:commandLink>
-                    
-                    <h:outputText value="#{alert.created}, #{alert.id}" style="margin-left:10px; margin-right: 10px" /> 
-                    
-                    <ppctu:commandButton value=">>" actionListener="#{tableBean.hide}" update="container" /> 
-                </ppctu:column>  
-            </ppctu:dataList>  
+                    <ppctu:column>  
+                        <ppctu:commandLink update=":form:alertDetail" oncomplete="alertDialog.show()" title="View Detail">  
+                            <ppctu:graphicImage value="./resources/img/search.png"/>   
+                            <f:setPropertyActionListener value="#{alert}" target="#{tableBean.selectedAlert}" />  
+                        </ppctu:commandLink>
+
+                        <h:outputText value="#{alert.created}, #{alert.id}" style="margin-left:10px; margin-right: 10px" /> 
+
+                        <ppctu:commandButton value=">>" actionListener="#{tableBean.hide}" update="container" /> 
+                    </ppctu:column>  
+                </ppctu:dataList>  
 
 
-            <ppctu:dialog header="alert Detail" widgetVar="alertDialog" modal="true" showEffect="fade">  
-                <ppctu:outputPanel id="alertDetail" style="text-align:center;" layout="block">  
-                    <ppctu:graphicImage value="/images/alerts/#{tableBean.selectedAlert.affected}.jpg"/>  
-                    <h:panelGrid  columns="2" cellpadding="5">  
-                        <h:outputLabel for="name" value="Nombre: " />  
-                        <h:outputText id="name" value="#{tableBean.selectedAlert.affected.firstName}, #{tableBean.selectedAlert.affected.lastName}" />  
+                <ppctu:dialog header="alert Detail" widgetVar="alertDialog" modal="true" showEffect="fade">  
+                    <ppctu:outputPanel id="alertDetail" style="text-align:center;" layout="block">  
+                        <ppctu:graphicImage value="/images/alerts/#{tableBean.selectedAlert.affected}.jpg"/>  
+                        <h:panelGrid  columns="2" cellpadding="5">  
+                            <h:outputLabel for="name" value="Nombre: " />  
+                            <h:outputText id="name" value="#{tableBean.selectedAlert.affected.firstName}, #{tableBean.selectedAlert.affected.lastName}" />  
 
-                        <h:outputLabel for="email" value="E-mail: " />  
-                        <h:outputText id="email" value="#{tableBean.selectedAlert.affected.email}" />  
+                            <h:outputLabel for="email" value="E-mail: " />  
+                            <h:outputText id="email" value="#{tableBean.selectedAlert.affected.email}" />  
 
-                        <h:outputLabel for="number" value="Mobile Number: " />  
-                        <h:outputText id="number" value="#{tableBean.selectedAlert.affected.mobileNumber}"/>  
+                            <h:outputLabel for="number" value="Mobile Number: " />  
+                            <h:outputText id="number" value="#{tableBean.selectedAlert.affected.mobileNumber}"/>  
+                        </h:panelGrid>  
+                    </ppctu:outputPanel>  
+                </ppctu:dialog> 
+
+            </h:form> 
+        </h:panelGroup> <!-- END OF THE FIRST PANEL GROUP -->
+        <ppctu:growl id="growl" showDetail="true"/>
+        <h:panelGroup rendered="#{!tableBean.show}">
+            <ppctu:tabView effect="Fade" effectDuration="normal">  
+                <ppctu:tab title="Godfather Part I">  
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <ppctu:graphicImage value="/images/godfather/godfather1.jpg" />  
+                        <h:outputText  
+                            value="The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding.  
+                            His beloved son Michael has just come home from the war, but does not intend to become part of his father's business. T  
+                            hrough Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give respect,  
+                            but given to ruthless violence whenever anything stands against the good of the family." />  
                     </h:panelGrid>  
-                </ppctu:outputPanel>  
-            </ppctu:dialog> 
+                </ppctu:tab>  
 
-        </h:form> 
+                <ppctu:tab title="Godfather Part II">  
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <ppctu:graphicImage value="/images/godfather/godfather2.jpg" />  
+                        <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.  
+                        In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,  
+                        killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."/>  
+                    </h:panelGrid>  
+                </ppctu:tab>  
+
+                <ppctu:tab title="Godfather Part III">  
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <ppctu:graphicImage value="/images/godfather/godfather3.jpg" />  
+                        <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.  
+                            Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate."/>  
+                    </h:panelGrid>  
+                </ppctu:tab>  
+
+            </ppctu:tabView> 
+            <br/><br/>
+    
+            <h:form>  
+                <center>
+                    <ppctu:gmap center="36.890257,30.707417" zoom="13" type="HYBRID" model="#{mapBean.advancedModel}" style="width:600px;height:400px" />  
+                  <!--      <ppctu:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}"/>
+                        
+                    <ppctu:gmapInfoWindow>  
+                        <ppctu:outputPanel style="text-align:center;display:block;margin:auto:">  
+                                <ppctu:graphicImage value="./resources/img/dock/#{mapBean.marker.data}" height="150"/>  
+                                <br/>  
+                                <h:outputText value="#{mapBean.marker.title}" />  
+                        </ppctu:outputPanel>  
+                    </ppctu:gmapInfoWindow>
+                    </ppctu:gmap></center> -->
+                <br/><br/>
+                <h:outputText value="Intervention: "/> 
+                <ppctu:inputTextarea value="#{tableBean.intervention}"  required="true"/>
+                <br/>
+                <ppctu:commandButton value="Done" actionListener="#{tableBean.hide}" update="container, container:growl"/></center>
+            </h:form>
         </h:panelGroup>
-            
-            
-        </ppctu:fieldset>
+        
+        </ppctu:fieldset><!-- END OF THE SECOND PANEL GROUP -->
     </div> <!-- fin contenedor960 -->  
-        
-        
-        
-        
-        
-        
+              
 <ppctu:dock>  
     <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="./dock.xhtml"/>  
     <ppctu:menuitem value="Email" icon="./resources/img/dock/email.png" url="#"/>  

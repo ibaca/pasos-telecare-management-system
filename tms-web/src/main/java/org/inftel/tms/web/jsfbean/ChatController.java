@@ -63,7 +63,7 @@ public class ChatController implements Serializable {
         else {  
             users.add(username);  
             loggedIn = true;  
-              
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username taken", "Try with another username."));   
             requestContext.push(CHANNEL, username + " joined the channel.");  
         }  
     }  

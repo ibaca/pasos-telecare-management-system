@@ -2,7 +2,16 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <!-- <param-value>Development</param-value> -->
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+            <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+            <param-value>true</param-value>
+    </context-param>
+    <context-param>
+            <param-name>javax.faces.CONFIG_FILES</param-name>
+            <param-value>/WEB-INF/faces-config.xml</param-value>
     </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -14,12 +23,12 @@
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>Comet Servlet</servlet-name>
-        <servlet-class>org.primefaces.comet.PrimeFacesCometServlet</servlet-class>
+            <servlet-name>Resource Servlet</servlet-name>
+            <servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Comet Servlet</servlet-name>
-        <url-pattern>/primefaces_comet/*</url-pattern>
+            <servlet-name>Resource Servlet</servlet-name>
+            <url-pattern>/primefaces_resource/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

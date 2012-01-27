@@ -5,21 +5,31 @@
 package org.inftel.tms.web.jsfbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import org.inftel.tms.domain.Alert;
-import org.inftel.tms.services.AlertFacadeRemote;
+
 
 /**
  *
  * @author inftel
  */
 public class TableBean implements Serializable {
-    @EJB
-    private AlertFacadeRemote alertFacade;
     private boolean show=true;
     private List<Alert> alerts;    
     private Alert selectedAlert;
+    private String intervention;
+
+    public String getIntervention() {
+        return intervention;
+    }
+
+    public void setIntervention(String intervention) {
+        this.intervention = intervention;
+    }
+    
     
     public TableBean() {}
 
@@ -32,15 +42,25 @@ public class TableBean implements Serializable {
     }
     
     public void hide(){
-        this.show=false;
-    }
-    
-    public void unHide(){
-        this.show=true;
+        FacesMessage msg;
+        if(show){
+            msg=new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected Alert", "Intervention opened");
+            this.show=false;
+        }else{
+            //GUARDAR INTERVENCION
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected Alert", "Intervention closed");
+            this.show=true;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg); 
     }
     
     public List<Alert> getAlerts() {
-        alerts=alertFacade.findActiveAlerts(); 
+       // alerts=alertFacade.findActiveAlerts(); 
+        alerts = new ArrayList<Alert>();
+        Alert a = new Alert();
+        a.setId(new Long(123123));
+        a.setCause("asdfasdf");
+        alerts.add(a);
         return alerts;
     }
 
