@@ -31,22 +31,30 @@
                         </ppctu:panel>
                     </ppctu:tab>
                     <ppctu:tab title="Datos contacto">
-                        <ppctu:panel id="panel2" header="Contacto">
+                        <ppctu:panel id="panel2" header="Contacto y dispositivo">
                             <h:panelGrid>
                                 <h:outputText value="Email: " />
                                 <h:inputText value="#{UserWizard.email}"/>
-                            </h:panelGrid>
-                        </ppctu:panel>
-                    </ppctu:tab>
-                    <ppctu:tab title="Datos Device">
-                        <ppctu:panel id="panel3" header="Dispositivo asociado">
-                            <h:panelGrid>
                                 <h:outputText value="MobileNumber " />
                                 <h:inputText value="#{UserWizard.Mobilenumber}"/>
                             </h:panelGrid>
                         </ppctu:panel>
                     </ppctu:tab>
-                    
+                    <!--<ppctu:tab title="Datos Device">
+                        <ppctu:panel id="panel3" header="Validacion">
+                            <h:panelGrid>
+                                <ppctu:captcha>
+                                    <ppctu:messages showDetail="true"/>  
+
+                                    <ppctu:captcha label="Captcha"/>  
+
+                                    <ppctu:commandButton value="Check" ajax="false"  
+                                                         actionListener="#{captchaBean.submit}" /> 
+                                </ppctu:captcha>
+                            </h:panelGrid>
+                        </ppctu:panel>
+                    </ppctu:tab>-->
+
                 </ppctu:wizard>
                 <ppctu:commandButton value="Submit" actionListener="#{userWizard.save}"/>
             </h:form>
