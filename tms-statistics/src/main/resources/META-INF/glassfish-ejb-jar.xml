@@ -3,7 +3,7 @@
 <glassfish-ejb-jar>
   <enterprise-beans>
     <ejb>
-      <ejb-name>StatisticsProcessor</ejb-name>
+      <ejb-name>StatisticProcessor</ejb-name>
       <resource-ref>
         <res-ref-name>jms/statisticsFactory</res-ref-name>
         <jndi-name>jms/statisticsFactory</jndi-name>

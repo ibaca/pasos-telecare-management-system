@@ -43,7 +43,7 @@ import javax.jms.Session;
  */
 @Stateless
 @LocalBean
-public class StatisticProcessor implements StatisticsProcessorRemote {
+public class StatisticProcessor implements StatisticProcessorRemote {
 
     private final static Logger logger = getLogger(StatisticProcessor.class.getName());
     @EJB

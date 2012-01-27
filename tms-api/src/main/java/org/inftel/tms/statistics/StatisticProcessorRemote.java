@@ -13,7 +13,7 @@ import javax.ejb.Remote;
  * @author ibaca
  */
 @Remote
-public interface StatisticsProcessorRemote {
+public interface StatisticProcessorRemote {
 
     /**
      * Envia a procesar una estadistica. Por ejemplo, si se quiere almacenar el tiempo de procesado
@@ -26,7 +26,7 @@ public interface StatisticsProcessorRemote {
      * 
      * Este metodo registra una única muestra, si se quiere registrar varias muestras simultaneas
      * debe llamarse al metodo
-     * {@link StatisticsProcessor#queueStatistic(String, Calendar, int, double)}.
+     * {@link StatisticProcessor#queueStatistic(String, Calendar, int, double)}.
      * 
      * @param name
      *            del valor estadistico en nomenclatura similar a paquetes java
@@ -48,7 +48,7 @@ public interface StatisticsProcessorRemote {
      * 
      * Este metodo registra una única muestra, si se quiere registrar varias muestras simultaneas
      * debe llamarse al metodo
-     * {@link StatisticsProcessor#queueStatistic(String, Calendar, int, double)}.
+     * {@link StatisticProcessor#queueStatistic(String, Calendar, int, double)}.
      * 
      * @param name
      *            del valor estadistico en nomenclatura similar a paquetes java

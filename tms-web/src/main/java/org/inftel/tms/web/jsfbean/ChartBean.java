@@ -23,7 +23,7 @@ import org.inftel.tms.domain.AffectedType;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AffectedFacadeRemote;
 import org.inftel.tms.statistics.StatisticDataPeriod;
-import org.inftel.tms.statistics.StatisticsProcessorRemote;
+import org.inftel.tms.statistics.StatisticProcessorRemote;
 import org.primefaces.component.calendar.CalendarUtils;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.LineChartSeries;
@@ -37,7 +37,7 @@ public class ChartBean implements Serializable {
     @EJB
     private AffectedFacadeRemote affectedFacade;
     @EJB
-    private StatisticsProcessorRemote statistics;
+    private StatisticProcessorRemote statistics;
 
     private PieChartModel affectedsModel;
 

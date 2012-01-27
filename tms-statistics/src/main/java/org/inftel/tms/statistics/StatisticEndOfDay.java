@@ -24,7 +24,7 @@ import org.inftel.tms.utils.StatisticsDateUtil;
 public class StatisticEndOfDay {
 
     @EJB
-    private StatisticProcessor statisticsProcessor;
+    private StatisticProcessor statisticProcessor;
     @EJB
     private AlertFacadeRemote alertFacade;
     @EJB
@@ -45,7 +45,7 @@ public class StatisticEndOfDay {
         Date to = DAYLY.endsAt(yesterday).getTime();
 
         generateEndOfDayStatistics(yesterday, from, to);
-        statisticsProcessor.updatePeriodsForAllStatistics();
+        statisticProcessor.updatePeriodsForAllStatistics();
 
     }
 
@@ -56,7 +56,7 @@ public class StatisticEndOfDay {
             String statName = "alert.type." + type.name().toLowerCase();
 
             StatisticData data = new StatisticData(statName, yesterday.getTime(), null, statCount);
-            statisticsProcessor.updateDaylyStatistic(data);
+            statisticProcessor.updateDaylyStatistic(data);
         }
 
         // Generar estadisticas diarias de tipo de afectados registrados en el sistema
@@ -65,7 +65,7 @@ public class StatisticEndOfDay {
             String statName = "affected.type." + type.name().toLowerCase();
 
             StatisticData data = new StatisticData(statName, yesterday.getTime(), null, statCount);
-            statisticsProcessor.updateDaylyStatistic(data);
+            statisticProcessor.updateDaylyStatistic(data);
         }
     }
 }

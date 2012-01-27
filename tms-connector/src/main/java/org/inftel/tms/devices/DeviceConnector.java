@@ -24,7 +24,7 @@ import org.inftel.tms.domain.Person;
 import org.inftel.tms.services.AlertFacadeRemote;
 import org.inftel.tms.services.AlertRawFacadeRemote;
 import org.inftel.tms.services.DeviceFacadeRemote;
-import org.inftel.tms.statistics.StatisticsProcessorRemote;
+import org.inftel.tms.statistics.StatisticProcessorRemote;
 
 /**
  * Se encarga de la comunicacion entre los dispositivos y el servidor. Su principal funcion es la de
@@ -56,7 +56,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
     private AlertRawFacadeRemote alertRawFacade;
 
     @EJB
-    private StatisticsProcessorRemote statisticsProcessor;
+    private StatisticProcessorRemote statisticProcessor;
 
     private static final String key = "&RK123456";
     private static final String call = "&RV1911234567";
@@ -190,7 +190,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
             return internalProcessAlert(from, message, raw);
         } finally {
             time = System.currentTimeMillis() - time;
-            statisticsProcessor.process("alert.reciverProcessTime", new Date(), time);
+            statisticProcessor.process("alert.reciverProcessTime", new Date(), time);
         }
     }
 
@@ -281,10 +281,10 @@ public class DeviceConnector implements DeviceConnectorRemote {
 
     // Internal Test Usage
     DeviceConnector(AlertFacadeRemote alertFacade, AlertRawFacadeRemote alertRawFacade,
-            DeviceFacadeRemote deviceFacade, StatisticsProcessorRemote statisticProcessor) {
+            DeviceFacadeRemote deviceFacade, StatisticProcessorRemote statisticProcessor) {
         this.alertFacade = alertFacade;
         this.alertRawFacade = alertRawFacade;
         this.deviceFacade = deviceFacade;
-        this.statisticsProcessor = statisticProcessor;
+        this.statisticProcessor = statisticProcessor;
     }
 }

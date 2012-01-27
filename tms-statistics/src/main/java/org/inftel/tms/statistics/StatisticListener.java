@@ -32,7 +32,7 @@ public class StatisticListener implements MessageListener {
     private static final Logger logger = getLogger(StatisticListener.class.getName());
     
     @EJB
-    private StatisticProcessor statisticsProcessor;
+    private StatisticProcessor statisticProcessor;
 
     public StatisticListener() {
     }
@@ -44,7 +44,7 @@ public class StatisticListener implements MessageListener {
             Object content = ((ObjectMessage) message).getObject();
             if (content instanceof StatisticData) {
                 logger.log(FINE, "mensaje recibido: " + content);
-                statisticsProcessor.updateDaylyStatistic((StatisticData) content);
+                statisticProcessor.updateDaylyStatistic((StatisticData) content);
             } else {
                 logger.log(WARNING, "mensaje recibido de tipo desconocido: " + content);
             }
