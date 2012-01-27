@@ -1,9 +1,12 @@
 package org.inftel.tms.statistics;
 
-import java.util.Calendar;
+import static java.util.logging.Level.FINE;
+import static java.util.logging.Level.WARNING;
+import static java.util.logging.Logger.getLogger;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
+
 import javax.annotation.PreDestroy;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
@@ -24,32 +27,30 @@ import javax.jms.ObjectMessage;
     @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
-public class ProcessableStatisticMessage implements MessageListener {
+public class StatisticListener implements MessageListener {
 
+    private static final Logger logger = getLogger(StatisticListener.class.getName());
+    
     @EJB
-    private StatisticsProcessor statisticsProcessor;
+    private StatisticProcessor statisticsProcessor;
 
-    public ProcessableStatisticMessage() {
+    public StatisticListener() {
     }
 
+    /** Delega el procesado de los mensajes a StatisticProcessor. */
     @Override
     public void onMessage(Message message) {
-
         try {
             Object content = ((ObjectMessage) message).getObject();
             if (content instanceof StatisticData) {
-
-                StatisticData sd = (StatisticData) content;
-                Calendar c = Calendar.getInstance();
-                c.setTime(sd.getPeriodDate());
-                
-                statisticsProcessor.updateRealTimeStatistic(sd.getName(), c, sd.getDataSum());
-
+                logger.log(FINE, "mensaje recibido: " + content);
+                statisticsProcessor.updateDaylyStatistic((StatisticData) content);
+            } else {
+                logger.log(WARNING, "mensaje recibido de tipo desconocido: " + content);
             }
         } catch (JMSException ex) {
-            Logger.getLogger(ProcessableStatisticMessage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StatisticListener.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @PreDestroy

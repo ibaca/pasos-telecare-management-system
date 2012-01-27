@@ -55,12 +55,12 @@ public class AlertFacade extends AbstractFacade<Alert> implements AlertFacadeRem
     }
 
     @Override
-    public int countByType(AlertType type, Date fromDate, Date toDate) {
+    public Long countByType(AlertType type, Date fromDate, Date toDate) {
         TypedQuery<Long> query = em.createNamedQuery(Alert.COUNT_BY_TYPE, Long.class);
         query.setParameter("type", type);
         query.setParameter("fromDate", fromDate);
         query.setParameter("toDate", toDate);
-        return query.getSingleResult().intValue();
+        return query.getSingleResult();
     }
 
     // Internal test usage

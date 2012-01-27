@@ -3,6 +3,7 @@ package org.inftel.tms.statistics;
 import static org.inftel.tms.statistics.StatisticDataPeriod.ANNUAL;
 import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -128,10 +129,10 @@ public class StatisticsDataFacadeTest {
         System.out.println("First date: " + firstDay.getTime() + "=" + firstDay);
         System.out.println("Last date: " + lastDay.getTime() + "=" + lastDay);
 
-        int sum = service.sumStatictics("alert.type." + AlertType.USER.name().toLowerCase(), DAYLY,
-                firstDay, lastDay);
+        Map<String, BigDecimal> result = service.sumStatictics("alert.type."
+                + AlertType.USER.name().toLowerCase(), DAYLY, firstDay, lastDay);
 
-        Assert.assertEquals(60, sum);
+        Assert.assertEquals(60, result.get("count").longValue());
 
     }
 
@@ -142,14 +143,15 @@ public class StatisticsDataFacadeTest {
         calendar.setTimeInMillis(0);
         calendar.set(2012, 1, 27, 0, 0, 0);
         System.out.println("FECHA A BUSCAR: " + calendar.getTime());
-        
+
         StatisticData sd = service.findByDate("alert.reciverProcessTime", calendar.getTime());
-        
-        System.out.println("id: "+sd.getId()+">"+sd.getName()+">"+sd.getPeriodDate()+">"+sd.getPeriodType()+">"+sd.getDataCount()+">"+sd.getDataValue()+">"+sd.getDataSum());
-                
-        
+
+        System.out.println("id: " + sd.getId() + ">" + sd.getName() + ">" + sd.getPeriodDate()
+                + ">" + sd.getPeriodType() + ">" + sd.getDataCount() + ">" + sd.getDataValue()
+                + ">" + sd.getDataSum());
+
         Assert.assertEquals(new Double(200), sd.getDataSum());
-        //Assert.assertNull(sd);
+        // Assert.assertNull(sd);
 
     }
 }

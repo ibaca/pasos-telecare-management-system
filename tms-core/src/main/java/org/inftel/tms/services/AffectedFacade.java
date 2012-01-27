@@ -27,9 +27,9 @@ public class AffectedFacade extends AbstractFacade<Affected> implements Affected
         super(Affected.class);
     }
 
-    public int countByType(AffectedType type) {
+    public Long countByType(AffectedType type) {
         TypedQuery<Long> query = em.createNamedQuery("Affected.countByType", Long.class);
         query.setParameter("type", type);
-        return query.getSingleResult().intValue();
+        return query.getSingleResult();
     }
 }

@@ -1,6 +1,8 @@
 package org.inftel.tms.statistics;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -43,8 +45,8 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
      *            fecha fin del sumatorio
      * @return sumatorio de los estadísticos
      */
-    public int sumStatictics(String startWith, StatisticDataPeriod period, Date fromDate,
-            Date toDate) {
+    public Map<String, BigDecimal> sumStatictics(String startWith, StatisticDataPeriod period,
+            Date fromDate, Date toDate) {
         TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o "
                 + "WHERE o.name LIKE :name AND o.periodType = :period "
                 + "AND o.periodDate BETWEEN :fromDate AND :toDate", StatisticData.class);
@@ -53,14 +55,20 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
         query.setParameter("fromDate", fromDate);
         query.setParameter("toDate", toDate);
 
-        List<StatisticData> result = query.getResultList();
-        int sum = 0;
-        for (StatisticData s : result) {
-            // FIXME de nuevo, esto deberia ser BigDecimal
-            sum += s.getDataValue().intValue();
+        List<StatisticData> queryResult = query.getResultList();
+        Map<String, BigDecimal> result = new HashMap<String, BigDecimal>(2);
+        // Initialize result
+        result.put("sum", new BigDecimal(0));
+        result.put("count", new BigDecimal(0));
+        for (StatisticData data : queryResult) {
+            if (data.getDataSum() != null) {
+                result.put("sum", result.get("sum").add(new BigDecimal(data.getDataSum())));
+            }
+            if (data.getDataCount() != null) {
+                result.put("count", result.get("count").add(new BigDecimal(data.getDataCount())));
+            }
         }
-
-        return sum;
+        return result;
     }
 
     /**

@@ -70,7 +70,7 @@ public class AlertFacadeTest {
   public void testCountByType() throws Exception {
     AlertFacadeRemote service = new AlertFacade(em);
     tx.begin();
-    int count = service.countByType(AlertType.USER, new Date(0), new Date());
+    long count = service.countByType(AlertType.USER, new Date(0), new Date());
     tx.commit();
     assertEquals(3, count);
     

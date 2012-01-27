@@ -35,5 +35,5 @@ public interface AlertFacadeRemote {
 
     List<Alert> findAlertsByAffected(Person affected);
 
-    int countByType(AlertType type, Date fromDate, Date toDate);
+    Long countByType(AlertType type, Date fromDate, Date toDate);
 }

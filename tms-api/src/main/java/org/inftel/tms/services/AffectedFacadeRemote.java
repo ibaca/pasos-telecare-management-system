@@ -28,5 +28,5 @@ public interface AffectedFacadeRemote {
 
     int count();
 
-    int countByType(AffectedType type);
+    Long countByType(AffectedType type);
 }
