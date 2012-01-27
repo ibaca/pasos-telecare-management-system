@@ -24,6 +24,7 @@ import org.inftel.tms.domain.Person;
 import org.inftel.tms.services.AlertFacadeRemote;
 import org.inftel.tms.services.AlertRawFacadeRemote;
 import org.inftel.tms.services.DeviceFacadeRemote;
+import org.inftel.tms.statistics.StatisticsProcessorRemote;
 
 /**
  * Se encarga de la comunicacion entre los dispositivos y el servidor. Su principal funcion es la de
@@ -42,17 +43,21 @@ import org.inftel.tms.services.DeviceFacadeRemote;
  */
 @Stateless
 public class DeviceConnector implements DeviceConnectorRemote {
-    @EJB
-    private DeviceFacadeRemote deviceFacade;
-    @EJB
-    private AlertFacadeRemote alertFacade;
-    @EJB
-    private AlertRawFacadeRemote alertRawFacade;
+
     private static final Logger logger = Logger.getLogger(DeviceConnector.class.getName());
 
-    /*
-     * remote parameters programming , by default
-     */
+    @EJB
+    private DeviceFacadeRemote deviceFacade;
+
+    @EJB
+    private AlertFacadeRemote alertFacade;
+
+    @EJB
+    private AlertRawFacadeRemote alertRawFacade;
+
+    @EJB
+    private StatisticsProcessorRemote statisticsProcessor;
+
     private static final String key = "&RK123456";
     private static final String call = "&RV1911234567";
     private static final String sms = "&RS1601234567";
@@ -60,9 +65,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
     private static final String transport = "&RT2:TCP";
     private static final String ip = "&RI01:12700000000108080";
 
-    /**
-     * Constructor
-     */
+    /** Crea una nueva instancia de DeviceConnector */
     public DeviceConnector() {
     }
 
@@ -178,12 +181,20 @@ public class DeviceConnector implements DeviceConnectorRemote {
                     "el origen y el contenido de una alerta no pueden ser nulos o cadenas vacias");
         }
 
-        AlertRaw raw = new AlertRaw();
-        raw.setOrigin(from);
-        raw.setRawData(message);
-        raw.setCreated(new Date());
-        alertRawFacade.create(raw);
+        long time = System.currentTimeMillis();
+        try {
+            // Primero se guarda el mensaje tal cual llega
+            AlertRaw raw = internalProcessRawAlert(from, message);
 
+            // Una vez guardado, se intenta parsear y se contruye la respuesta
+            return internalProcessAlert(from, message, raw);
+        } finally {
+            time = System.currentTimeMillis() - time;
+            statisticsProcessor.process("alert.reciverProcessTime", new Date(), time);
+        }
+    }
+
+    private CharSequence internalProcessAlert(String from, String message, AlertRaw raw) {
         if ((message == null) || (message.isEmpty())) {
             logger.log(Level.INFO, "empty message received");
             return "*$RP06" + key + key + call + sms + id + transport + ip + "#";
@@ -225,6 +236,15 @@ public class DeviceConnector implements DeviceConnectorRemote {
             logger.log(Level.SEVERE, "ERROR: trama no soportada");
             throw new RuntimeException("ERROR: trama no soporteda");
         }
+    }
+
+    private AlertRaw internalProcessRawAlert(String from, String message) {
+        AlertRaw raw = new AlertRaw();
+        raw.setOrigin(from);
+        raw.setRawData(message);
+        raw.setCreated(new Date());
+        alertRawFacade.create(raw);
+        return raw;
     }
 
     /**
