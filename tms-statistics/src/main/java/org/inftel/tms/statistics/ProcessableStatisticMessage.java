@@ -41,10 +41,9 @@ public class ProcessableStatisticMessage implements MessageListener {
 
                 StatisticData sd = (StatisticData) content;
                 Calendar c = Calendar.getInstance();
+                c.setTime(sd.getPeriodDate());
                 
-                System.out.println(">>>>>>>>>>>>>>>>>>>" + statisticsProcessor);
-                
-                statisticsProcessor.updateStatistic(sd.getName(), c, sd.getDataSum().intValue());
+                statisticsProcessor.updateRealTimeStatistic(sd.getName(), c, sd.getDataSum());
 
             }
         } catch (JMSException ex) {

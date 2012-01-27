@@ -1,48 +1,39 @@
 package org.inftel.tms.statistics;
 
-import static java.util.Calendar.MONTH;
-import static java.util.Calendar.YEAR;
-import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.WARNING;
-import static java.util.logging.Logger.getLogger;
-import static org.inftel.tms.statistics.StatisticDataPeriod.ANNUAL;
-import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
-import static org.inftel.tms.statistics.StatisticDataPeriod.MONTHLY;
-
 import java.io.Serializable;
 import java.util.Calendar;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.WARNING;
 import java.util.logging.Logger;
-
+import static java.util.logging.Logger.getLogger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
+import javax.jms.*;
+import static org.inftel.tms.statistics.StatisticDataPeriod.*;
 
 /**
- * Debe sacar la informacion necesaria a traves de los metodos expuestos en el interfaz remoto, y
- * poner en la cola de estadisticas los valores concretos que se quieran agregar.
- * 
- * La decision de extraer las estadisticas de la entidad concreta (alert, interventio, etc) podria
- * hacerse cuando se lee de la cola.
+ * Debe sacar la informacion necesaria a traves de los metodos expuestos en el
+ * interfaz remoto, y poner en la cola de estadisticas los valores concretos que
+ * se quieran agregar.
+ *
+ * La decisión de extraer las estadisticas de la entidad concreta (alert,
+ * interventio, etc) podria hacerse cuando se lee de la cola.
+ *
+ * @author agumpg
  */
 @Stateless
 @LocalBean
 public class StatisticsProcessor implements StatisticsProcessorRemote {
 
     private final static Logger logger = getLogger(StatisticsProcessor.class.getName());
-
     @EJB
     private StatisticDataFacade statisticDataFacade;
     @Resource(mappedName = "jms/statistics")
@@ -104,6 +95,13 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
         }
     }
 
+    /**
+     * Actualización de los diarios, mensuales y anuales en la tabla estadística
+     *
+     * @param statisticName nombre de la etiqueta de alerta a procesar
+     * @param date fecha de procesamiento
+     * @param value valor del acumulado
+     */
     public void updateStatistic(String statisticName, Calendar date, int value) {
         // Se calcula el dia de hoy para comparar
         Calendar today = Calendar.getInstance();
@@ -113,8 +111,7 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
 
         // Si ayer fue un mes diferente
         if (today.get(MONTH) != date.get(MONTH)) {
-            int count = statisticDataFacade.sumStatictics(statisticName, DAYLY, MONTHLY
-                    .endsAt(date).getTime(), MONTHLY.beginsAt(date).getTime());
+            int count = statisticDataFacade.sumStatictics(statisticName, DAYLY, MONTHLY.endsAt(date).getTime(), MONTHLY.beginsAt(date).getTime());
             saveStatisticData(statisticName, MONTHLY, date, (long) count);
         }
 
@@ -126,6 +123,43 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
         }
     }
 
+    /**
+     * Actualiza la tabla de estadísticas para las alertas de tiempo real
+     *
+     * @param statisticName nombre de la etiqueta de la alerta
+     * @param date fecha de la última actualización
+     * @param value valor asociada a la etiqueta de alerta
+     */
+    public void updateRealTimeStatistic(String statisticName, Calendar date, Double value) {
+
+        date.setTimeInMillis(0);
+        StatisticData sd = statisticDataFacade.findByDate(statisticName, date.getTime());
+
+        if (sd != null) {
+            //Ya existe una entrada en StatisticData y lo actualizamos
+            sd.setDataCount(sd.getDataCount() + 1);
+            sd.setDataSum(sd.getDataSum() + value);
+        } else {
+            //No existe ninguna entrada para el contador de media para ese día
+            sd.setName(statisticName);
+            sd.setPeriodType(DAYLY);
+            sd.setPeriodDate(date.getTime());
+            sd.setDataCount(new Long(1));
+            sd.setDataSum(value);
+
+            statisticDataFacade.create(sd);
+        }
+
+    }
+
+    /**
+     * Almacena en la tabla de estadísticas una estadística de acumulado
+     *
+     * @param name nombre asociado a la etiqueta de la alerta
+     * @param period DIARY, MONTHLY, ANNUAL
+     * @param date fecha de la alerta
+     * @param value valor asociado a la alerta
+     */
     private void saveStatisticData(String name, StatisticDataPeriod period, Calendar date,
             long value) {
         StatisticData sd = new StatisticData();
@@ -138,14 +172,12 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
         statisticDataFacade.create(sd);
 
     }
-    
-            
 
     @Override
     public Map<Date, Long> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
             Date toDate) {
         logger.log(INFO, "consultando estadisticas {0} para periodo {1} y fechas entre {2} y {3}",
-                new Object[] { name, period, fromDate, toDate });
+                new Object[]{name, period, fromDate, toDate});
         // Delegate to StatisticDataFacade
         return statisticDataFacade.findStatistics(name, period, fromDate, toDate);
     }
@@ -154,7 +186,4 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
     public List<String> findStatisticsNames(String startWith) {
         return statisticDataFacade.findStatisticsNames(startWith);
     }
-
-    
-    
 }
