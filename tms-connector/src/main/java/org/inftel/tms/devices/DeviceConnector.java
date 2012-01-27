@@ -29,7 +29,7 @@ import org.inftel.tms.services.DeviceFacadeRemote;
  *
  * La captura HTTP se realiza en {@link org.inftel.tms.web.DeviceConnectorDelegatorServlet}.
  *
- * @author ibaca
+ * @author migueqm
  */
 @Stateless
 public class DeviceConnector implements DeviceConnectorRemote {
@@ -52,7 +52,10 @@ public class DeviceConnector implements DeviceConnectorRemote {
   private static final String transport = "&RT2:TCP";
   private static final String ip = "&RI01:12700000000108080";
 
-    public DeviceConnector() {
+  /**
+   * Constructor
+   */
+  public DeviceConnector() {
     }
 
   /**
@@ -88,6 +91,13 @@ public class DeviceConnector implements DeviceConnectorRemote {
     return Pattern.matches("^\\*\\$AD.*$", message);
   }
   
+    /**
+   * Comprueba si la trama recibida del terminal es un mensaje Status Report(SR)
+   * con un frame ACK(KO)
+   *
+   * @param message el contenido del mensaje en formato paSOS
+   * @return boolean
+   */
   private boolean isACK(String message) {
     boolean isStatusReport = Pattern.matches("^\\*\\$SR0.*$", message);
     
@@ -96,7 +106,13 @@ public class DeviceConnector implements DeviceConnectorRemote {
     boolean isACK = matcher.find();
     return ( (isStatusReport) && (isACK) ) ;
   }
-    
+   /**
+   * Comprueba que la Access Key es correcta, comparándola con la que envío el 
+   * servidor en su primer mensaje.
+   *
+   * @param message el contenido del mensaje en formato paSOS
+   * @return boolean
+   */ 
   private boolean checkKey(String message) {
     Pattern pattern = Pattern.compile("(\\&RK[0-9]{6})");
     Matcher matcher = pattern.matcher(message);    
@@ -107,7 +123,13 @@ public class DeviceConnector implements DeviceConnectorRemote {
         return false;
     }
   }
-  
+   /**
+   * Comprueba que el ACK que se manda es correcto, comparando el ID de la trama (RP)
+   * con el ID que se quiere enviar en el mensaje envía.
+   *
+   * @param message el contenido del mensaje en formato paSOS
+   * @return boolean
+   */
   private boolean checkACK(String message) {
     Pattern pattern = Pattern.compile("(\\&KO[0-9]{4})");
     Matcher matcher = pattern.matcher(message);    
@@ -124,6 +146,8 @@ public class DeviceConnector implements DeviceConnectorRemote {
    *
    * Si el mensage es vacio (cadena vacia o null) se considera como si el servidor se estuviese
    * conectando con el dispositivo. Y por tanto podra enviar mensajes de configuracion hacia este.
+   * Procesa mensajes vacíos, mensajes ACK, User Alarms, Device Alarms, 
+   * Technical Alarms y mensajes erróneos
    *
    * @param from el origen del mensaje, normalmente el numero de movil de afectado
    * @param message el contenido del mensaje en formato paSOS
@@ -178,6 +202,14 @@ public class DeviceConnector implements DeviceConnectorRemote {
     }
   }
   
+  /**
+   * Crea una alerta con su alertRaw, persistentes en bbdd
+   * @param type
+   * @param priority
+   * @param cause
+   * @param raw
+   * @param mobileNumber
+   */
   public void createAlert(AlertType type, AlertPriority priority,String cause, AlertRaw raw,String mobileNumber){
       Alert alert = new Alert();
       Device device = deviceFacade.findByMobile(mobileNumber);
