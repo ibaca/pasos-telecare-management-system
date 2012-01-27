@@ -1,13 +1,18 @@
 package org.inftel.tms.statistics;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jms.*;
 import org.inftel.tms.domain.Alert;
 import org.inftel.tms.domain.Intervention;
+import static org.inftel.tms.statistics.StatisticDataPeriod.*;
 
 /**
  * Debe sacar la informacion necesaria a traves de los metodos expuestos en el
@@ -20,6 +25,10 @@ import org.inftel.tms.domain.Intervention;
 @Stateless
 public class StatisticsProcessor implements StatisticsProcessorRemote {
 
+    @EJB
+    private StatisticDataFacade statisticDataFacade;
+    @EJB
+    private EndOfDayStatisticsTimer endOfDayStatisticsTimer;
     @Resource(mappedName = "jms/statistics")
     private Queue statistics;
     @Resource(mappedName = "jms/statisticsFactory")
@@ -37,6 +46,12 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
         // alert.priority.critical : numero de alertas por prioridad
         // alert.priority.important
         // ...
+    
+    
+    
+    
+    
+    
     }
 
     @Override
@@ -69,5 +84,46 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
                 connection.close();
             }
         }
+    }
+    
+    
+    
+    
+
+
+    public void updateStatistic(String statisticName, Calendar date, int value) {
+        // Se calcula el dia de hoy para comparar
+        Calendar today = Calendar.getInstance();
+
+        // Actualización de diarios de Alertas
+        saveStatisticData(statisticName, DAYLY, date, value);
+
+        // Si ayer fue un mes diferente
+        if (today.get(MONTH) != date.get(MONTH)) {
+            int count = statisticDataFacade.sumStatictics(statisticName, DAYLY,
+                    MONTHLY.endsAt(date).getTime(), MONTHLY.beginsAt(date).getTime());
+            saveStatisticData(statisticName, MONTHLY, date, (long) count);
+        }
+
+        // Si se ha producido un cambio de año actualizamos históricos anuales
+        if (today.get(YEAR) != date.get(YEAR)) {
+            int count = statisticDataFacade.sumStatictics(statisticName, MONTHLY,
+                    ANNUAL.endsAt(date).getTime(), ANNUAL.beginsAt(date).getTime());
+            saveStatisticData(statisticName, ANNUAL, date, (long) count);
+        }
+    }
+
+    private void saveStatisticData(String name, StatisticDataPeriod period, Calendar date,
+            long value) {
+        StatisticData sd = new StatisticData();
+
+        sd.setName(name);
+        sd.setPeriodType(period);
+        sd.setPeriodDate(period.beginsAt(date).getTime());
+        sd.setDataCount(value);
+
+        statisticDataFacade.create(sd);
+        
+       
     }
 }
