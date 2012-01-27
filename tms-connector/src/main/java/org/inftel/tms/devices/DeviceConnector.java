@@ -35,7 +35,6 @@ import org.inftel.tms.services.DeviceFacadeRemote;
 public class DeviceConnector implements DeviceConnectorRemote {
   @EJB
   private DeviceFacadeRemote deviceFacade;
-
   @EJB
   private AlertFacadeRemote alertFacade;
   @EJB
@@ -210,6 +209,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
    * @param raw
    * @param mobileNumber
    */
+    @Override
   public void createAlert(AlertType type, AlertPriority priority,String cause, AlertRaw raw,String mobileNumber){
       Alert alert = new Alert();
       Device device = deviceFacade.findByMobile(mobileNumber);
