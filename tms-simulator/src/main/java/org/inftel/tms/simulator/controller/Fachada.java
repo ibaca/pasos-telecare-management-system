@@ -18,6 +18,7 @@ import org.inftel.tms.simulator.model.Parameters;
 
 
 /**
+ * @author migueqm
  * Enterprise Application Client main class.
  *
  * Se muestra un ejemplo de obtener el interfaz remoto de {@link UserFacadeRemote} y llamar a uno de
@@ -30,28 +31,58 @@ import org.inftel.tms.simulator.model.Parameters;
  */
 public class Fachada {
 
-  public static final String USER_FACADE_JNDI = "java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/tms-core-1.0-SNAPSHOT/UserFacade!org.inftel.tms.services.UserFacadeRemote";  
-  protected Parameters parameters;
+    /**
+     * JNDI de USER_FACADE
+     */
+    public static final String USER_FACADE_JNDI = "java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/tms-core-1.0-SNAPSHOT/UserFacade!org.inftel.tms.services.UserFacadeRemote";  
+    /**
+     * Parametros de la trama
+     */
+    protected Parameters parameters;
     
-  public Fachada() {
+    /**
+     * Constructor de clase
+     */
+    public Fachada() {
         parameters = new Parameters();
   }
 
   
+  /**
+   * Devuelve los parametros
+   * @return Parameters
+   */
   public Parameters getParameters() {
         return parameters;
     }
 
-    public void setParameters(Parameters parameters) {
+  /**
+   * Establece los parametros
+   * @param parameters
+   */
+  public void setParameters(Parameters parameters) {
         this.parameters = parameters;
     }
     
-    public void setParameters(String trama) {
+  /**
+   * Establece los parametros a partir de la trama recibida de la centralita (remote parameters programming)
+   * @param trama
+   */
+  public void setParameters(String trama) {
         parseTrama(trama);
     }
   
-  //Manda un mensaje vacío al servlet para solicitar los Remote Parameters  
-  public HttpResponse sendEmptyMessage() throws URISyntaxException, IOException{    
+    /**
+     * Manda un mensaje vacío, para pedir los remote parameters.
+     * Segun el protocolo PASOS, es la centralita quien manda el primer mensaje 
+     * por SMS al terminal con los parámetros.
+     * Nosotros lo simulamos pidiendole los parámetros a la centralita con un 
+     * mensaje vacío.Siempre incluimos en la cabecera HTTP el numero de movil que origina la trama.
+     * @return HttpResponse
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    public HttpResponse sendEmptyMessage() throws URISyntaxException, IOException{    
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
         post.setHeader("sender-mobile-number", parameters.getSenderMobileNumber());
@@ -60,6 +91,11 @@ public class Fachada {
         return client.execute(post);
   }  
   
+  /**
+   * Convierte un InputStream a String
+   * @param in
+   * @return
+   */
   public String readStreamAsString(InputStream in) {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
@@ -83,9 +119,9 @@ public class Fachada {
             }
         }
     }
-
+  
+    // Parsea una trama y guarda sus parametros en el atributo Parameters de la fachada
     private void parseTrama(String trama) {
-        //*$RP06 &RK123456 &RK123456 &RV1911234567 &KO1000 &RT2:TCP &RI01:12700000000108080#        
         StringTokenizer tokens = new StringTokenizer(trama.trim(), "&#*$");        
     
         //$RP06 RK123456 RV1911234567 RS1601234567 KO1000 RT2:TCP RI01:12700000000108080        
@@ -102,6 +138,14 @@ public class Fachada {
         }               
     }
 
+    /**
+     * Envia un ACK al servidor, con el ID de la trama recibida anteriormente: "remote parameters 
+     * programming" para decirle al servidor que hemos recibido los parametros 
+     * de configuracion correctamente.
+     * @return HttpResponse
+     * @throws URISyntaxException
+     * @throws IOException
+     */
     public HttpResponse enviarACK() throws URISyntaxException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
@@ -112,7 +156,12 @@ public class Fachada {
         return client.execute(post);
     }
 
-    //TODO si da tiempo usar la fecha del sistema al enviar
+    /**
+     * Envia una alerta de usuario (AU), usamos una latitud y longitud al azar, al no ser un móvil real
+     * @return HttpResponse
+     * @throws URISyntaxException
+     * @throws IOException
+     */
     public HttpResponse enviarUserAlarm() throws URISyntaxException, IOException {                
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
@@ -130,6 +179,14 @@ public class Fachada {
         return client.execute(post);        
     }
     
+    /**
+     * Envia una alerta de dispositivo (AD), usamos una latitud y longitud al azar, 
+     * al no ser un móvil real. Simulamos una alerta por temperatura.
+     * @return HttpResponse
+     * @throws URISyntaxException
+     * @throws UnsupportedEncodingException
+     * @throws IOException
+     */
     public HttpResponse enviarDeviceAlarm() throws URISyntaxException, UnsupportedEncodingException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
@@ -147,8 +204,15 @@ public class Fachada {
         return client.execute(post);  
     }
     
-    //Alarma tecnica: 5% de batería y no está conectado al cargador.
-    //TODO si da tiempo usar la fecha del sistema al enviar
+    /**
+     * Envia una alarma técnica (AT), usamos una latitud y longitud al azar, 
+     * al no ser un móvil real.Simulamos una alerta por el nivel de batería, 
+     * indicando además que el terminal no está conectado al cargador.
+     * @return HttpRespose
+     * @throws URISyntaxException
+     * @throws UnsupportedEncodingException
+     * @throws IOException
+     */
     public HttpResponse enviarTechnicalAlarm() throws URISyntaxException, UnsupportedEncodingException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();    
