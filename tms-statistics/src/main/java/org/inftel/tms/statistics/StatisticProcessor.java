@@ -172,9 +172,10 @@ public class StatisticProcessor implements StatisticProcessorRemote {
             data.setPeriodDate(processDate);
             data.setDataCount(dataOrigin.getDataCount());
             data.setDataSum(dataOrigin.getDataSum());
-            statisticDataFacade.create(dataOrigin);
+            statisticDataFacade.create(data);
         } else {
             // Ya existe una entrada en StatisticData y lo actualizamos
+            data.setPeriodType(DAYLY); // FIXME no deberia ser necesario
             data.setDataCount(data.getDataCount() + dataOrigin.getDataCount());
             data.setDataSum(data.getDataSum() + dataOrigin.getDataSum());
             // TODO esto no debe fallar, pero si un tipo de estadistica pasa de ser tipo

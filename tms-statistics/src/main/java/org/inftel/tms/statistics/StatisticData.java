@@ -1,19 +1,26 @@
 package org.inftel.tms.statistics;
 
+import static java.util.logging.Level.INFO;
 import static javax.persistence.GenerationType.TABLE;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.sun.tools.ws.wsdl.document.jaxws.Exception;
 
 /**
  * Los valores estadisticos quedan definidos por dos atributos, sum y count. Sum indica el sumatorio
@@ -32,6 +39,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "statistics")
 public class StatisticData implements Serializable {
+
+    private final static Logger logger = Logger.getLogger(StatisticData.class.getName());
 
     public static final String LAST_MONTH = "StatisticsData.LastMonth";
 
@@ -58,7 +67,7 @@ public class StatisticData implements Serializable {
     public StatisticData(String name, StatisticDataPeriod period, Date date, Double sum) {
         this(name, period, date, sum, null);
     }
-    
+
     /** Este metodo crea estadisticas temporales, ya que el periodo es un campo obligatorio. */
     public StatisticData(String name, Date date, Double sum, Long count) {
         this(name, null, date, sum, count);
@@ -85,7 +94,7 @@ public class StatisticData implements Serializable {
     }
 
     public Long getDataCount() {
-        return (dataCount == null) ? 1l : dataCount;
+        return (dataCount == null) ? 0l : dataCount;
     }
 
     public void setDataCount(Long dataCount) {
@@ -113,7 +122,7 @@ public class StatisticData implements Serializable {
     }
 
     public Double getDataSum() {
-        return dataSum;
+        return (dataSum == null) ? 0d : dataSum;
     }
 
     public void setDataSum(Double dataSum) {
@@ -158,6 +167,24 @@ public class StatisticData implements Serializable {
 
     @Override
     public String toString() {
-        return "org.inftel.tms.statistics.StatisticsData[ id=" + id + " ]";
+        StringBuffer buff = new StringBuffer("StatisticsData[");
+        buff.append(" id=").append(id);
+        buff.append(", name=").append(name);
+        buff.append(", period=").append(periodType);
+        buff.append(", date=").append(periodDate);
+        buff.append(", count=").append(dataCount);
+        buff.append(", sum=").append(dataSum);
+        buff.append(" ]");
+        return buff.toString();
+    }
+
+    @PostPersist
+    void onCreateLog() {
+        logger.log(INFO, "post persist {0}", toString());
+    }
+
+    @PreUpdate
+    void onUpdate() {
+        logger.log(INFO, "pre update {0}", toString());
     }
 }

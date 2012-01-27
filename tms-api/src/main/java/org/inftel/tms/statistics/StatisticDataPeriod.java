@@ -20,39 +20,51 @@ public enum StatisticDataPeriod {
     /**
      * Periodo estadistico para intervalo diario.
      */
-    DAYLY(DAY_OF_MONTH),
+    DAYLY {
+        @Override
+        protected int getField() {
+            return DAY_OF_MONTH;
+        }
+    },
     /**
      * Periodo estadistico para intervalo mensual.
      */
-    MONTHLY(MONTH),
+    MONTHLY {
+        @Override
+        protected int getField() {
+            return MONTH;
+        }
+    },
     /**
      * Periodo estadistico para intervalo anual.
      */
-    ANNUAL(YEAR);
+    ANNUAL {
+        @Override
+        protected int getField() {
+            return YEAR;
+        }
+    };
 
-    private int field;
-
-    private StatisticDataPeriod(int field) {
-        this.field = field;
-    }
+    protected abstract int getField();
 
     /** Devuelve la fecha que representa el inicio del periodo. */
     public Calendar endsAt(Calendar of) {
-        return DateUtils.ceiling(of, field);
+        return DateUtils.ceiling(of, getField());
     }
 
     /** Devuelve la fecha que representa el inicio del periodo. */
     public Date endsAt(Date of) {
-        return DateUtils.ceiling(of, field);
+        return DateUtils.ceiling(of, getField());
     }
 
     /** Devuelve la fecha que representa el final del periodo. */
     public Calendar beginsAt(Calendar of) {
-        return DateUtils.truncate(of, field);
+        return DateUtils.truncate(of, getField());
     }
 
     /** Devuelve la fecha que representa el final del periodo. */
     public Date beginsAt(Date of) {
-        return DateUtils.truncate(of, field);
+        return DateUtils.truncate(of, getField());
     }
+
 }
