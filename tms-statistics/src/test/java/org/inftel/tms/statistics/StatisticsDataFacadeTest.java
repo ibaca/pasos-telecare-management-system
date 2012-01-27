@@ -139,12 +139,17 @@ public class StatisticsDataFacadeTest {
     public void testFindByDate() {
         StatisticDataFacade service = new StatisticDataFacade(em);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2012, 1, 1, 0, 0, 0);
-        System.out.println("FEHCA: " + calendar.getTime());
-        StatisticData sd = service.findByDate("alert.process.time", calendar.getTime());
-
-        // Assert.assertEquals(new Integer(200), sd.getDataSum());
-        Assert.assertNull(sd);
+        calendar.setTimeInMillis(0);
+        calendar.set(2012, 1, 27, 0, 0, 0);
+        System.out.println("FECHA A BUSCAR: " + calendar.getTime());
+        
+        StatisticData sd = service.findByDate("alert.reciverProcessTime", calendar.getTime());
+        
+        System.out.println("id: "+sd.getId()+">"+sd.getName()+">"+sd.getPeriodDate()+">"+sd.getPeriodType()+">"+sd.getDataCount()+">"+sd.getDataValue()+sd.getDataSum());
+                
+        
+        Assert.assertEquals(new Integer(200), sd.getDataSum());
+        //Assert.assertNull(sd);
 
     }
 }
