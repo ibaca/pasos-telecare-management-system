@@ -44,7 +44,7 @@ public class LoginBean {
         FacesMessage msg;
         if(username != null  && username.equals("admin") && password != null  && password.equals("admin")) {  
             loggedIn = true;  
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Welcome", username);
             
         } else {  
             loggedIn = false;  

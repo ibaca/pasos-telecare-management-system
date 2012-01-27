@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.inftel.tms.domain.Alert;
 import org.inftel.tms.services.AlertFacadeRemote;
@@ -20,10 +22,10 @@ import org.inftel.tms.services.AlertFacadeRemote;
  * @author inftel
  */
 public class TableBean implements Serializable {
-    private boolean show=true;
-    private List<Alert> alerts;    
+    private boolean show=true;   
     private Alert selectedAlert;
     private String intervention;
+    private List<Alert> alerts;
     
     @EJB
     private AlertFacadeRemote alertFacade;
@@ -50,12 +52,17 @@ public class TableBean implements Serializable {
     public void hide(){
         FacesMessage msg;
         if(show){
-            msg=new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected Alert", "Intervention opened");
+            msg=new FacesMessage(FacesMessage.SEVERITY_WARN, "Intervention opened", "Accesing..");
             this.show=false;
         }else{
-            //GUARDAR INTERVENCION
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected Alert", "Intervention closed");
-            this.show=true;
+            System.out.println("INTERVENTIONNNNN: "+intervention);
+            if(intervention!=null || !intervention.isEmpty()){
+                //GUARDAR INTERVENCION
+                msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Intervention closed", "Closing..");
+                this.show=true;
+            }else{
+                msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Can't close the intervention. Please fill the text area");
+            }
         }
         FacesContext.getCurrentInstance().addMessage(null, msg); 
     }
@@ -63,9 +70,9 @@ public class TableBean implements Serializable {
     public List<Alert> getAlerts() {
         return alertFacade.findActiveAlerts(); 
     }
-
-    public void setAlerts(List<Alert> alerts) {
-        this.alerts = alerts;
+    
+    public void setAlerts(List<Alert> alerts){
+        this.alerts=alerts;
     }
 
     public Alert getSelectedAlert() {
