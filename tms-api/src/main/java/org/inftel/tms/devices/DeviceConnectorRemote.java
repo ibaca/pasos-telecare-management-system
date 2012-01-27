@@ -13,6 +13,8 @@ import javax.ejb.Remote;
 @Remote
 public interface DeviceConnectorRemote {
 
-  CharSequence processAlertMessage(String from, String message);
+CharSequence processAlertMessage(String from, String message);
+
+public void createAlert(org.inftel.tms.domain.AlertType type, org.inftel.tms.domain.AlertPriority priority, java.lang.String cause, org.inftel.tms.domain.AlertRaw raw, java.lang.String mobileNumber);
   
 }
