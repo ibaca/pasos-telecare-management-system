@@ -10,12 +10,20 @@
   <people id='4' firstname='Ambrosio' lastname='Jacinto' email='ajacinto@mail.com' mobilenumber='666000224' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16'/>
   <people id='5' firstname='Yosue' lastname='Itare' email='yi@mail.com' mobilenumber='666000225' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16'/>
   
-  <affected id='1' data_id='1' created='2012-01-15' updated='2012-01-16'/>
+  <affected id='1' data_id='1' type='0'  created='2012-01-15' updated='2012-01-16'/>
   <affected_contacts contacts_id='2' chargeof_id='1'/> 
   <affected_contacts contacts_id='3' chargeof_id='1'/>
   
-  <affected id='2' data_id='4' created='2012-01-15' updated='2012-01-16'/>
+  <affected id='2' data_id='4' type='1'  created='2012-01-15' updated='2012-01-16'/>
   <affected_contacts contacts_id='5' chargeof_id='2'/>
+  
+  <affected id='3' data_id='4' type='1' created='2012-01-15' updated='2012-01-16'/>
+  <affected id='4' data_id='4' type='1' created='2012-01-15' updated='2012-01-16'/>
+  <affected id='5' data_id='4' type='2' created='2012-01-15' updated='2012-01-16'/>
+  <affected id='6' data_id='4' type='2' created='2012-01-15' updated='2012-01-16'/>
+  <affected id='7' data_id='4' type='2' created='2012-01-15' updated='2012-01-16'/>
+  <affected id='8' data_id='4' type='3' created='2012-01-15' updated='2012-01-16'/>
+  <affected id='9' data_id='4' type='4' created='2012-01-15' updated='2012-01-16'/>
   
   <devices id='1' owner_id='1' batery='50' lastconnection='2012-01-16' mobilenumber='666123123' simcard='1234' temperature='28' created='2012-01-15' updated='2012-01-16'/>
   

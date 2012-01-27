@@ -42,10 +42,6 @@
     
         <managed-bean-scope>request</managed-bean-scope></managed-bean>
     <managed-bean>
-        <managed-bean-name>chartBean</managed-bean-name>
-        <managed-bean-class>org.inftel.tms.web.jsfbean.ChartBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
-    <managed-bean>
         <managed-bean-name>mapBean</managed-bean-name>
         <managed-bean-class>org.inftel.tms.web.jsfbean.MapBean</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
