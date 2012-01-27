@@ -96,10 +96,10 @@ public class TableBean implements Serializable {
     
     public MapModel getAdvancedModel() {
         MapModel advancedModel = new DefaultMapModel();
-        LatLng mycoord = new LatLng(selectedAlert.getAffected().getLatitude(),selectedAlert.getAffected().getLongitude());
-        advancedModel.addOverlay(new Marker(mycoord, selectedAlert.getAffected().getFirstName(), selectedAlert.getAffected().getSimpleName(),
+        //i am in...
+        advancedModel.addOverlay(new Marker(new LatLng(selectedAlert.getAffected().getLatitude(),selectedAlert.getAffected().getLongitude()), selectedAlert.getAffected().getFirstName(), selectedAlert.getAffected().getSimpleName(),
                     "http://maps.google.com/mapfiles/ms/micons/red-dot.png"));
-        
+        //my people...
         for(Person p: getContacsOfSelectedAlert()){
             LatLng coord = new LatLng(p.getLatitude(),p.getLongitude());
             advancedModel.addOverlay(new Marker(coord, p.getFirstName(), p.getSimpleName(),
