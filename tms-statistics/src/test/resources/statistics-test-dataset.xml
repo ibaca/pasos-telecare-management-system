@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
+    
+  <statistics id='2059' name='alert.reciverProcessTime' periodtype='0' perioddate='2012-02-27' datacount='10' dataSum='200'/>
+  <statistics id='2060' name='alert.reciverProcessTime' periodtype='0' perioddate='2012-02-28' datacount='20' dataSum='600'/>
+    
+    
   <statistics id='1000' name='alert.counter' periodtype='0' perioddate='2011-12-01' datacount='3'/>
   <statistics id='1001' name='alert.counter' periodtype='0' perioddate='2011-12-02' datacount='5'/>
   <statistics id='1002' name='alert.counter' periodtype='0' perioddate='2011-12-03' datacount='2'/>
@@ -73,8 +78,6 @@
   <statistics id='2058' name='alert.type.user' periodtype='0' perioddate='2012-02-3' datacount='30'/>
   
   
-  <statistics id='2059' name='alert.reciverProcessTime' periodtype='0' perioddate='2012-02-27' datacount='10' dataSum='200'/>
-  <statistics id='2060' name='alert.reciverProcessTime' periodtype='0' perioddate='2012-02-28' datacount='20' dataSum='600'/>
     
   
   
