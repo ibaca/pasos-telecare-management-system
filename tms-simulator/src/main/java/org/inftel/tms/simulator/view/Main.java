@@ -189,12 +189,10 @@ public class Main extends javax.swing.JFrame {
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         try {
-            Parameters param = fachada.getParameters();
-            param.setBattery(txtBattery.getText());
-            param.setSenderMobileNumber(txtnumber.getText());
-            param.setTemperature(txtTemp.getText());
-            param.setURLservlet(txtURL.getText());
-            fachada.setParameters(param);   
+            fachada.setBattery(txtBattery.getText());
+            fachada.setSenderMobileNumber(txtnumber.getText());
+            fachada.setTemperature(txtTemp.getText());
+            fachada.setURLservlet(txtURL.getText());
             
             HttpResponse response = fachada.sendEmptyMessage();
             textArea.append("Requesting remote parameters...\n");
@@ -227,13 +225,11 @@ public class Main extends javax.swing.JFrame {
 
     private void btnUserAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserAlarmActionPerformed
         try {
-            Parameters param = fachada.getParameters();
-            param.setBattery(txtBattery.getText());
-            param.setSenderMobileNumber(txtnumber.getText());
-            param.setTemperature(txtTemp.getText());
-            param.setURLservlet(txtURL.getText());
-            param.setLocation((String)comboLoc.getSelectedItem());           
-            fachada.setParameters(param); 
+            fachada.setBattery(txtBattery.getText());
+            fachada.setSenderMobileNumber(txtnumber.getText());
+            fachada.setTemperature(txtTemp.getText());
+            fachada.setURLservlet(txtURL.getText());
+            fachada.setLocation((String)comboLoc.getSelectedItem());                       
             
             textArea.append("Sending User Alarm... \n");
             HttpResponse response = fachada.enviarUserAlarm(); 
@@ -252,13 +248,11 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDeviceAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeviceAlarmActionPerformed
         try {
-            Parameters param = fachada.getParameters();
-            param.setBattery(txtBattery.getText());
-            param.setSenderMobileNumber(txtnumber.getText());
-            param.setTemperature(txtTemp.getText());
-            param.setURLservlet(txtURL.getText());
-            param.setLocation((String)comboLoc.getSelectedItem());           
-            fachada.setParameters(param); 
+            fachada.setBattery(txtBattery.getText());
+            fachada.setSenderMobileNumber(txtnumber.getText());
+            fachada.setTemperature(txtTemp.getText());
+            fachada.setURLservlet(txtURL.getText());
+            fachada.setLocation((String)comboLoc.getSelectedItem());           
             
             textArea.append("Sending Device Alarm... \n");
             HttpResponse response = fachada.enviarDeviceAlarm();   
@@ -278,13 +272,11 @@ public class Main extends javax.swing.JFrame {
 
     private void btnTechnicalAlarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTechnicalAlarmActionPerformed
         try {
-            Parameters param = fachada.getParameters();
-            param.setBattery(txtBattery.getText());
-            param.setSenderMobileNumber(txtnumber.getText());
-            param.setTemperature(txtTemp.getText());
-            param.setURLservlet(txtURL.getText());
-            param.setLocation((String)comboLoc.getSelectedItem());           
-            fachada.setParameters(param); 
+            fachada.setBattery(txtBattery.getText());
+            fachada.setSenderMobileNumber(txtnumber.getText());
+            fachada.setTemperature(txtTemp.getText());
+            fachada.setURLservlet(txtURL.getText());
+            fachada.setLocation((String)comboLoc.getSelectedItem());                       
             
             textArea.append("Sending Technical Alarm... \n");
             HttpResponse response = fachada.enviarTechnicalAlarm();   

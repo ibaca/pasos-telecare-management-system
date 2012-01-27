@@ -221,8 +221,29 @@ public class Fachada {
                 +parameters.getTime()
                 +parameters.getLocation()                
                 +"&PB"+parameters.getBattery()
-                +"PC000#"));
+                +"&PC000#"));
         return client.execute(post);  
     }
+
+    public void setBattery(String battery){
+            parameters.setBattery(battery);
+    }
     
+    public void setSenderMobileNumber(String sender){
+            parameters.setSenderMobileNumber(sender);
+    }
+    
+    public void setTemperature(String temp){
+            parameters.setTemperature(temp);
+    }
+    
+    public void setURLservlet(String url){
+            parameters.setURLservlet(url);
+    }
+    
+    public void setLocation(String location){
+            parameters.setLocation(location);
+    }
+    
+ 
 }
