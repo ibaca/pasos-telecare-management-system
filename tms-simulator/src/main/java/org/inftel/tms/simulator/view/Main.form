@@ -27,13 +27,13 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="comboLoc" min="-2" pref="410" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtnumber" alignment="0" pref="358" max="32767" attributes="0"/>
-                          <Component id="labelBattery" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtBattery" max="32767" attributes="0"/>
+                          <Component id="txtnumber" alignment="0" pref="410" max="32767" attributes="0"/>
                           <Component id="txtURL" max="32767" attributes="0"/>
                           <Component id="txtTemp" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtBattery" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
@@ -54,8 +54,10 @@
                   <Component id="labelnumber" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" min="-2" pref="416" max="-2" attributes="0"/>
                   <Component id="labelTemp" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelBattery" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelLoc" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -85,17 +87,18 @@
                   <Component id="txtTemp" alignment="3" max="32767" attributes="0"/>
                   <Component id="btnDeviceAlarm" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="labelBattery" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnTechnicalAlarm" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="txtBattery" max="32767" attributes="0"/>
-                      <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                  </Group>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnTechnicalAlarm" max="32767" attributes="0"/>
+                  <Component id="txtBattery" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="labelLoc" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="comboLoc" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -171,7 +174,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="labelURL">
       <Properties>
-        <Property name="text" type="java.lang.String" value="URL del servlet:"/>
+        <Property name="text" type="java.lang.String" value="URL del servlet"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtTemp">
@@ -211,6 +214,18 @@
     <Component class="javax.swing.JLabel" name="labelnumber">
       <Properties>
         <Property name="text" type="java.lang.String" value="N&#xfa;mero de m&#xf3;vil"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboLoc">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelLoc">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Localizacion"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -122,9 +122,7 @@ public class Fachada {
   
     // Parsea una trama y guarda sus parametros en el atributo Parameters de la fachada
     private void parseTrama(String trama) {
-        StringTokenizer tokens = new StringTokenizer(trama.trim(), "&#*$");        
-    
-        //$RP06 RK123456 RV1911234567 RS1601234567 KO1000 RT2:TCP RI01:12700000000108080        
+        StringTokenizer tokens = new StringTokenizer(trama.trim(), "&#*$");                
         while(tokens.hasMoreTokens()){
             String token = tokens.nextToken();
             if(token.contains("RK"))        parameters.setKey(token);
@@ -173,8 +171,7 @@ public class Fachada {
                 +parameters.getKey()
                 +parameters.getDate()
                 +parameters.getTime()
-                +"&LN1008052067"
-                +"&LT153052067"
+                +parameters.getLocation()                
                 +"#"));
         return client.execute(post);        
     }
@@ -198,8 +195,7 @@ public class Fachada {
                 +parameters.getKey()
                 +parameters.getDate()
                 +parameters.getTime()
-                +"&LN1008052067"
-                +"&LT153052067"
+                +parameters.getLocation()                
                 +"&DT"+parameters.getTemperature()+"#"));
         return client.execute(post);  
     }
@@ -224,8 +220,7 @@ public class Fachada {
                 +parameters.getKey()
                 +parameters.getDate()
                 +parameters.getTime()
-                +"&LN1008052067"
-                +"&LT153052067"
+                +parameters.getLocation()                
                 +"&PB"+parameters.getBattery()
                 +"PC000#"));
         return client.execute(post);  

@@ -23,6 +23,8 @@ public class Main extends javax.swing.JFrame {
         btnDeviceAlarm.setVisible(false);
         btnUserAlarm.setVisible(false);
         btnTechnicalAlarm.setVisible(false);
+        comboLoc.addItem("&LN1008052067&LT153052067");
+        comboLoc.addItem("&LN2119255067&LT223155067");
     }
 
     /**
@@ -48,6 +50,8 @@ public class Main extends javax.swing.JFrame {
         labelBattery = new javax.swing.JLabel();
         txtnumber = new javax.swing.JTextField();
         labelnumber = new javax.swing.JLabel();
+        comboLoc = new javax.swing.JComboBox();
+        labelLoc = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Samsung Galaxy Nexus");
@@ -93,7 +97,7 @@ public class Main extends javax.swing.JFrame {
         txtURL.setText("http://localhost:8080/tms-web/connector");
         txtURL.setPreferredSize(new java.awt.Dimension(250, 20));
 
-        labelURL.setText("URL del servlet:");
+        labelURL.setText("URL del servlet");
 
         txtTemp.setText("55");
         txtTemp.setPreferredSize(new java.awt.Dimension(250, 20));
@@ -110,6 +114,8 @@ public class Main extends javax.swing.JFrame {
 
         labelnumber.setText("Número de móvil");
 
+        labelLoc.setText("Localizacion");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,13 +123,13 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtnumber, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                            .addComponent(labelBattery)
-                            .addComponent(txtBattery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtnumber, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                             .addComponent(txtURL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtBattery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(67, 67, 67)
@@ -137,8 +143,10 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(labelURL)
                     .addComponent(labelnumber)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTemp))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labelTemp)
+                    .addComponent(labelBattery)
+                    .addComponent(labelLoc))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,15 +171,17 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDeviceAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelBattery)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnTechnicalAlarm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtBattery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(labelLoc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTechnicalAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtBattery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(3, 3, 3)))
-                .addGap(28, 28, 28))
+                .addComponent(comboLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
         );
 
         pack();
@@ -222,6 +232,7 @@ public class Main extends javax.swing.JFrame {
             param.setSenderMobileNumber(txtnumber.getText());
             param.setTemperature(txtTemp.getText());
             param.setURLservlet(txtURL.getText());
+            param.setLocation((String)comboLoc.getSelectedItem());           
             fachada.setParameters(param); 
             
             textArea.append("Sending User Alarm... \n");
@@ -246,6 +257,7 @@ public class Main extends javax.swing.JFrame {
             param.setSenderMobileNumber(txtnumber.getText());
             param.setTemperature(txtTemp.getText());
             param.setURLservlet(txtURL.getText());
+            param.setLocation((String)comboLoc.getSelectedItem());           
             fachada.setParameters(param); 
             
             textArea.append("Sending Device Alarm... \n");
@@ -271,6 +283,7 @@ public class Main extends javax.swing.JFrame {
             param.setSenderMobileNumber(txtnumber.getText());
             param.setTemperature(txtTemp.getText());
             param.setURLservlet(txtURL.getText());
+            param.setLocation((String)comboLoc.getSelectedItem());           
             fachada.setParameters(param); 
             
             textArea.append("Sending Technical Alarm... \n");
@@ -336,8 +349,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnTechnicalAlarm;
     private javax.swing.JButton btnUserAlarm;
+    private javax.swing.JComboBox comboLoc;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelBattery;
+    private javax.swing.JLabel labelLoc;
     private javax.swing.JLabel labelTemp;
     private javax.swing.JLabel labelURL;
     private javax.swing.JLabel labelnumber;

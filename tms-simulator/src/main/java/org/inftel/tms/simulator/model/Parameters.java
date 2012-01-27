@@ -18,8 +18,26 @@ public class Parameters {
   private String time="";
   private String URLservlet="";
   private String senderMobileNumber="";
-  private String temperature;
-  private String battery;
+  private String temperature="";
+  private String battery="";
+  private String location="";
+
+
+  /**
+   * Devuelve la localizacion
+   * @return String
+   */
+  public String getLocation() {
+        return location;
+    }
+
+  /**
+   * Establece la localizacion
+   * @param location
+   */
+  public void setLocation(String location) {
+        this.location = location;
+    }
 
   /**
    * Devuelve la URL del servidor
