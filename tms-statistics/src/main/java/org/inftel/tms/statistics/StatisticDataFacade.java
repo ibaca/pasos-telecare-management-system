@@ -106,10 +106,10 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
         TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o WHERE o.name LIKE :name AND o.periodDate = :date", StatisticData.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("date", date);
+        query.setMaxResults(1); // aunq el modelo no debe devolver mas de uno
         
-        StatisticData result = query.getSingleResult();
-
-        return result;
+        List<StatisticData> result = query.getResultList();
+        return (result.size() > 0) ? result.get(0) : null;
     }
     
     
