@@ -225,8 +225,9 @@ public class DeviceConnector implements DeviceConnectorRemote {
   }
 
   // Internal Test Usage
-  DeviceConnector(AlertFacadeRemote alertFacade, AlertRawFacadeRemote alertRawFacade) {
+  DeviceConnector(AlertFacadeRemote alertFacade, AlertRawFacadeRemote alertRawFacade, DeviceFacadeRemote deviceFacade) {
     this.alertFacade = alertFacade;
     this.alertRawFacade = alertRawFacade;
+    this.deviceFacade = deviceFacade;
   }
 }
