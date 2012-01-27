@@ -27,8 +27,6 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
 
     @EJB
     private StatisticDataFacade statisticDataFacade;
-    @EJB
-    private EndOfDayStatisticsTimer endOfDayStatisticsTimer;
     @Resource(mappedName = "jms/statistics")
     private Queue statistics;
     @Resource(mappedName = "jms/statisticsFactory")
@@ -36,21 +34,17 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
 
     @Override
     public void processAlert(Alert name) {
-        // Ejemplos de estadisticas
-        // alert.recived : numero de alertas recibidas
-        //
-        // alert.type.user : numero de alertas por tipo
-        // alert.type.device
-        // alert.type.technical
-        // ...
-        // alert.priority.critical : numero de alertas por prioridad
-        // alert.priority.important
-        // ...
     
-    
-    
-    
-    
+        StatisticData sd = new StatisticData();
+        
+        //TODO: ¿¿instanciar sd con los valores de la Alerta recibida??
+        //¿Cual es el tipo de la alarma a tratar? ¿y el valor? 
+        
+        try {
+            sendJMSMessageToStatistics(sd);
+        } catch (JMSException ex) {
+            Logger.getLogger(StatisticsProcessor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
     }
 
@@ -87,10 +81,8 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
     }
     
     
-    
-    
 
-
+    @Override
     public void updateStatistic(String statisticName, Calendar date, int value) {
         // Se calcula el dia de hoy para comparar
         Calendar today = Calendar.getInstance();
@@ -123,7 +115,9 @@ public class StatisticsProcessor implements StatisticsProcessorRemote {
         sd.setDataCount(value);
 
         statisticDataFacade.create(sd);
-        
        
     }
+    
+    
+    
 }

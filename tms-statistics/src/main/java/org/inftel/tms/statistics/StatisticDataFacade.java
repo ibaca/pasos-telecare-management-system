@@ -102,6 +102,18 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
         return result;
     }
 
+    public StatisticData findByDate(String startWith, Date date) {
+        TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o WHERE o.name LIKE :name AND o.periodDate = :date", StatisticData.class);
+        query.setParameter("name", startWith + "%");
+        query.setParameter("date", date);
+        
+        StatisticData result = query.getSingleResult();
+
+        return result;
+    }
+    
+    
+
     StatisticDataFacade(EntityManager em) {
         super(StatisticData.class);
         this.em = em;
