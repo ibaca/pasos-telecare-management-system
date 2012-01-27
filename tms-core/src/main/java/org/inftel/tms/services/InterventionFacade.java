@@ -43,4 +43,13 @@ public class InterventionFacade extends AbstractFacade<Intervention> implements
         query.setParameter("fromDate", from).setParameter("toDate", to);
         return query.setParameter("user", user).getSingleResult();
     }
+    
+    @Override
+    public void create(Intervention entity) {
+        super.create(entity);
+        if (entity.getAlert() != null) {
+            em.merge(entity.getAlert());
+            entity.getAlert().setClosedIntervention(entity);
+        }
+    }
 }

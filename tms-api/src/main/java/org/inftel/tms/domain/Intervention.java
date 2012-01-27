@@ -37,8 +37,7 @@ public class Intervention extends BaseEntity {
 
     private static final long serialVersionUID = 27387751321069701L;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false, updatable = false)
+    @ManyToOne
     private Alert alert;
 
     @ManyToOne(optional = false)
@@ -82,6 +81,7 @@ public class Intervention extends BaseEntity {
      */
     public void setAlert(Alert alert) {
         this.alert = alert;
+        alert.setClosedIntervention(this);
     }
 
     /**

@@ -11,8 +11,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.inftel.tms.domain.Alert;
+import org.inftel.tms.domain.Intervention;
 import org.inftel.tms.domain.Person;
 import org.inftel.tms.services.AlertFacadeRemote;
+import org.inftel.tms.services.InterventionFacadeRemote;
+import org.inftel.tms.services.UserFacadeRemote;
+import org.inftel.tms.web.UserController;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -32,6 +36,10 @@ public class TableBean implements Serializable {
 
     @EJB
     private AlertFacadeRemote alertFacade;
+    @EJB
+    private UserFacadeRemote userFacade;
+    @EJB
+    private InterventionFacadeRemote interFacade;
 
     public String getIntervention() {
         return intervention;
@@ -56,13 +64,18 @@ public class TableBean implements Serializable {
     public void hide() {
         FacesMessage msg;
         if (show) {
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Intervention opened", "Accesing..");
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Intervention opened", "Accesing...");
             this.show = false;
         } else {
             if (intervention != null || !intervention.isEmpty()) {
-                // GUARDAR INTERVENCION
+                Intervention newIntervention = new Intervention();
+                newIntervention.setAlert(selectedAlert);
+                newIntervention.setBy(userFacade.currentUser());
+                newIntervention.setDescription(intervention);
+                interFacade.create(newIntervention);
+
                 msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Intervention closed",
-                        "Closing..");
+                        "Closing...");
                 this.show = true;
             } else {
                 msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error",
@@ -87,26 +100,25 @@ public class TableBean implements Serializable {
     public void setSelectedAlert(Alert selectedAlert) {
         this.selectedAlert = selectedAlert;
     }
-    
 
-    
-    public List<Person> getContacsOfSelectedAlert(){
+    public List<Person> getContacsOfSelectedAlert() {
         return this.selectedAlert.getAffected().getAffected().getContacts();
     }
-    
+
     public MapModel getAdvancedModel() {
         MapModel advancedModel = new DefaultMapModel();
-        //i am in...
-        advancedModel.addOverlay(new Marker(new LatLng(selectedAlert.getAffected().getLatitude(),selectedAlert.getAffected().getLongitude()), selectedAlert.getAffected().getFirstName(), selectedAlert.getAffected().getSimpleName(),
-                    "http://maps.google.com/mapfiles/ms/micons/red-dot.png"));
-        //my people...
-        for(Person p: getContacsOfSelectedAlert()){
-            LatLng coord = new LatLng(p.getLatitude(),p.getLongitude());
+        // i am in...
+        advancedModel.addOverlay(new Marker(new LatLng(selectedAlert.getAffected().getLatitude(),
+                selectedAlert.getAffected().getLongitude()), selectedAlert.getAffected()
+                .getFirstName(), selectedAlert.getAffected().getSimpleName(),
+                "http://maps.google.com/mapfiles/ms/micons/red-dot.png"));
+        // my people...
+        for (Person p : getContacsOfSelectedAlert()) {
+            LatLng coord = new LatLng(p.getLatitude(), p.getLongitude());
             advancedModel.addOverlay(new Marker(coord, p.getFirstName(), p.getSimpleName(),
                     "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
         }
 
-        
         return advancedModel;
     }
 }
