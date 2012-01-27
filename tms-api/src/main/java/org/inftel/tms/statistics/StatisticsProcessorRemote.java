@@ -1,6 +1,9 @@
 package org.inftel.tms.statistics;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Remote;
 
@@ -89,4 +92,30 @@ public interface StatisticsProcessorRemote {
      *            fecha asociada al valor estadistico
      */
     public void process(String name, Date date);
+
+    /**
+     * Obtiene valores estadisticos.
+     * 
+     * @param name
+     *            nombre estadistico
+     * @param period
+     *            tipo de periodo que se quiere buscar
+     * @param fromDate
+     *            inicio de fecha de las muestras que se quieren obtener
+     * @param toDate
+     *            fin de fecha de las muestras que se quieren obtener
+     * @return mapa donde las claves son los nombre completos estadisticos y los enteros son el
+     *         valor para la muestra y periodo concretoF
+     */
+    public Map<Date, Long> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
+            Date toDate);
+
+    /**
+     * Devuelve todos los nombres estadisticos que coincidan con el token pasado.
+     * 
+     * @param startWith
+     *            comienzo del nombre estadistico que se quiere buscar
+     * @return lista de los nombres que coinciden
+     */
+    public List<String> findStatisticsNames(String startWith);
 }

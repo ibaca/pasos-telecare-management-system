@@ -2,6 +2,7 @@ package org.inftel.tms.statistics;
 
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
+import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
 import static org.inftel.tms.statistics.StatisticDataPeriod.ANNUAL;
@@ -11,6 +12,8 @@ import static org.inftel.tms.statistics.StatisticDataPeriod.MONTHLY;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -133,6 +136,20 @@ public class StatisticsProcessor implements StatisticsProcessorRemote, Statistic
 
         statisticDataFacade.create(sd);
 
+    }
+
+    @Override
+    public Map<Date, Long> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
+            Date toDate) {
+        logger.log(INFO, "consultando estadisticas {0} para periodo {1} y fechas entre {2} y {3}",
+                new Object[] { name, period, fromDate, toDate });
+        // Delegate to StatisticDataFacade
+        return statisticDataFacade.findStatistics(name, period, fromDate, toDate);
+    }
+
+    @Override
+    public List<String> findStatisticsNames(String startWith) {
+        return statisticDataFacade.findStatisticsNames(startWith);
     }
 
 }

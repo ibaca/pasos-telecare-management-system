@@ -1,9 +1,19 @@
 package org.inftel.tms.statistics;
 
+import static javax.persistence.GenerationType.TABLE;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Los valores estadisticos quedan definidos por dos atributos, sum y count. Sum indica el sumatorio
@@ -27,7 +37,8 @@ public class StatisticData implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(name = "statistic_data_generator", initialValue = 10000)
+    @GeneratedValue(strategy = TABLE, generator = "statistic_data_generator")
     private Long id;
     private String name;
     @Column(nullable = false)

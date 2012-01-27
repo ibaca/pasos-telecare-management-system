@@ -39,11 +39,11 @@ public class StatisticsDataFacadeTest {
         // Inicializar EntityManager, obtener connection y cargar datos XML
         emf = Persistence.createEntityManagerFactory("tms-statistic-mocked");
         em = emf.createEntityManager();
-        connection = new DatabaseConnection(
-                ((EntityManagerImpl) (em.getDelegate())).getServerSession().getAccessor().getConnection());
+        connection = new DatabaseConnection(((EntityManagerImpl) (em.getDelegate()))
+                .getServerSession().getAccessor().getConnection());
         FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
-        dataset = builder.build(
-                Thread.currentThread().getContextClassLoader().getResourceAsStream("statistics-test-dataset.xml"));
+        dataset = builder.build(Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("statistics-test-dataset.xml"));
         // Todo lo realizado hasta ahora se puede hacer una unica vez para todos los test
     }
 
@@ -87,8 +87,9 @@ public class StatisticsDataFacadeTest {
         Date date = calendar.getTime();
         System.out.println("date: " + date.getTime() + "=" + date);
         for (StatisticData data : service.findAll()) {
-            System.out.println(data.getName() + " > " + data.getPeriodType() + " > " + data.getPeriodDate().getTime() + "="
-                    + data.getPeriodDate() + " :: " + data.getDataValue());
+            System.out.println(data.getName() + " > " + data.getPeriodType() + " > "
+                    + data.getPeriodDate().getTime() + "=" + data.getPeriodDate() + " :: "
+                    + data.getDataValue());
         }
         Map<String, Long> result = service.findStatistics("alert.type", ANNUAL, date);
         Assert.assertEquals(new Long(10), result.get("alert.type.user"));
@@ -107,19 +108,15 @@ public class StatisticsDataFacadeTest {
         System.out.println("First date: " + firstDay.getTime() + "=" + firstDay);
         System.out.println("Last date: " + lastDay.getTime() + "=" + lastDay);
 
-        List<StatisticData> result = service.findStatistics("alert.type." + AlertType.USER.name().toLowerCase(), DAYLY, firstDay, lastDay);
-        for (StatisticData data : result) {
-            System.out.println(data.getName() + " > "
-                    + data.getPeriodType() + " > "
-                    + data.getPeriodDate().getTime() + "="
-                    + data.getPeriodDate() + " :: "
-                    + data.getDataValue());
+        Map<Date, Long> result = service.findStatistics("alert.type."
+                + AlertType.USER.name().toLowerCase(), DAYLY, firstDay, lastDay);
+        for (Date date : result.keySet()) {
+            System.out.println(date + " := " + result.get(date));
         }
         Assert.assertEquals(new Integer(18), new Integer(result.size()));
     }
 
     @Test
-   
     public void testSumStatictics() {
         StatisticDataFacade service = new StatisticDataFacade(em);
         Calendar calendar = Calendar.getInstance();
@@ -131,8 +128,8 @@ public class StatisticsDataFacadeTest {
         System.out.println("First date: " + firstDay.getTime() + "=" + firstDay);
         System.out.println("Last date: " + lastDay.getTime() + "=" + lastDay);
 
-        int sum = service.sumStatictics("alert.type." + AlertType.USER.name().toLowerCase(),
-                DAYLY, firstDay, lastDay);
+        int sum = service.sumStatictics("alert.type." + AlertType.USER.name().toLowerCase(), DAYLY,
+                firstDay, lastDay);
 
         Assert.assertEquals(60, sum);
 
@@ -146,7 +143,7 @@ public class StatisticsDataFacadeTest {
         System.out.println("FEHCA: " + calendar.getTime());
         StatisticData sd = service.findByDate("alert.process.time", calendar.getTime());
 
-       // Assert.assertEquals(new Integer(200), sd.getDataSum());
+        // Assert.assertEquals(new Integer(200), sd.getDataSum());
         Assert.assertNull(sd);
 
     }

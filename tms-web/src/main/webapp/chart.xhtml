@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ppctu="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ppctu="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<title>Telecare Alarm Center</title>
 	<link href="#{request.contextPath}/resources/img/favicon.ico" rel="shortcut icon" />
@@ -18,10 +17,8 @@
 
 	<ppctu:growl id="growl" showDetail="true" life="3000" />
 	<div class="contenedor960">
-		<ppctu:pieChart value="#{chartBean.affectedsModel}" legendPosition="e" title="Tipos de afectados registrados en el sistema"
-			style="height:300px;margin-top:20px" />
-		<ppctu:lineChart value="#{chartBean.linearModel}" legendPosition="e" title="Linear Chart" minY="0"
-			maxY="10" style="height:300px" />
+		<ppctu:pieChart value="#{chartBean.affectedsModel}" legendPosition="e" title="Tipos de afectados registrados en el sistema" style="height:300px;margin-top:20px" />
+		<ppctu:lineChart value="#{chartBean.alertsModel}" legendPosition="e" title="Historico de numero de alertas recibidas por tipo de alerta" minY="0" style="height:300px" />
 
 
 	</div>
