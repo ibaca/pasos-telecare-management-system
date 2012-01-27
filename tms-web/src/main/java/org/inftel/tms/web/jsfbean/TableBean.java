@@ -59,7 +59,6 @@ public class TableBean implements Serializable {
             msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Intervention opened", "Accesing..");
             this.show = false;
         } else {
-            System.out.println("INTERVENTIONNNNN: " + intervention);
             if (intervention != null || !intervention.isEmpty()) {
                 // GUARDAR INTERVENCION
                 msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Intervention closed",
@@ -86,9 +85,10 @@ public class TableBean implements Serializable {
     }
 
     public void setSelectedAlert(Alert selectedAlert) {
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedAlert",selectedAlert);
         this.selectedAlert = selectedAlert;
     }
+    
+
     
     public List<Person> getContacsOfSelectedAlert(){
         return this.selectedAlert.getAffected().getAffected().getContacts();
@@ -96,11 +96,16 @@ public class TableBean implements Serializable {
     
     public MapModel getAdvancedModel() {
         MapModel advancedModel = new DefaultMapModel();
-        for(Person p: selectedAlert.getAffected().getAffected().getContacts()){
+        LatLng mycoord = new LatLng(selectedAlert.getAffected().getLatitude(),selectedAlert.getAffected().getLongitude());
+        advancedModel.addOverlay(new Marker(mycoord, selectedAlert.getAffected().getFirstName(), selectedAlert.getAffected().getSimpleName(),
+                    "http://maps.google.com/mapfiles/ms/micons/red-dot.png"));
+        
+        for(Person p: getContacsOfSelectedAlert()){
             LatLng coord = new LatLng(p.getLatitude(),p.getLongitude());
-            advancedModel.addOverlay(new Marker(coord, p.getFirstName(), "konyaalti.png",
+            advancedModel.addOverlay(new Marker(coord, p.getFirstName(), p.getSimpleName(),
                     "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
         }
+
         
         return advancedModel;
     }

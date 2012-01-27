@@ -24,7 +24,7 @@ type="text/javascript"></script>
         <ppctu:fieldset id="container" legend="Telecare Alarm Center: Administration"> 
         <h:panelGroup rendered="#{tableBean.show}" >
             
-            <h:form> 
+            <h:form id="form">        
                 <ppctu:dataList value="#{tableBean.alerts}" var="alert"  
                     paginator="true" rows="5" effectSpeed="fast"  
                     paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
@@ -34,31 +34,27 @@ type="text/javascript"></script>
                         Active Alerts  
                     </f:facet>  
 
-                    <ppctu:column>  
-                        <ppctu:commandLink update=":form:alertDetail" oncomplete="alertDialog.show()" title="View Detail" style="width: 30px;display: inline-block;">  
-                            <ppctu:graphicImage value="./resources/img/search.png"/>   
-                            <f:setPropertyActionListener value="#{alert}" target="#{tableBean.selectedAlert}" />  
-                        </ppctu:commandLink>
-
-                        <h:outputText value="#{alert.type}" style="width:100px;white-space:nowrap;display:inline-block;" />
-                        <h:outputText value="#{alert.priority}" style="width:100px;white-space:nowrap;display:inline-block;" />
-                        <h:outputText value="#{alert.affected.simpleName}" style="width:100px;white-space:nowrap;display:inline-block;" />
-                        <h:outputText value="#{alert.cause}" style="width:275px;white-space:nowrap;display:inline-block;overflow: hidden;margin-right:5px;" />
-                        <h:outputText value="#{alert.created}" style="width:198px;white-space:nowrap;display:inline-block;" />
-                        
-                        <ppctu:commandLink>
-                            <ppctu:commandButton value=">>" actionListener="#{tableBean.hide}" update="container" />
-                            <f:setPropertyActionListener value="#{alert}" target="#{tableBean.selectedAlert}" /> 
-                        </ppctu:commandLink>
+                    <ppctu:column>
+                        <h:panelGrid  columns="3" cellpadding="5">
+                            <h:panelGroup id="firstcolumn">
+                                <ppctu:commandLink update=":form:alertDetail" oncomplete="alertDialog.show()" title="View Detail">  
+                                    <ppctu:selectBooleanCheckbox />    
+                                    <f:setPropertyActionListener value="#{alert}" target="#{tableBean.selectedAlert}" />  
+                                </ppctu:commandLink>  
+                            </h:panelGroup>
+                            <h:outputText value="#{alert.type}  #{alert.priority}  #{alert.affected.simpleName}  #{alert.cause}  #{alert.created}" style="margin-left:10px" />  
+                            <h:panelGroup id="secondcolumn">
+                            </h:panelGroup>
+                        </h:panelGrid>
                     </ppctu:column>  
-                </ppctu:dataList>  
-
-
-                <ppctu:dialog header="alert Detail" widgetVar="alertDialog" modal="true" showEffect="fade">  
+                </ppctu:dataList>
+                <br/>
+                <ppctu:commandButton value="Intervention" actionListener="#{tableBean.hide}" update="container"/>
+                
+                <ppctu:dialog header="Alert Detail" widgetVar="alertDialog" modal="true" showEffect="fade">  
                     <ppctu:outputPanel id="alertDetail" style="text-align:center;" layout="block">  
-                        <ppctu:graphicImage value="/images/alerts/#{tableBean.selectedAlert.affected}.jpg"/>  
                         <h:panelGrid  columns="2" cellpadding="5">  
-                            <h:outputLabel for="name" value="Name: " />  
+                           <h:outputLabel for="name" value="Name: " />  
                             <h:outputText id="name" value="#{tableBean.selectedAlert.affected.firstName}, #{tableBean.selectedAlert.affected.lastName}" />  
 
                             <h:outputLabel for="email" value="E-mail: " />  
@@ -68,9 +64,9 @@ type="text/javascript"></script>
                             <h:outputText id="number" value="#{tableBean.selectedAlert.affected.mobileNumber}"/>  
                         </h:panelGrid>  
                     </ppctu:outputPanel>  
-                </ppctu:dialog> 
+                </ppctu:dialog>  
 
-            </h:form> 
+            </h:form>    
         </h:panelGroup> <!-- END OF THE FIRST PANEL GROUP -->
          
         <h:panelGroup rendered="#{!tableBean.show}">
@@ -116,7 +112,7 @@ type="text/javascript"></script>
               
                 <center>
                     
-                    <ppctu:gmap center="36.890257,30.707417" zoom="13" type="HYBRID" model="#{tableBean.advancedModel}" style="width:600px;height:400px" />  
+                    <ppctu:gmap center="#{tableBean.selectedAlert.affected.latitude},#{tableBean.selectedAlert.affected.longitude}" zoom="13" type="HYBRID" model="#{tableBean.advancedModel}" style="width:600px;height:400px" />  
                   <!--      <ppctu:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}"/>
                         
                     <ppctu:gmapInfoWindow>  
