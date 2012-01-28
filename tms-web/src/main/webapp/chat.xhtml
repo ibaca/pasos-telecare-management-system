@@ -15,12 +15,13 @@
             <span> Telecare Alarm Center </span>
         </div> <!-- fin contenedor960 -->
     </div> <!-- fin menu -->    
-    <ppctu:growl id="growl" showDetail="true" life="3000" /> 
     
     <div class="contenedor960">                   
+       <ppctu:growl id="growl" showDetail="true" />  
+              
         <h:form>  
 
-            <ppctu:fieldset id="container" legend="Telecare Alarm Center: Chat">  
+            <ppctu:fieldset id="container" legend="Telecare Alarm Center: Administration">  
 
                 <h:panelGroup rendered="#{chatController.loggedIn}" >  
                     <ppctu:outputPanel layout="block" style="width:600px;height:200px;overflow:auto"   
@@ -36,9 +37,8 @@
                                         oncomplete="chatAgent.close()" update="container" />  
                 </h:panelGroup>  
 
-                <h:panelGroup rendered="#{not chatController.loggedIn}" >  
+                <h:panelGroup rendered="#{!chatController.loggedIn}" >  
                     Username: <ppctu:inputText value="#{chatController.username}" />  
-
                     <ppctu:spacer width="5" />  
                     <ppctu:commandButton value="Login" actionListener="#{chatController.login}" update="container"   
                                     icon="ui-icon-person"/>  
@@ -59,8 +59,6 @@
                 chatContent.scrollTop(chatContent.height());  
             }  
         </script>  
-           
-        
     </div> <!-- fin contenedor960 -->               
 <ppctu:dock>  
     <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="./dock.xhtml"/>  

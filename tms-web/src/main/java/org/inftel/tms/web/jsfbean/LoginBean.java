@@ -1,11 +1,13 @@
 package org.inftel.tms.web.jsfbean;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.inftel.tms.domain.User;
 
 import org.inftel.tms.services.UserFacadeRemote;
 import org.primefaces.context.RequestContext;
@@ -41,17 +43,21 @@ public class LoginBean {
     }
 
     public void login() {
+        List<User> lista = userFacade.findAll();
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg;
-        if (username != null && username.equals("admin") && password != null
-                && password.equals("admin")) {
-            loggedIn = true;
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Welcome", username);
-
-        } else {
-            loggedIn = false;
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Invalid credentials");
+        for(User u : lista){
+            if (username != null && username.equals(u.getNickname()) && password != null
+                    && password.equals(u.getPassword())) {
+                loggedIn = true;
+                msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Welcome", username);
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                context.addCallbackParam("loggedIn", loggedIn);
+                return;
+            }
         }
+        loggedIn = false;
+        msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Invalid credentials");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         context.addCallbackParam("loggedIn", loggedIn);
     }
