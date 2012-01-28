@@ -5,8 +5,8 @@
   <users id='2' fullname='Ignacio Baca' nickname='ibaca' email='ignacio@bacamt.com' password='ibaca' userRole='0' created='2012-01-15' updated='2012-01-16' version='1' />
 
   <people id='1' firstname='Marco' lastname='Polo' email='marco@polo.com' mobilenumber='666000111' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
-  <people id='2' firstname='Ernesto' lastname='Rivera' email='ernesto@rivera.com' mobilenumber='666000222' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
-  <people id='3' firstname='Francisco' lastname='Lopez' email='flopez@mail.com' mobilenumber='666000223' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
+  <people id='2' firstname='Ernesto' lastname='Rivera' email='ernesto@rivera.com' mobilenumber='666000222' latitude='36.831' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
+  <people id='3' firstname='Francisco' lastname='Lopez' email='flopez@mail.com' mobilenumber='666000223' latitude='36.731' longitude='-4.517' created='2012-01-15' updated='2012-01-16' version='1' />
   <people id='4' firstname='Ambrosio' lastname='Jacinto' email='ajacinto@mail.com' mobilenumber='666000224' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
   <people id='5' firstname='Yosue' lastname='Itare' email='yi@mail.com' mobilenumber='666000225' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
 
