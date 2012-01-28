@@ -65,7 +65,7 @@ public class StatisticProcessor implements StatisticProcessorRemote {
 
     @Override
     public void process(String name, Date date, double accumulated) {
-        process(name, date, accumulated, null);
+        process(name, date, accumulated, 1l);
     }
 
     @Override

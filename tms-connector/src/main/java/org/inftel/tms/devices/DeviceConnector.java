@@ -190,7 +190,7 @@ public class DeviceConnector implements DeviceConnectorRemote {
             return internalProcessAlert(from, message, raw);
         } finally {
             time = System.currentTimeMillis() - time;
-            statisticProcessor.process("alert.reciverProcessTime", new Date(), time);
+            statisticProcessor.process("alert.reciverProcessTime", new Date(), new Double(time));
         }
     }
 

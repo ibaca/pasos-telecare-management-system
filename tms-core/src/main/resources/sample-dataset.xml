@@ -32,12 +32,26 @@
   <alerts_raw id='1002' origin='666123123' rawData='$AU11&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;PB50#' version='1' />
   <alerts_raw id='1003' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
   <alerts_raw id='1004' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='1005' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='1006' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='1007' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='1008' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='1009' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='1010' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='1011' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
 
   <alerts id='1000' affected_id='1' origin_id='1' cause='se ha caido' type='0' priority='0' raw_id='1000' created='2012-01-15' updated='2012-01-16' version='1' />
   <alerts id='1001' affected_id='1' origin_id='1' cause='ha tropezado' type='0' priority='0' raw_id='1001' created='2012-01-15' updated='2012-01-16' version='1' />
   <alerts id='1002' affected_id='1' origin_id='1' cause='se ha perdido' type='0' priority='0' raw_id='1002' created='2012-01-15' updated='2012-01-16' version='1' />
   <alerts id='1003' affected_id='1' origin_id='1' cause='ha pulsado el boton' type='1' priority='1' raw_id='1003' created='2012-01-15' updated='2012-01-16' version='1' />
   <alerts id='1004' affected_id='1' origin_id='1' cause='otra cosa' type='1' priority='1' raw_id='1004' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='1005' affected_id='1' origin_id='1' cause='otra cosa mas' type='1' priority='1' raw_id='1005' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='1006' affected_id='1' origin_id='1' cause='otra cosa menos' type='1' priority='1' raw_id='1006' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='1007' affected_id='2' origin_id='1' cause='otra intervencio' type='1' priority='1' raw_id='1007' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='1008' affected_id='2' origin_id='1' cause='otra problema' type='1' priority='1' raw_id='1008' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='1009' affected_id='2' origin_id='1' cause='otra' type='1' priority='1' raw_id='1009' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='1010' affected_id='2' origin_id='1' cause='otra pulsacion de boton' type='1' priority='1' raw_id='1010' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='1011' affected_id='1' origin_id='1' cause='otra cosa' type='1' priority='1' raw_id='1011' created='2012-01-15' updated='2012-01-16' version='1' />
 
   <interventions id='1' description='descripcion1' alert_id='1000' by_id='1' created='2012-01-15' updated='2012-01-16' version='1' />
   <interventions id='2' description='descripcion2' alert_id='1000' by_id='1' created='2012-01-15' updated='2012-01-16' version='1' />
