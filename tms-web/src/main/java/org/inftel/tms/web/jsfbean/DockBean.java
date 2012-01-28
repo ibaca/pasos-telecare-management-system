@@ -28,7 +28,7 @@ import org.primefaces.model.map.Marker;
  */
 @ManagedBean
 @SessionScoped
-public class TableBean implements Serializable {
+public class DockBean implements Serializable {
     private boolean show = true;
     private Alert selectedAlert;
     private String intervention;
@@ -49,7 +49,7 @@ public class TableBean implements Serializable {
         this.intervention = intervention;
     }
 
-    public TableBean() {
+    public DockBean() {
         System.out.println("nueva instancia table bean" + this);
     }
 
@@ -60,7 +60,7 @@ public class TableBean implements Serializable {
     public void setShow(boolean show) {
         this.show = show;
     }
-
+    
     public void hide() {
         FacesMessage msg;
         if (show) {
@@ -107,16 +107,20 @@ public class TableBean implements Serializable {
 
     public MapModel getAdvancedModel() {
         MapModel advancedModel = new DefaultMapModel();
+        
         // i am in...
-        advancedModel.addOverlay(new Marker(new LatLng(selectedAlert.getAffected().getLatitude(),
-                selectedAlert.getAffected().getLongitude()), selectedAlert.getAffected()
-                .getFirstName(), selectedAlert.getAffected().getSimpleName(),
-                "http://maps.google.com/mapfiles/ms/micons/red-dot.png"));
+        LatLng mycoord = new LatLng(selectedAlert.getAffected().getLatitude(),selectedAlert.getAffected().getLongitude());
+        Marker myMark= new Marker(mycoord,selectedAlert.getAffected().getFirstName(),
+                selectedAlert.getAffected().getSimpleName(),
+                "http://maps.google.com/mapfiles/ms/micons/red-dot.png");
+        advancedModel.addOverlay(myMark);
+        
         // my people...
         for (Person p : getContacsOfSelectedAlert()) {
             LatLng coord = new LatLng(p.getLatitude(), p.getLongitude());
-            advancedModel.addOverlay(new Marker(coord, p.getFirstName(), p.getSimpleName(),
-                    "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
+            Marker mark= new Marker(coord, p.getFirstName(), p.getSimpleName(),
+                    "http://maps.google.com/mapfiles/ms/micons/blue-dot.png");
+            advancedModel.addOverlay(mark);
         }
 
         return advancedModel;

@@ -22,46 +22,50 @@ type="text/javascript"></script>
     <div class="contenedor960">
         
         <ppctu:fieldset id="container" legend="Telecare Alarm Center: Administration"> 
-        <h:panelGroup rendered="#{tableBean.show}" >
+        <h:panelGroup id="firstgroup" rendered="#{dockBean.show}" >
             
             <h:form id="form">        
-                <ppctu:dataList value="#{tableBean.alerts}" var="alert"  
-                    paginator="true" rows="5" effectSpeed="fast"  
+                <ppctu:dataList value="#{dockBean.alerts}" var="alert"  
+                    paginator="true" rows="5"  
                     paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                    rowsPerPageTemplate="5,10,15">  
+                    rowsPerPageTemplate="5,10,15" >  
 
                     <f:facet name="header">  
                         Active Alerts  
                     </f:facet>  
 
                     <ppctu:column>
-                        <h:panelGrid  columns="3" cellpadding="5">
-                            <h:panelGroup id="firstcolumn">
-                                <ppctu:commandLink update=":form:alertDetail" oncomplete="alertDialog.show()" title="View Detail">  
-                                    <ppctu:selectBooleanCheckbox />    
-                                    <f:setPropertyActionListener value="#{alert}" target="#{tableBean.selectedAlert}" />  
+                      <h:panelGrid  columns="2" cellpadding="5">
+                             <h:panelGroup id="firstcolumn">
+                                <ppctu:commandLink update=":form:alertDetail" oncomplete="alertDialog.show()" title="Select Alert">  
+                                    <ppctu:commandButton value=">>"/>    
+                                    <f:setPropertyActionListener value="#{alert}" target="#{dockBean.selectedAlert}" />  
                                 </ppctu:commandLink>  
                             </h:panelGroup>
                             <h:outputText value="#{alert.type}  #{alert.priority}  #{alert.affected.simpleName}  #{alert.cause}  #{alert.created}" style="margin-left:10px" />  
-                            <h:panelGroup id="secondcolumn">
-                            </h:panelGroup>
-                        </h:panelGrid>
+                      </h:panelGrid>
                     </ppctu:column>  
                 </ppctu:dataList>
                 <br/>
-                <ppctu:commandButton value="Intervention" actionListener="#{tableBean.hide}" update="container"/>
+                <ppctu:commandButton value="Intervention" actionListener="#{dockBean.hide}" update="container"/>
                 
-                <ppctu:dialog header="Alert Detail" widgetVar="alertDialog" modal="true" showEffect="fade">  
+                <ppctu:dialog header="Selected Alert" widgetVar="alertDialog" modal="true" showEffect="fade">  
                     <ppctu:outputPanel id="alertDetail" style="text-align:center;" layout="block">  
-                        <h:panelGrid  columns="2" cellpadding="5">  
+                        <h:outputText value="WARNING! you have chosen this alert to intervene it" />
+                        <br/>
+                        <h:panelGrid  columns="2" cellpadding="5"> 
+                            
                            <h:outputLabel for="name" value="Name: " />  
-                            <h:outputText id="name" value="#{tableBean.selectedAlert.affected.firstName}, #{tableBean.selectedAlert.affected.lastName}" />  
+                            <h:outputText id="name" value="#{dockBean.selectedAlert.affected.firstName}, #{dockBean.selectedAlert.affected.lastName}" />  
 
                             <h:outputLabel for="email" value="E-mail: " />  
-                            <h:outputText id="email" value="#{tableBean.selectedAlert.affected.email}" />  
+                            <h:outputText id="email" value="#{dockBean.selectedAlert.affected.email}" />  
 
                             <h:outputLabel for="number" value="Mobile Number: " />  
-                            <h:outputText id="number" value="#{tableBean.selectedAlert.affected.mobileNumber}"/>  
+                            <h:outputText id="number" value="#{dockBean.selectedAlert.affected.mobileNumber}"/> 
+                            
+                            <h:outputLabel for="created" value="Created: " />
+                            <h:outputText value="#{dockBean.selectedAlert.created}" />
                         </h:panelGrid>  
                     </ppctu:outputPanel>  
                 </ppctu:dialog>  
@@ -69,50 +73,47 @@ type="text/javascript"></script>
             </h:form>    
         </h:panelGroup> <!-- END OF THE FIRST PANEL GROUP -->
          
-        <h:panelGroup rendered="#{!tableBean.show}">
-            <h:form>
+        <h:panelGroup id="secondgroup" rendered="#{!dockBean.show}">
+            <h:form id="secondform">
             <ppctu:tabView id="tabView">  
 
                 <ppctu:tab id="tab1" title="About">  
                      <h:panelGrid columns="1" cellpadding="10">   
-                        <h:outputText value="First Name: #{tableBean.selectedAlert.affected.firstName}" />
-                        <h:outputText value="Last Name: #{tableBean.selectedAlert.affected.lastName}" />
-                        <h:outputText value="Simple Name: #{tableBean.selectedAlert.affected.simpleName}" />
-                        <h:outputText value="Email: #{tableBean.selectedAlert.affected.email}" />
-                        <h:outputText value="Id: #{tableBean.selectedAlert.affected.id}" />
+                        <h:outputText value="First Name: #{dockBean.selectedAlert.affected.firstName}" />
+                        <h:outputText value="Last Name: #{dockBean.selectedAlert.affected.lastName}" />
+                        <h:outputText value="Simple Name: #{dockBean.selectedAlert.affected.simpleName}" />
+                        <h:outputText value="Email: #{dockBean.selectedAlert.affected.email}" />
+                        <h:outputText value="Id: #{dockBean.selectedAlert.affected.id}" />
                     </h:panelGrid>  
                 </ppctu:tab>  
 
                 <ppctu:tab id="tab2" title="Alert">  
                      <h:panelGrid columns="1" cellpadding="10">   
-                         <h:outputText value="Cause: #{tableBean.selectedAlert.cause}" />
-                         <h:outputText value="Created: #{tableBean.selectedAlert.created}" />
-                         <h:outputText value="Priority: #{tableBean.selectedAlert.priority}" />
-                         <h:outputText value="Type: #{tableBean.selectedAlert.type}" />
+                         <h:outputText value="Cause: #{dockBean.selectedAlert.cause}" />
+                         <h:outputText value="Created: #{dockBean.selectedAlert.created}" />
+                         <h:outputText value="Priority: #{dockBean.selectedAlert.priority}" />
+                         <h:outputText value="Type: #{dockBean.selectedAlert.type}" />
                     </h:panelGrid>  
                 </ppctu:tab>  
 
                 <ppctu:tab id="tab3" title="Device">  
                     <h:panelGrid columns="1" cellpadding="10">  
-                        <h:outputText value="Number: #{tableBean.selectedAlert.origin.mobileNumber}" />
-                        <h:outputText value="Battery: #{tableBean.selectedAlert.origin.batery}" />
-                        <h:outputText value="SimCard: #{tableBean.selectedAlert.origin.simCard}" />
-                        <h:outputText value="Temperature: #{tableBean.selectedAlert.origin.temperature}" />
+                        <h:outputText value="Number: #{dockBean.selectedAlert.origin.mobileNumber}" />
+                        <h:outputText value="Battery: #{dockBean.selectedAlert.origin.batery}" />
+                        <h:outputText value="SimCard: #{dockBean.selectedAlert.origin.simCard}" />
+                        <h:outputText value="Temperature: #{dockBean.selectedAlert.origin.temperature}" />
                     </h:panelGrid>  
                 </ppctu:tab>
                 
                 <ppctu:tab id="tab4" title="Contacs">  
-                   <ppctu:dataList value="#{tableBean.contacsOfSelectedAlert}" var="person" itemType="disc">  
+                   <ppctu:dataList value="#{dockBean.contacsOfSelectedAlert}" var="person" itemType="disc">  
                         #{person.firstName}, #{person.lastName} : #{person.mobileNumber}  
                     </ppctu:dataList>
                 </ppctu:tab>  
             </ppctu:tabView>  
             <br/><br/>
-    
-              
                 <center>
-                    
-                    <ppctu:gmap center="#{tableBean.selectedAlert.affected.latitude},#{tableBean.selectedAlert.affected.longitude}" zoom="13" type="HYBRID" model="#{tableBean.advancedModel}" style="width:600px;height:400px" />  
+                    <ppctu:gmap id="gmap" center="#{dockBean.selectedAlert.affected.latitude},#{dockBean.selectedAlert.affected.longitude}" zoom="13" type="HYBRID" model="#{dockBean.advancedModel}" style="width:600px;height:400px" />  
                   <!--      <ppctu:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}"/>
                         
                     <ppctu:gmapInfoWindow>  
@@ -124,17 +125,15 @@ type="text/javascript"></script>
                     </ppctu:gmapInfoWindow>
                     </ppctu:gmap></center> -->
                 <br/><br/>
-                <h:outputText value="Intervention: "/> 
-                <ppctu:inputTextarea value="#{tableBean.intervention}"  required="true"/>
-                <br/>
-                <ppctu:commandButton value="Done" actionListener="#{tableBean.hide}" update="container"/></center>
+                <h:outputText value="Intervention: " /> 
+                <ppctu:inputTextarea value="#{dockBean.intervention}"  required="false" style="width: 400px"/></center>
+            <ppctu:commandButton value="Done" actionListener="#{dockBean.hide}" update="container" style="float:right"/>
             </h:form>
         </h:panelGroup>
         <ppctu:growl id="growl" showDetail="true"/>
         </ppctu:fieldset><!-- END OF THE SECOND PANEL GROUP -->
     </div> <!-- fin contenedor960 -->  
-            
-<ppctu:dock>  
+<ppctu:dock >  
     <ppctu:menuitem value="Home" icon="./resources/img/dock/home.png" url="./dock.xhtml"/>  
     <ppctu:menuitem value="Email" icon="./resources/img/dock/email.png" url="#"/>  
     <ppctu:menuitem value="Chat" icon="./resources/img/dock/portfolio.png" url="./chat.xhtml"/>  
