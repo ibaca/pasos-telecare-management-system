@@ -20,8 +20,6 @@ import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.sun.tools.ws.wsdl.document.jaxws.Exception;
-
 /**
  * Los valores estadisticos quedan definidos por dos atributos, sum y count. Sum indica el sumatorio
  * de los valores en el intervalo que representa la instancia. Count representa el numero de
