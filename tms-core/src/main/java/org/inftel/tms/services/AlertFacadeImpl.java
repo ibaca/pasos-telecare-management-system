@@ -23,9 +23,9 @@ import org.inftel.tms.domain.Person;
  * @author ibaca
  */
 @Stateless
-public class AlertFacade extends AbstractFacade<Alert> implements AlertFacadeRemote {
+public class AlertFacadeImpl extends AbstractFacade<Alert> implements AlertFacade {
 
-    private final static Logger log = Logger.getLogger(AlertFacade.class.getName());
+    private final static Logger log = Logger.getLogger(AlertFacadeImpl.class.getName());
 
     @PersistenceContext(unitName = "tms-persistence")
     private EntityManager em;
@@ -35,7 +35,7 @@ public class AlertFacade extends AbstractFacade<Alert> implements AlertFacadeRem
         return em;
     }
 
-    public AlertFacade() {
+    public AlertFacadeImpl() {
         super(Alert.class);
     }
 
@@ -64,7 +64,7 @@ public class AlertFacade extends AbstractFacade<Alert> implements AlertFacadeRem
     }
 
     // Internal test usage
-    AlertFacade(EntityManager em) {
+    AlertFacadeImpl(EntityManager em) {
         super(Alert.class);
         this.em = em;
     }

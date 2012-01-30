@@ -13,7 +13,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import org.inftel.tms.domain.Device;
-import org.inftel.tms.services.DeviceFacadeRemote;
+import org.inftel.tms.services.DeviceFacade;
 import org.inftel.tms.web.util.JsfUtil;
 import org.inftel.tms.web.util.PaginationHelper;
 
@@ -24,7 +24,7 @@ public class DeviceController implements Serializable {
   private Device current;
   private DataModel items = null;
   @EJB
-  private DeviceFacadeRemote ejbFacade;
+  private DeviceFacade ejbFacade;
   private PaginationHelper pagination;
   private int selectedItemIndex;
 
@@ -39,7 +39,7 @@ public class DeviceController implements Serializable {
     return current;
   }
 
-  private DeviceFacadeRemote getFacade() {
+  private DeviceFacade getFacade() {
     return ejbFacade;
   }
 

@@ -17,9 +17,9 @@ import javax.naming.NamingException;
 import org.inftel.tms.domain.Affected;
 import org.inftel.tms.domain.Device;
 import org.inftel.tms.domain.Person;
-import org.inftel.tms.services.AffectedFacadeRemote;
-import org.inftel.tms.services.DeviceFacadeRemote;
-import org.inftel.tms.services.PeopleFacadeRemote;
+import org.inftel.tms.services.AffectedFacade;
+import org.inftel.tms.services.DeviceFacade;
+import org.inftel.tms.services.PeopleFacade;
 
 /**
  *
@@ -32,11 +32,11 @@ import org.inftel.tms.services.PeopleFacadeRemote;
 @ManagedBean
 public class UserWizard {
     @EJB
-    AffectedFacadeRemote affectedFacade = lookupAffectedFacadeRemote();
+    AffectedFacade affectedFacade = lookupAffectedFacadeRemote();
     @EJB
-    DeviceFacadeRemote deviceFacade = lookupDeviceFacadeRemote();
+    DeviceFacade deviceFacade = lookupDeviceFacadeRemote();
     @EJB
-    PeopleFacadeRemote peopleFacade = lookupPeopleFacadeRemote();
+    PeopleFacade peopleFacade = lookupPeopleFacadeRemote();
     
     Person p;
     Device d;
@@ -67,30 +67,30 @@ public class UserWizard {
         deviceFacade.create(d);
     }
 
-    private PeopleFacadeRemote lookupPeopleFacadeRemote() {
+    private PeopleFacade lookupPeopleFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (PeopleFacadeRemote) c.lookup("java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/org.inftel.tms_tms-core_ejb_1.0-SNAPSHOT/PeopleFacade!org.inftel.tms.services.PeopleFacadeRemote");
+            return (PeopleFacade) c.lookup("java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/org.inftel.tms_tms-core_ejb_1.0-SNAPSHOT/PeopleFacade!org.inftel.tms.services.PeopleFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
     }
 
-    private DeviceFacadeRemote lookupDeviceFacadeRemote() {
+    private DeviceFacade lookupDeviceFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (DeviceFacadeRemote) c.lookup("java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/org.inftel.tms_tms-core_ejb_1.0-SNAPSHOT/DeviceFacade!org.inftel.tms.services.DeviceFacadeRemote");
+            return (DeviceFacade) c.lookup("java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/org.inftel.tms_tms-core_ejb_1.0-SNAPSHOT/DeviceFacade!org.inftel.tms.services.DeviceFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
     }
 
-    private AffectedFacadeRemote lookupAffectedFacadeRemote() {
+    private AffectedFacade lookupAffectedFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (AffectedFacadeRemote) c.lookup("java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/org.inftel.tms_tms-core_ejb_1.0-SNAPSHOT/AffectedFacade!org.inftel.tms.services.AffectedFacadeRemote");
+            return (AffectedFacade) c.lookup("java:global/org.inftel.tms_tms-bundle_ear_1.0-SNAPSHOT/org.inftel.tms_tms-core_ejb_1.0-SNAPSHOT/AffectedFacade!org.inftel.tms.services.AffectedFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

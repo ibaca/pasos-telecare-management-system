@@ -9,7 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.inftel.tms.domain.User;
 
-import org.inftel.tms.services.UserFacadeRemote;
+import org.inftel.tms.services.UserFacade;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -20,7 +20,7 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class LoginBean {
     @EJB
-    private UserFacadeRemote userFacade;
+    private UserFacade userFacade;
 
     private String username;
     private String password;

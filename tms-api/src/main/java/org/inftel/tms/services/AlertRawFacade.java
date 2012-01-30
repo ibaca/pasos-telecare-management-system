@@ -11,7 +11,7 @@ import org.inftel.tms.domain.AlertRaw;
  * @author ibaca
  */
 @Local
-public interface AlertRawFacadeRemote {
+public interface AlertRawFacade {
 
     void create(AlertRaw alertsRaw);
 

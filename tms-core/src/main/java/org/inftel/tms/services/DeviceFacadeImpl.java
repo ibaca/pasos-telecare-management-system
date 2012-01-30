@@ -16,7 +16,7 @@ import org.inftel.tms.domain.Device;
  * @author ibaca
  */
 @Stateless
-public class DeviceFacade extends AbstractFacade<Device> implements DeviceFacadeRemote {
+public class DeviceFacadeImpl extends AbstractFacade<Device> implements DeviceFacade {
 
     @PersistenceContext(unitName = "tms-persistence")
     private EntityManager em;
@@ -26,7 +26,7 @@ public class DeviceFacade extends AbstractFacade<Device> implements DeviceFacade
         return em;
     }
 
-    public DeviceFacade() {
+    public DeviceFacadeImpl() {
         super(Device.class);
     }
 

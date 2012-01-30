@@ -1,6 +1,5 @@
-package org.inftel.tms.services;
+package org.inftel.tms.statistics;
 
-import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -11,15 +10,12 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.eclipse.persistence.internal.jpa.EntityManagerImpl;
-import org.inftel.tms.domain.AlertType;
-import static org.junit.Assert.*;
 import org.junit.*;
 
 /**
  *
- * @author ibaca
  */
-public class AlertFacadeTest {
+public class StatisticEndOfDayTest {
 
   static EntityManagerFactory emf;
   static EntityManager em;
@@ -27,19 +23,19 @@ public class AlertFacadeTest {
   static IDataSet dataset;
   static EntityTransaction tx;
 
-  public AlertFacadeTest() {
+  public StatisticEndOfDayTest() {
   }
 
   @BeforeClass
   public static void setUpClass() throws Exception {
     // Inicializar EntityManager, obtener connection y cargar datos XML
-    emf = Persistence.createEntityManagerFactory("tms-persistence-mocked");
+    emf = Persistence.createEntityManagerFactory("tms-statistic-mocked");
     em = emf.createEntityManager();
     connection = new DatabaseConnection(
             ((EntityManagerImpl) (em.getDelegate())).getServerSession().getAccessor().getConnection());
     FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
     dataset = builder.build(
-            Thread.currentThread().getContextClassLoader().getResourceAsStream("alert-test-dataset.xml"));
+            Thread.currentThread().getContextClassLoader().getResourceAsStream("statistics-test-dataset.xml"));
     // Todo lo realizado hasta ahora se puede hacer una unica vez para todos los test
   }
 
@@ -51,7 +47,8 @@ public class AlertFacadeTest {
 
   @Before
   public void setUp() throws Exception {
-    DatabaseOperation.CLEAN_INSERT.execute(connection, dataset);
+    //DatabaseOperation.CLEAN_INSERT.execute(connection, dataset);
+    DatabaseOperation.DELETE_ALL.execute(connection, connection.createDataSet());
     tx = em.getTransaction();
   }
 
@@ -59,29 +56,12 @@ public class AlertFacadeTest {
   public void tearDown() {
   }
 
+  /**
+   * Test of myTimer method, of class EndOfDayStatisticsTimer.
+   */
   @Test
-  public void testCount() throws Exception {
-    AlertFacadeRemote service = new AlertFacade(em);
-    int count = service.count();
-    assertEquals(5, count);
-  }
-  
-  @Test
-  public void testCountByType() throws Exception {
-    AlertFacadeRemote service = new AlertFacade(em);
-    tx.begin();
-    long count = service.countByType(AlertType.USER, new Date(0), new Date());
-    tx.commit();
-    assertEquals(3, count);
+  public void testMyTimer() throws Exception {
+ 
     
-    tx.begin();
-    count = service.countByType(AlertType.DEVICE, new Date(0), new Date());
-    tx.commit();
-    assertEquals(2, count);
-    
-    tx.begin();
-    count = service.countByType(AlertType.TECHNICAL, new Date(0), new Date());
-    tx.commit();
-    assertEquals(0, count);
   }
 }

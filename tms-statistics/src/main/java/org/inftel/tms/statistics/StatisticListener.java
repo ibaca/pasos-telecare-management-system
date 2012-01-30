@@ -32,12 +32,12 @@ public class StatisticListener implements MessageListener {
     private static final Logger logger = getLogger(StatisticListener.class.getName());
     
     @EJB
-    private StatisticProcessor statisticProcessor;
+    private StatisticProcessorImpl statisticProcessor;
 
     public StatisticListener() {
     }
 
-    /** Delega el procesado de los mensajes a StatisticProcessor. */
+    /** Delega el procesado de los mensajes a StatisticProcessorImpl. */
     @Override
     public void onMessage(Message message) {
         try {

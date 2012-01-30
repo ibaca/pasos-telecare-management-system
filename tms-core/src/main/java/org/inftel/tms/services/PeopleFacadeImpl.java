@@ -10,7 +10,7 @@ import org.inftel.tms.domain.Person;
  * @author ibaca
  */
 @Stateless
-public class PeopleFacade extends AbstractFacade<Person> implements PeopleFacadeRemote {
+public class PeopleFacadeImpl extends AbstractFacade<Person> implements PeopleFacade {
 
   @PersistenceContext(unitName = "tms-persistence")
   private EntityManager em;
@@ -20,7 +20,7 @@ public class PeopleFacade extends AbstractFacade<Person> implements PeopleFacade
     return em;
   }
 
-  public PeopleFacade() {
+  public PeopleFacadeImpl() {
     super(Person.class);
   }
 }

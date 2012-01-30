@@ -8,10 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.inftel.tms.devices.DeviceConnectorRemote;
+import org.inftel.tms.devices.DeviceConnector;
 
 /**
- * Obtiene los datos de la peticion HTTP y delega el procesado a {@link DeviceConnectorRemote}.
+ * Obtiene los datos de la peticion HTTP y delega el procesado a {@link DeviceConnector}.
  *
  * FIXME Solo deberia procesar los POST, pero por ahora dejamos POST y GET para facilitar desarrollo
  *
@@ -21,7 +21,7 @@ import org.inftel.tms.devices.DeviceConnectorRemote;
 public class DeviceConnectorDelegatorServlet extends HttpServlet {
 
   @EJB
-  private DeviceConnectorRemote deviceConnector;
+  private DeviceConnector deviceConnector;
 
   /**
    * Processes requests for both HTTP

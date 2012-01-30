@@ -12,7 +12,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.inftel.tms.services.UserFacadeRemote;
+import org.inftel.tms.services.UserFacade;
 import org.inftel.tms.simulator.model.Parameters;
 
 
@@ -20,7 +20,7 @@ import org.inftel.tms.simulator.model.Parameters;
  * @author migueqm
  * Enterprise Application Client main class.
  *
- * Se muestra un ejemplo de obtener el interfaz remoto de {@link UserFacadeRemote} y llamar a uno de
+ * Se muestra un ejemplo de obtener el interfaz remoto de {@link UserFacade} y llamar a uno de
  * sus metodos. Podria ser buena idea que los nombres JNDI estandard estuviesen en el API como
  * variables estaticas.
  *

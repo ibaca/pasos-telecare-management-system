@@ -13,7 +13,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import org.inftel.tms.domain.User;
-import org.inftel.tms.services.UserFacadeRemote;
+import org.inftel.tms.services.UserFacade;
 import org.inftel.tms.web.util.JsfUtil;
 import org.inftel.tms.web.util.PaginationHelper;
 
@@ -24,7 +24,7 @@ public class UserController implements Serializable {
   private User current;
   private DataModel items = null;
   @EJB
-  private UserFacadeRemote ejbFacade;
+  private UserFacade ejbFacade;
   private PaginationHelper pagination;
   private int selectedItemIndex;
 
@@ -39,7 +39,7 @@ public class UserController implements Serializable {
     return current;
   }
 
-  private UserFacadeRemote getFacade() {
+  private UserFacade getFacade() {
     return ejbFacade;
   }
 

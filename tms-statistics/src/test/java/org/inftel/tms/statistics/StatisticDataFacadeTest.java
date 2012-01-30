@@ -24,7 +24,7 @@ import org.junit.*;
 /**
  *
  */
-public class StatisticsDataFacadeTest {
+public class StatisticDataFacadeTest {
 
     static EntityManagerFactory emf;
     static EntityManager em;
@@ -32,7 +32,7 @@ public class StatisticsDataFacadeTest {
     static IDataSet dataset;
     static EntityTransaction tx;
 
-    public StatisticsDataFacadeTest() {
+    public StatisticDataFacadeTest() {
     }
 
     @BeforeClass

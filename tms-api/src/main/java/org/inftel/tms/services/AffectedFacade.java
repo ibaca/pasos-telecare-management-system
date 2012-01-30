@@ -12,7 +12,7 @@ import org.inftel.tms.domain.AffectedType;
  * @author ibaca
  */
 @Local
-public interface AffectedFacadeRemote {
+public interface AffectedFacade {
 
     void create(Affected affected);
 

@@ -26,10 +26,10 @@ import org.inftel.tms.domain.AlertRaw;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.domain.Device;
 import org.inftel.tms.domain.Person;
-import org.inftel.tms.services.AlertFacadeRemote;
-import org.inftel.tms.services.AlertRawFacadeRemote;
-import org.inftel.tms.services.DeviceFacadeRemote;
-import org.inftel.tms.statistics.StatisticProcessorRemote;
+import org.inftel.tms.services.AlertFacade;
+import org.inftel.tms.services.AlertRawFacade;
+import org.inftel.tms.services.DeviceFacade;
+import org.inftel.tms.statistics.StatisticProcessor;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -41,7 +41,7 @@ import org.mockito.Mockito;
 /**
  *
  */
-public class DeviceConnectorTest {
+public class DeviceConnectorImplTest {
 
     static EntityManagerFactory emf;
     static EntityManager em;
@@ -49,7 +49,7 @@ public class DeviceConnectorTest {
     static IDataSet dataset;
     static EntityTransaction tx;
 
-    public DeviceConnectorTest() {
+    public DeviceConnectorImplTest() {
     }
 
     @BeforeClass
@@ -83,21 +83,21 @@ public class DeviceConnectorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessAlertMessageNullOrign() throws Exception {
-        AlertFacadeRemote alertMocked = Mockito.mock(AlertFacadeRemote.class);
-        AlertRawFacadeRemote rawMocked = Mockito.mock(AlertRawFacadeRemote.class);
-        StatisticProcessorRemote statMocked = Mockito.mock(StatisticProcessorRemote.class);
-        DeviceConnectorRemote deviceService = new DeviceConnector(alertMocked, rawMocked, null, statMocked);
+        AlertFacade alertMocked = Mockito.mock(AlertFacade.class);
+        AlertRawFacade rawMocked = Mockito.mock(AlertRawFacade.class);
+        StatisticProcessor statMocked = Mockito.mock(StatisticProcessor.class);
+        DeviceConnectorImpl deviceService = new DeviceConnectorImpl(alertMocked, rawMocked, null, statMocked);
         // No debe permitir procesar mensajes con origen nulo
         deviceService.processAlertMessage(null, "THIS_MESSAGE_MUST_NOT_BE_PARSED");
     }
 
     @Test
     public void testProcessAlertTypeUser() throws Exception {
-        AlertFacadeRemote alertMocked = mock(AlertFacadeRemote.class);
-        AlertRawFacadeRemote rawMocked = mock(AlertRawFacadeRemote.class);
-        DeviceFacadeRemote devMocked = mock(DeviceFacadeRemote.class);
-        StatisticProcessorRemote statMocked = Mockito.mock(StatisticProcessorRemote.class);
-        DeviceConnectorRemote deviceService = new DeviceConnector(alertMocked, rawMocked, devMocked, statMocked);
+        AlertFacade alertMocked = mock(AlertFacade.class);
+        AlertRawFacade rawMocked = mock(AlertRawFacade.class);
+        DeviceFacade devMocked = mock(DeviceFacade.class);
+        StatisticProcessor statMocked = Mockito.mock(StatisticProcessor.class);
+        DeviceConnectorImpl deviceService = new DeviceConnectorImpl(alertMocked, rawMocked, devMocked, statMocked);
 
         // Configuramos el metodo AlertRawFacade.create para que capture lo que le pasen
         ArgumentCaptor<AlertRaw> rawCaptor = ArgumentCaptor.forClass(AlertRaw.class);
@@ -128,11 +128,11 @@ public class DeviceConnectorTest {
     
     @Test
     public void testProcessAlertTypeDevice() throws Exception {
-        AlertFacadeRemote alertMocked = mock(AlertFacadeRemote.class);
-        AlertRawFacadeRemote rawMocked = mock(AlertRawFacadeRemote.class);
-        DeviceFacadeRemote devMocked = mock(DeviceFacadeRemote.class);
-        StatisticProcessorRemote statMocked = Mockito.mock(StatisticProcessorRemote.class);
-        DeviceConnectorRemote deviceService = new DeviceConnector(alertMocked, rawMocked, devMocked, statMocked);
+        AlertFacade alertMocked = mock(AlertFacade.class);
+        AlertRawFacade rawMocked = mock(AlertRawFacade.class);
+        DeviceFacade devMocked = mock(DeviceFacade.class);
+        StatisticProcessor statMocked = Mockito.mock(StatisticProcessor.class);
+        DeviceConnectorImpl deviceService = new DeviceConnectorImpl(alertMocked, rawMocked, devMocked, statMocked);
 
         // Configuramos el metodo AlertRawFacade.create para que capture lo que le pasen
         ArgumentCaptor<AlertRaw> rawCaptor = ArgumentCaptor.forClass(AlertRaw.class);
@@ -163,11 +163,11 @@ public class DeviceConnectorTest {
 
     @Test
     public void testProcessAlertTypeTechnical() throws Exception {
-        AlertFacadeRemote alertMocked = mock(AlertFacadeRemote.class);
-        AlertRawFacadeRemote rawMocked = mock(AlertRawFacadeRemote.class);
-        DeviceFacadeRemote devMocked = mock(DeviceFacadeRemote.class);
-        StatisticProcessorRemote statMocked = Mockito.mock(StatisticProcessorRemote.class);
-        DeviceConnectorRemote deviceService = new DeviceConnector(alertMocked, rawMocked, devMocked, statMocked);
+        AlertFacade alertMocked = mock(AlertFacade.class);
+        AlertRawFacade rawMocked = mock(AlertRawFacade.class);
+        DeviceFacade devMocked = mock(DeviceFacade.class);
+        StatisticProcessor statMocked = Mockito.mock(StatisticProcessor.class);
+        DeviceConnectorImpl deviceService = new DeviceConnectorImpl(alertMocked, rawMocked, devMocked, statMocked);
 
         // Configuramos el metodo AlertRawFacade.create para que capture lo que le pasen
         ArgumentCaptor<AlertRaw> rawCaptor = ArgumentCaptor.forClass(AlertRaw.class);

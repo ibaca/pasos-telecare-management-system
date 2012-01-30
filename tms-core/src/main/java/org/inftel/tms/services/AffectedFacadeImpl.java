@@ -13,7 +13,7 @@ import org.inftel.tms.domain.AffectedType;
  * @author ibaca
  */
 @Stateless
-public class AffectedFacade extends AbstractFacade<Affected> implements AffectedFacadeRemote {
+public class AffectedFacadeImpl extends AbstractFacade<Affected> implements AffectedFacade {
 
     @PersistenceContext(unitName = "tms-persistence")
     private EntityManager em;
@@ -23,7 +23,7 @@ public class AffectedFacade extends AbstractFacade<Affected> implements Affected
         return em;
     }
 
-    public AffectedFacade() {
+    public AffectedFacadeImpl() {
         super(Affected.class);
     }
 

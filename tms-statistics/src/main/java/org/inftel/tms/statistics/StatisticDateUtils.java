@@ -1,4 +1,4 @@
-package org.inftel.tms.utils;
+package org.inftel.tms.statistics;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  *
  * @author agumpg
  */
-public class StatisticsDateUtil {
+public class StatisticDateUtils {
 
     /**
      * Obtiene el primer día del mes actual

@@ -26,6 +26,11 @@
           <defaultLibBundleDir>lib</defaultLibBundleDir>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.glassfish</groupId>
+        <artifactId>maven-embedded-glassfish-plugin</artifactId>
+        <version>3.1.1</version>
+      </plugin>
     </plugins>
   </build>
   <dependencies>

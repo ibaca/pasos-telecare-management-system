@@ -10,7 +10,7 @@ import org.inftel.tms.domain.AlertRaw;
  * @author ibaca
  */
 @Stateless
-public class AlertRawFacade extends AbstractFacade<AlertRaw> implements AlertRawFacadeRemote {
+public class AlertRawFacadeImpl extends AbstractFacade<AlertRaw> implements AlertRawFacade {
 
   @PersistenceContext(unitName = "tms-persistence")
   private EntityManager em;
@@ -20,7 +20,7 @@ public class AlertRawFacade extends AbstractFacade<AlertRaw> implements AlertRaw
     return em;
   }
 
-  public AlertRawFacade() {
+  public AlertRawFacadeImpl() {
     super(AlertRaw.class);
   }
 }

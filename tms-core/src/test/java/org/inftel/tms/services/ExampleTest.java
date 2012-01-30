@@ -62,13 +62,13 @@ public class ExampleTest {
     System.out.println("embeddable test");
     EJBContainer container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
     Context context = container.getContext();
-    UserFacadeRemote userFacade = (UserFacadeRemote) context.lookup("java:global/classes/UserFacade");
+    UserFacade userFacade = (UserFacade) context.lookup("java:global/classes/UserFacade");
 
     User entity = new User();
     entity.setFullName("test-user");
     entity.setPassword("secreta");
     entity.setEmail("test-user@mail.com");
-    UserFacadeRemote instance = userFacade;
+    UserFacade instance = userFacade;
     instance.create(entity);
 
     assertNotNull(entity);
@@ -86,12 +86,12 @@ public class ExampleTest {
     final EntityManager em = Persistence.createEntityManagerFactory("tms-persistence-mocked").createEntityManager();
 
     // Se simulan los otros ejbs
-    final DeviceFacadeRemote mockedDeviceService = Mockito.mock(DeviceFacadeRemote.class);
+    final DeviceFacade mockedDeviceService = Mockito.mock(DeviceFacade.class);
     // como sabemos q solo vamos a probar este metodo, solo configuramos ese metodo
     Mockito.when(mockedDeviceService.findAll()).thenReturn(Collections.<Device>emptyList());
 
     // Se crea un ejb y configuramos los recursos que deberia inyectar el contenedor
-    UserFacade service = new UserFacade(em, mockedDeviceService);
+    UserFacadeImpl service = new UserFacadeImpl(em, mockedDeviceService);
 
     // Una vez esta todo configurado, se lanza el test
     List<Device> deviceList = service.getDevices();
@@ -124,7 +124,7 @@ public class ExampleTest {
     DatabaseOperation.CLEAN_INSERT.execute(connection, dataset);
 
     // Instanciamos servicio configurado para tests
-    UserFacadeRemote service = new UserFacade(em, null);
+    UserFacade service = new UserFacadeImpl(em, null);
 
     // Se lanza el test
     tx.begin();
@@ -160,7 +160,7 @@ public class ExampleTest {
     DatabaseOperation.CLEAN_INSERT.execute(connection, dataset);
 
     // Instanciamos servicio configurado para tests
-    UserFacadeRemote service = new UserFacade(em, null);
+    UserFacade service = new UserFacadeImpl(em, null);
 
     // Se lanza el test
     tx.begin();

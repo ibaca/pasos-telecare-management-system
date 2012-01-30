@@ -17,8 +17,8 @@ import org.inftel.tms.domain.User;
  * @author ibaca
  */
 @Stateless
-public class InterventionFacade extends AbstractFacade<Intervention> implements
-        InterventionFacadeRemote {
+public class InterventionFacadeImpl extends AbstractFacade<Intervention> implements
+        InterventionFacade {
 
     @PersistenceContext(unitName = "tms-persistence")
     private EntityManager em;
@@ -28,7 +28,7 @@ public class InterventionFacade extends AbstractFacade<Intervention> implements
         return em;
     }
 
-    public InterventionFacade() {
+    public InterventionFacadeImpl() {
         super(Intervention.class);
     }
 

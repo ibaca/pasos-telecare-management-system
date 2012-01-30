@@ -12,13 +12,12 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.eclipse.persistence.internal.jpa.EntityManagerImpl;
-import org.inftel.tms.utils.StatisticsDateUtil;
 import org.junit.*;
 
 /**
  *
  */
-public class StatisticsDateUtilTest {
+public class StatisticDateUtilTest {
 
     static EntityManagerFactory emf;
     static EntityManager em;
@@ -26,7 +25,7 @@ public class StatisticsDateUtilTest {
     static IDataSet dataset;
     static EntityTransaction tx;
 
-    public StatisticsDateUtilTest() {
+    public StatisticDateUtilTest() {
     }
 
     @BeforeClass
@@ -70,12 +69,12 @@ public class StatisticsDateUtilTest {
         Date lastDay = calendar.getTime();
 
         //Pruebas adicionales aunque no en test
-        System.out.println("PRIMER DIA DEL MES: " + StatisticsDateUtil.getFirstDayToMonth());
-        System.out.println("ULTIMO DIA DEL MES: " + StatisticsDateUtil.getLastDayToMonth());
-        System.out.println("AYER: " + StatisticsDateUtil.getYesterday());
+        System.out.println("PRIMER DIA DEL MES: " + StatisticDateUtils.getFirstDayToMonth());
+        System.out.println("ULTIMO DIA DEL MES: " + StatisticDateUtils.getLastDayToMonth());
+        System.out.println("AYER: " + StatisticDateUtils.getYesterday());
         //---------------------------
 
-        Assert.assertTrue(StatisticsDateUtil.isEqualsYear(firstDay, lastDay));
+        Assert.assertTrue(StatisticDateUtils.isEqualsYear(firstDay, lastDay));
 
     }
 }

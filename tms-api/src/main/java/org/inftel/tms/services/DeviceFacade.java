@@ -3,7 +3,6 @@ package org.inftel.tms.services;
 import java.util.List;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 import org.inftel.tms.domain.Device;
 
 /**
@@ -11,7 +10,7 @@ import org.inftel.tms.domain.Device;
  * @author ibaca
  */
 @Local
-public interface DeviceFacadeRemote {
+public interface DeviceFacade {
 
   void create(Device devices);
 

@@ -1,4 +1,4 @@
-package org.inftel.tms.statistics;
+package org.inftel.tms.services;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,12 +10,15 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.eclipse.persistence.internal.jpa.EntityManagerImpl;
+import org.inftel.tms.domain.User;
+import static org.junit.Assert.*;
 import org.junit.*;
 
 /**
  *
+ * @author ibaca
  */
-public class EndOfDayStatisticsTimerTest {
+public class UserFacadeImplTest {
 
   static EntityManagerFactory emf;
   static EntityManager em;
@@ -23,19 +26,19 @@ public class EndOfDayStatisticsTimerTest {
   static IDataSet dataset;
   static EntityTransaction tx;
 
-  public EndOfDayStatisticsTimerTest() {
+  public UserFacadeImplTest() {
   }
 
   @BeforeClass
   public static void setUpClass() throws Exception {
     // Inicializar EntityManager, obtener connection y cargar datos XML
-    emf = Persistence.createEntityManagerFactory("tms-statistic-mocked");
+    emf = Persistence.createEntityManagerFactory("tms-persistence-mocked");
     em = emf.createEntityManager();
     connection = new DatabaseConnection(
             ((EntityManagerImpl) (em.getDelegate())).getServerSession().getAccessor().getConnection());
     FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
     dataset = builder.build(
-            Thread.currentThread().getContextClassLoader().getResourceAsStream("statistics-test-dataset.xml"));
+            Thread.currentThread().getContextClassLoader().getResourceAsStream("user-test-dataset.xml"));
     // Todo lo realizado hasta ahora se puede hacer una unica vez para todos los test
   }
 
@@ -47,8 +50,8 @@ public class EndOfDayStatisticsTimerTest {
 
   @Before
   public void setUp() throws Exception {
-    //DatabaseOperation.CLEAN_INSERT.execute(connection, dataset);
-    DatabaseOperation.DELETE_ALL.execute(connection, connection.createDataSet());
+    // La siguiente linea borra la tabla y escribe los datos del fichero XML previamente configurado
+    DatabaseOperation.CLEAN_INSERT.execute(connection, dataset);
     tx = em.getTransaction();
   }
 
@@ -56,12 +59,15 @@ public class EndOfDayStatisticsTimerTest {
   public void tearDown() {
   }
 
-  /**
-   * Test of myTimer method, of class EndOfDayStatisticsTimer.
-   */
   @Test
-  public void testMyTimer() throws Exception {
- 
-    
+  public void testCurrentUser() throws Exception {
+    // Instanciamos servicio configurado para tests
+    UserFacade service = new UserFacadeImpl(em, null);
+
+    // Se lanza el test
+    tx.begin();
+    User user = service.currentUser();
+    tx.commit();
+    assertNotNull(user);
   }
 }

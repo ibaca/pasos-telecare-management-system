@@ -1,7 +1,6 @@
 package org.inftel.tms.devices;
 
 import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.WARNING;
 
 import java.util.Date;
 import java.util.Properties;
@@ -12,7 +11,6 @@ import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.inftel.tms.domain.Alert;
@@ -21,10 +19,10 @@ import org.inftel.tms.domain.AlertRaw;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.domain.Device;
 import org.inftel.tms.domain.Person;
-import org.inftel.tms.services.AlertFacadeRemote;
-import org.inftel.tms.services.AlertRawFacadeRemote;
-import org.inftel.tms.services.DeviceFacadeRemote;
-import org.inftel.tms.statistics.StatisticProcessorRemote;
+import org.inftel.tms.services.AlertFacade;
+import org.inftel.tms.services.AlertRawFacade;
+import org.inftel.tms.services.DeviceFacade;
+import org.inftel.tms.statistics.StatisticProcessor;
 
 /**
  * Se encarga de la comunicacion entre los dispositivos y el servidor. Su principal funcion es la de
@@ -42,21 +40,21 @@ import org.inftel.tms.statistics.StatisticProcessorRemote;
  * @author migueqm
  */
 @Stateless
-public class DeviceConnector implements DeviceConnectorRemote {
+public class DeviceConnectorImpl implements DeviceConnector {
 
-    private static final Logger logger = Logger.getLogger(DeviceConnector.class.getName());
-
-    @EJB
-    private DeviceFacadeRemote deviceFacade;
+    private static final Logger logger = Logger.getLogger(DeviceConnectorImpl.class.getName());
 
     @EJB
-    private AlertFacadeRemote alertFacade;
+    private DeviceFacade deviceFacade;
 
     @EJB
-    private AlertRawFacadeRemote alertRawFacade;
+    private AlertFacade alertFacade;
 
     @EJB
-    private StatisticProcessorRemote statisticProcessor;
+    private AlertRawFacade alertRawFacade;
+
+    @EJB
+    private StatisticProcessor statisticProcessor;
 
     private static final String key = "&RK123456";
     private static final String call = "&RV1911234567";
@@ -65,8 +63,8 @@ public class DeviceConnector implements DeviceConnectorRemote {
     private static final String transport = "&RT2:TCP";
     private static final String ip = "&RI01:12700000000108080";
 
-    /** Crea una nueva instancia de DeviceConnector */
-    public DeviceConnector() {
+    /** Crea una nueva instancia de DeviceConnectorImpl */
+    public DeviceConnectorImpl() {
     }
 
     /**
@@ -280,8 +278,8 @@ public class DeviceConnector implements DeviceConnectorRemote {
     }
 
     // Internal Test Usage
-    DeviceConnector(AlertFacadeRemote alertFacade, AlertRawFacadeRemote alertRawFacade,
-            DeviceFacadeRemote deviceFacade, StatisticProcessorRemote statisticProcessor) {
+    DeviceConnectorImpl(AlertFacade alertFacade, AlertRawFacade alertRawFacade,
+            DeviceFacade deviceFacade, StatisticProcessor statisticProcessor) {
         this.alertFacade = alertFacade;
         this.alertRawFacade = alertRawFacade;
         this.deviceFacade = deviceFacade;

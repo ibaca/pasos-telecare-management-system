@@ -1,5 +1,6 @@
 package org.inftel.tms.services;
 
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -10,7 +11,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.eclipse.persistence.internal.jpa.EntityManagerImpl;
-import org.inftel.tms.domain.User;
+import org.inftel.tms.domain.AlertType;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -18,7 +19,7 @@ import org.junit.*;
  *
  * @author ibaca
  */
-public class UserFacadeTest {
+public class AlertFacadeImplTest {
 
   static EntityManagerFactory emf;
   static EntityManager em;
@@ -26,7 +27,7 @@ public class UserFacadeTest {
   static IDataSet dataset;
   static EntityTransaction tx;
 
-  public UserFacadeTest() {
+  public AlertFacadeImplTest() {
   }
 
   @BeforeClass
@@ -38,7 +39,7 @@ public class UserFacadeTest {
             ((EntityManagerImpl) (em.getDelegate())).getServerSession().getAccessor().getConnection());
     FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
     dataset = builder.build(
-            Thread.currentThread().getContextClassLoader().getResourceAsStream("user-test-dataset.xml"));
+            Thread.currentThread().getContextClassLoader().getResourceAsStream("alert-test-dataset.xml"));
     // Todo lo realizado hasta ahora se puede hacer una unica vez para todos los test
   }
 
@@ -50,7 +51,6 @@ public class UserFacadeTest {
 
   @Before
   public void setUp() throws Exception {
-    // La siguiente linea borra la tabla y escribe los datos del fichero XML previamente configurado
     DatabaseOperation.CLEAN_INSERT.execute(connection, dataset);
     tx = em.getTransaction();
   }
@@ -60,14 +60,28 @@ public class UserFacadeTest {
   }
 
   @Test
-  public void testCurrentUser() throws Exception {
-    // Instanciamos servicio configurado para tests
-    UserFacadeRemote service = new UserFacade(em, null);
-
-    // Se lanza el test
+  public void testCount() throws Exception {
+    AlertFacade service = new AlertFacadeImpl(em);
+    int count = service.count();
+    assertEquals(5, count);
+  }
+  
+  @Test
+  public void testCountByType() throws Exception {
+    AlertFacade service = new AlertFacadeImpl(em);
     tx.begin();
-    User user = service.currentUser();
+    long count = service.countByType(AlertType.USER, new Date(0), new Date());
     tx.commit();
-    assertNotNull(user);
+    assertEquals(3, count);
+    
+    tx.begin();
+    count = service.countByType(AlertType.DEVICE, new Date(0), new Date());
+    tx.commit();
+    assertEquals(2, count);
+    
+    tx.begin();
+    count = service.countByType(AlertType.TECHNICAL, new Date(0), new Date());
+    tx.commit();
+    assertEquals(0, count);
   }
 }

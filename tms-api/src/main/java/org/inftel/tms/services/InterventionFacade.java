@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 
 import org.inftel.tms.domain.Intervention;
 import org.inftel.tms.domain.User;
@@ -14,7 +13,7 @@ import org.inftel.tms.domain.User;
  * @author ibaca
  */
 @Local
-public interface InterventionFacadeRemote {
+public interface InterventionFacade {
 
     void create(Intervention intervention);
 

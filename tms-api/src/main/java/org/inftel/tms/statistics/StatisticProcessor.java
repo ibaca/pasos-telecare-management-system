@@ -4,16 +4,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.ejb.Local;
 
-import javax.ejb.Remote;
 
 /**
  * Permite registrar valores estadisticos de forma asincrona.
  * 
  * @author ibaca
  */
-@Remote
-public interface StatisticProcessorRemote {
+@Local
+public interface StatisticProcessor {
 
     /**
      * Envia a procesar una estadistica. Por ejemplo, si se quiere almacenar el tiempo de procesado

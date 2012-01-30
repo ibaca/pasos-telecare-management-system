@@ -41,11 +41,11 @@ import javax.jms.Session;
  * 
  * @author agumpg
  */
-@Stateless
+@Stateless(name="StatisticProcessor")
 @LocalBean
-public class StatisticProcessor implements StatisticProcessorRemote {
+public class StatisticProcessorImpl implements StatisticProcessor {
 
-    private final static Logger logger = getLogger(StatisticProcessor.class.getName());
+    private final static Logger logger = getLogger(StatisticProcessorImpl.class.getName());
     @EJB
     private StatisticDataFacade statisticDataFacade;
     @Resource(mappedName = "jms/statistics")

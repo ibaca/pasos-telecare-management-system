@@ -13,9 +13,9 @@ import javax.faces.context.FacesContext;
 import org.inftel.tms.domain.Alert;
 import org.inftel.tms.domain.Intervention;
 import org.inftel.tms.domain.Person;
-import org.inftel.tms.services.AlertFacadeRemote;
-import org.inftel.tms.services.InterventionFacadeRemote;
-import org.inftel.tms.services.UserFacadeRemote;
+import org.inftel.tms.services.AlertFacade;
+import org.inftel.tms.services.InterventionFacade;
+import org.inftel.tms.services.UserFacade;
 import org.inftel.tms.web.UserController;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -35,11 +35,11 @@ public class DockBean implements Serializable {
     private List<Alert> alerts;
 
     @EJB
-    private AlertFacadeRemote alertFacade;
+    private AlertFacade alertFacade;
     @EJB
-    private UserFacadeRemote userFacade;
+    private UserFacade userFacade;
     @EJB
-    private InterventionFacadeRemote interFacade;
+    private InterventionFacade interFacade;
 
     public String getIntervention() {
         return intervention;

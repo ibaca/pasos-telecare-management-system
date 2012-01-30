@@ -8,10 +8,9 @@ import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import org.inftel.tms.domain.AffectedType;
 import org.inftel.tms.domain.AlertType;
-import org.inftel.tms.services.AffectedFacadeRemote;
-import org.inftel.tms.services.AlertFacadeRemote;
+import org.inftel.tms.services.AffectedFacade;
+import org.inftel.tms.services.AlertFacade;
 import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
-import org.inftel.tms.utils.StatisticsDateUtil;
 
 /**
  * Algunas estadisticas podrian generarse en el End Of Day, por ejemplo podrian registarse
@@ -24,11 +23,11 @@ import org.inftel.tms.utils.StatisticsDateUtil;
 public class StatisticEndOfDay {
 
     @EJB
-    private StatisticProcessor statisticProcessor;
+    private StatisticProcessorImpl statisticProcessor;
     @EJB
-    private AlertFacadeRemote alertFacade;
+    private AlertFacade alertFacade;
     @EJB
-    private AffectedFacadeRemote affectedFacade;
+    private AffectedFacade affectedFacade;
 
     /**
      * Calcula las estadisticas diarias para algunos valores. Y ademas, genera los historicos de
@@ -40,7 +39,7 @@ public class StatisticEndOfDay {
     public void processDialyStatistics() {
 
         Calendar yesterday = Calendar.getInstance();
-        yesterday.setTime(StatisticsDateUtil.getYesterday());
+        yesterday.setTime(StatisticDateUtils.getYesterday());
         Date from = DAYLY.beginsAt(yesterday).getTime();
         Date to = DAYLY.endsAt(yesterday).getTime();
 

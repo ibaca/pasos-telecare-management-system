@@ -7,7 +7,7 @@ import javax.ejb.Local;
  * @author ibaca
  */
 @Local
-public interface DeviceConnectorRemote {
+public interface DeviceConnector {
 
   CharSequence processAlertMessage(String from, String message);
   

@@ -13,7 +13,7 @@ import org.inftel.tms.domain.User;
  * @author ibaca
  */
 @Stateless
-public class UserFacade extends AbstractFacade<User> implements UserFacadeRemote {
+public class UserFacadeImpl extends AbstractFacade<User> implements UserFacade {
 
   @PersistenceContext(unitName = "tms-persistence")
   protected EntityManager em;
@@ -23,15 +23,15 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeRemote
     return em;
   }
 
-  public UserFacade() {
+  public UserFacadeImpl() {
     super(User.class);
   }
   // FIXME los siguientes metodos se han agregado solo para mostrar un ejemplo
   // de simulacion de servicios en tests
   @EJB
-  private DeviceFacadeRemote deviceFacade;
+  private DeviceFacade deviceFacade;
 
-  protected DeviceFacadeRemote getDeviceFacade() {
+  protected DeviceFacade getDeviceFacade() {
     return deviceFacade;
   }
 
@@ -44,7 +44,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeRemote
   /**
    * Uso interno para configurar test
    */
-  UserFacade(EntityManager em, DeviceFacadeRemote deviceFacade) {
+  UserFacadeImpl(EntityManager em, DeviceFacade deviceFacade) {
     super(User.class);
     this.em = em;
     this.deviceFacade = deviceFacade;
