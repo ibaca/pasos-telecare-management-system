@@ -59,7 +59,7 @@
         <configuration>
           <archive>
             <manifest>                            
-              <mainClass>org.inftel.tms.simulator.Main</mainClass>
+              <mainClass>org.inftel.tms.simulator.view.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
