@@ -36,14 +36,6 @@
           <contextRoot>${project.artifactId}</contextRoot>
           <name>${project.artifactId}</name>
         </configuration>
-        <executions>
-          <execution>
-            <phase>install</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
