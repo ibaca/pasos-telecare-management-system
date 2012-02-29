@@ -6,17 +6,12 @@
     <groupId>org.inftel.tms</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-
-  <groupId>org.inftel.tms</groupId>
   <artifactId>tms-core</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <packaging>ejb</packaging>
-
   <name>TMS :: Core</name>
 
   <properties>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>

@@ -7,10 +7,20 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>TMS</name>
+
+  <url>http://code.google.com/p/proyecto-javaee/</url>
+
+  <scm>
+    <connection>scm:svn:http://proyecto-javaee.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://proyecto-javaee.googlecode.com/svn/trunk</developerConnection>
+    <url>http://proyecto-javaee.googlecode.com/svn/trunk</url>
+  </scm>
+
   <properties>
     <maven.compiler.source>1.6</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
   <modules>
     <module>tms-api</module>
     <module>tms-bundle</module>
@@ -20,41 +30,103 @@
     <module>tms-statistics</module>
     <module>tms-web</module>
   </modules>
-  <repositories>
-    <repository>
-      <id>javageomodel-repo</id>
-      <name>GeocellJava Repository</name>
-      <url>http://javageomodel.googlecode.com/svn/repository</url>
-    </repository>
-    <repository>
-      <url>http://repository.primefaces.org/</url>
-      <id>primefaces</id>
-      <layout>default</layout>
-      <name>Repository for library Library[primefaces]</name>
-    </repository>
-    <repository>
-      <url>http://download.eclipse.org/rt/eclipselink/maven.repo/</url>
-      <id>eclipselink</id>
-      <layout>default</layout>
-      <name>Repository for library Library[eclipselink]</name>
-    </repository>
-  </repositories>
+
   <distributionManagement>
     <site>
-      <id>lproyecto-javaee.googlecode.com</id>
-      <url>scp://proyecto-javaee.googlecode.com/svn</url>
+      <id>code.google.com</id>
+      <name>googlecode scm</name>
+      <url>scm:svn:https://proyecto-javaee.googlecode.com/svn/site</url>
     </site>
   </distributionManagement>
-  <url>http://code.google.com/p/proyecto-javaee/</url>
-  <scm>
-    <connection>scm:svn:http://proyecto-javaee.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://proyecto-javaee.googlecode.com/svn/trunk</developerConnection>
-    <url>http://code.google.com/p/proyecto-javaee/source/checkout</url>
-  </scm>
+
   <organization>
     <name>Master INFTEL</name>
     <url>http://masterinftel.uma.es/</url>
   </organization>
+
+  <developers>
+    <developer>
+      <email>ignacio.bacamt@gmail.com</email>
+      <id>ibaca</id>
+      <name>Ignacio Baca Moreno-Torres</name>
+      <timezone>CET</timezone>
+    </developer>
+    <developer>
+      <email>agumpg@gmail.com</email>
+      <id>agumpg</id>
+      <name>Agustin M. Peña García</name>
+      <timezone>CET</timezone>
+    </developer>
+    <developer>
+      <email>migueqm@gmail.com</email>
+      <id>migueqm</id>
+      <name>Miguel Angel Quero Martín</name>
+      <timezone>CET</timezone>
+    </developer>
+    <developer>
+      <email>miwe08@gmail.com</email>
+      <id>miwe08</id>
+      <name>Miguel Pintor Moral</name>
+      <timezone>CET</timezone>
+    </developer>
+    <developer>
+      <email>cx_jimen17@hotmail.com</email>
+      <id>cx_jimen17</id>
+      <name>Cristian Jimenez</name>
+      <timezone>CET</timezone>
+    </developer>
+  </developers>
+  
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>tms-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>tms-bundle</artifactId>
+        <version>${project.version}</version>
+        <type>ear</type>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>tms-connector</artifactId>
+        <version>${project.version}</version>
+        <type>ejb</type>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>tms-core</artifactId>
+        <version>${project.version}</version>
+        <type>ejb</type>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>tms-simulator</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>tms-statistics</artifactId>
+        <version>${project.version}</version>
+        <type>ejb</type>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>tms-web</artifactId>
+        <version>${project.version}</version>
+        <type>war</type>
+      </dependency>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.1</version>
+    </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
     <plugins>
       <plugin>
@@ -144,5 +216,76 @@
         </configuration>
       </plugin>
     </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings 
+          only. It has no influence on the Maven build itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[2.1,)</versionRange>
+                    <goals>
+                      <goal>copy</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.bsc.maven</groupId>
+                    <artifactId>maven-processor-plugin</artifactId>
+                    <versionRange>[2.0.5,)</versionRange>
+                    <goals>
+                      <goal>process</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
+
+  <repositories>
+    <repository>
+      <id>javageomodel-repo</id>
+      <name>GeocellJava Repository</name>
+      <url>http://javageomodel.googlecode.com/svn/repository</url>
+    </repository>
+    <repository>
+      <url>http://repository.primefaces.org/</url>
+      <id>primefaces</id>
+      <layout>default</layout>
+      <name>Repository for library Library[primefaces]</name>
+    </repository>
+    <repository>
+      <url>http://download.eclipse.org/rt/eclipselink/maven.repo/</url>
+      <id>eclipselink</id>
+      <layout>default</layout>
+      <name>Repository for library Library[eclipselink]</name>
+    </repository>
+    <repository>
+      <url>http://download.java.net/maven/2/</url>
+      <id>javaee-api-6.0</id>
+      <layout>default</layout>
+      <name>Repository for library Library[javaee-api-6.0]</name>
+    </repository>
+  </repositories>
+
 </project>

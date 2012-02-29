@@ -6,36 +6,18 @@
     <groupId>org.inftel.tms</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-
-  <groupId>org.inftel.tms</groupId>
   <artifactId>tms-simulator</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>app-client</packaging>
-
+  <packaging>jar</packaging>
   <name>TMS :: Simulator</name>
 
   <properties>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>org.glassfish.appclient</groupId>
-      <artifactId>gf-client</artifactId>
-      <version>3.1.1</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>tms-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>6.0</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>

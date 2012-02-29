@@ -7,12 +7,8 @@
     <groupId>org.inftel.tms</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-
-  <groupId>org.inftel.tms</groupId>
   <artifactId>tms-bundle</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <packaging>ear</packaging>
-
   <name>TMS :: Bundle</name>
 
   <build>
@@ -43,31 +39,26 @@
     <dependency>
       <groupId>org.inftel.tms</groupId>
       <artifactId>tms-connector</artifactId>
-      <version>1.0-SNAPSHOT</version>
       <type>ejb</type>
     </dependency>
     <dependency>
       <groupId>org.inftel.tms</groupId>
       <artifactId>tms-core</artifactId>
-      <version>1.0-SNAPSHOT</version>
       <type>ejb</type>
     </dependency>
     <dependency>
       <groupId>org.inftel.tms</groupId>
       <artifactId>tms-statistics</artifactId>
-      <version>1.0-SNAPSHOT</version>
       <type>ejb</type>
     </dependency>
     <dependency>
       <groupId>org.inftel.tms</groupId>
       <artifactId>tms-web</artifactId>
-      <version>1.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.inftel.tms</groupId>
       <artifactId>tms-api</artifactId>
-      <version>1.0-SNAPSHOT</version>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>
