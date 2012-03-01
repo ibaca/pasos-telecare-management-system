@@ -48,9 +48,9 @@ public class StatisticProcessorImpl implements StatisticProcessor {
     private final static Logger logger = getLogger(StatisticProcessorImpl.class.getName());
     @EJB
     private StatisticDataFacade statisticDataFacade;
-    @Resource(mappedName = "jms/statistics")
+    //@Resource(mappedName = "jms/statistics")
     private Queue statistics;
-    @Resource(mappedName = "jms/statisticsFactory")
+    //@Resource(mappedName = "jms/statisticsFactory")
     private ConnectionFactory statisticsFactory;
 
     @Override

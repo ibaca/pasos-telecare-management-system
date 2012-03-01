@@ -1,7 +1,7 @@
 package org.inftel.tms.statistics;
 
 import static java.util.logging.Level.INFO;
-import static javax.persistence.GenerationType.TABLE;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,10 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PostPersist;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -44,8 +42,7 @@ public class StatisticData implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @TableGenerator(name = "statistic_data_generator", initialValue = 10000)
-    @GeneratedValue(strategy = TABLE, generator = "statistic_data_generator")
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String name;
     @Column(nullable = false)

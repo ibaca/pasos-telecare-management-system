@@ -23,10 +23,10 @@ import javax.jms.ObjectMessage;
  * MessageDriven es no transaccional, y se recomienda usar acceso a las tablas
  * no transaccional.
  */
-@MessageDriven(mappedName = "jms/statistics", activationConfig = {
-    @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
-    @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
-})
+//@MessageDriven(mappedName = "jms/statistics", activationConfig = {
+//    @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
+//    @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
+//})
 public class StatisticListener implements MessageListener {
 
     private static final Logger logger = getLogger(StatisticListener.class.getName());

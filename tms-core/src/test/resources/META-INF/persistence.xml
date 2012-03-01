@@ -10,7 +10,7 @@
     <class>org.inftel.tms.domain.Person</class>
     <class>org.inftel.tms.domain.User</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:target/derby-test-db;create=true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:derby-test-db;create=true"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.user" value=""/>
       <property name="javax.persistence.jdbc.password" value=""/>
@@ -28,7 +28,7 @@
     <class>org.inftel.tms.domain.Person</class>
     <class>org.inftel.tms.domain.User</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:target/derby-test-db;create=true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:derby-test-db;create=true"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.user" value=""/>
       <property name="javax.persistence.jdbc.password" value=""/>

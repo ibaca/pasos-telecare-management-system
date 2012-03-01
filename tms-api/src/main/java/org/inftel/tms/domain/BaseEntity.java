@@ -1,6 +1,6 @@
 package org.inftel.tms.domain;
 
-import static javax.persistence.GenerationType.TABLE;
+import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 import java.io.Serializable;
@@ -14,7 +14,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.Version;
 
@@ -33,8 +32,7 @@ public abstract class BaseEntity implements Serializable {
     @Temporal(TIMESTAMP)
     private Date created;
     @Id
-    @TableGenerator(name = "base_entity_generator", initialValue = 10000)
-    @GeneratedValue(strategy = TABLE, generator = "base_entity_generator")
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @Temporal(TIMESTAMP)
     private Date updated;
