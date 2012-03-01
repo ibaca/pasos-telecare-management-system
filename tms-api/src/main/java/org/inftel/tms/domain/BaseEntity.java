@@ -27,93 +27,98 @@ import javax.persistence.Version;
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    static final Logger log = Logger.getLogger(BaseEntity.class.getName());
-    @Temporal(TIMESTAMP)
-    private Date created;
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
-    @Temporal(TIMESTAMP)
-    private Date updated;
-    @Version
-    private Long version;
+	private static final long serialVersionUID = 1L;
 
-    public Date getCreated() {
-        return created;
-    }
+	static final Logger log = Logger.getLogger(BaseEntity.class.getName());
 
-    public Long getId() {
-        return id;
-    }
+	@Temporal(TIMESTAMP)
+	private Date created;
 
-    public Date getUpdated() {
-        return updated;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	private Long id;
 
-    public Long getVersion() {
-        return version;
-    }
+	@Temporal(TIMESTAMP)
+	private Date updated;
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+	@Version
+	private Long version;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Date getCreated() {
+		return created;
+	}
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setVersion(Long version) {
-        this.version = version;
-    }
+	public Date getUpdated() {
+		return updated;
+	}
 
-    @PrePersist
-    void onCreate() {
-        Date current = new Date();
-        setCreated(current);
-        setUpdated(current);
-    }
+	public Long getVersion() {
+		return version;
+	}
 
-    @PostPersist
-    void onCreateLog() {
-        // post para que se vea el identificador
-        log.log(Level.INFO, "post persist {0}", toString());
-    }
+	public void setCreated(Date created) {
+		this.created = created;
+	}
 
-    @PreUpdate
-    void onUpdate() {
-        log.log(Level.INFO, "pre update {0}", toString());
-        Date current = new Date();
-        setUpdated(current);
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(getClass().isAssignableFrom(object.getClass()))) {
-            return false;
-        }
-        BaseEntity other = (BaseEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	public void setVersion(Long version) {
+		this.version = version;
+	}
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName().toLowerCase() + " [id=" + getId() + ", version="
-                + getVersion() + "]";
-    }
+	@PrePersist
+	void onCreate() {
+		Date current = new Date();
+		setCreated(current);
+		setUpdated(current);
+	}
+
+	@PostPersist
+	void onCreateLog() {
+		// post para que se vea el identificador
+		log.log(Level.INFO, "post persist {0}", toString());
+	}
+
+	@PreUpdate
+	void onUpdate() {
+		log.log(Level.INFO, "pre update {0}", toString());
+		Date current = new Date();
+		setUpdated(current);
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(getClass().isAssignableFrom(object.getClass()))) {
+			return false;
+		}
+		BaseEntity other = (BaseEntity) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName().toLowerCase() + " [id=" + getId() + ", version="
+				+ getVersion() + "]";
+	}
 }

@@ -1,7 +1,15 @@
 package org.inftel.tms.domain;
 
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,76 +22,83 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "devices")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Device.findAll", query = "SELECT d FROM Device d"),
-        @NamedQuery(name = "Device.findById", query = "SELECT d FROM Device d WHERE d.id = :id"),
-        @NamedQuery(name = "Device.findByBatery", query = "SELECT d FROM Device d WHERE d.batery = :batery"),
-        @NamedQuery(name = "Device.findByCreated", query = "SELECT d FROM Device d WHERE d.created = :created"),
-        @NamedQuery(name = "Device.findByLastconnection", query = "SELECT d FROM Device d WHERE d.lastConnection = :lastconnection"),
-        @NamedQuery(name = Device.FIND_BY_MOBILE, query = "SELECT d FROM Device d WHERE d.mobileNumber = :mobile"),
-        @NamedQuery(name = "Device.findBySimcard", query = "SELECT d FROM Device d WHERE d.simCard = :simcard"),
-        @NamedQuery(name = "Device.findByTemperature", query = "SELECT d FROM Device d WHERE d.temperature = :temperature"),
-        @NamedQuery(name = "Device.findByUpdated", query = "SELECT d FROM Device d WHERE d.updated = :updated"),
-        @NamedQuery(name = "Device.findByVersion", query = "SELECT d FROM Device d WHERE d.version = :version") })
+		@NamedQuery(name = "Device.findAll", query = "SELECT d FROM Device d"),
+		@NamedQuery(name = "Device.findById", query = "SELECT d FROM Device d WHERE d.id = :id"),
+		@NamedQuery(name = "Device.findByBatery", query = "SELECT d FROM Device d WHERE d.batery = :batery"),
+		@NamedQuery(name = "Device.findByCreated", query = "SELECT d FROM Device d WHERE d.created = :created"),
+		@NamedQuery(name = "Device.findByLastconnection", query = "SELECT d FROM Device d WHERE d.lastConnection = :lastconnection"),
+		@NamedQuery(name = Device.FIND_BY_MOBILE, query = "SELECT d FROM Device d WHERE d.mobileNumber = :mobile"),
+		@NamedQuery(name = "Device.findBySimcard", query = "SELECT d FROM Device d WHERE d.simCard = :simcard"),
+		@NamedQuery(name = "Device.findByTemperature", query = "SELECT d FROM Device d WHERE d.temperature = :temperature"),
+		@NamedQuery(name = "Device.findByUpdated", query = "SELECT d FROM Device d WHERE d.updated = :updated"),
+		@NamedQuery(name = "Device.findByVersion", query = "SELECT d FROM Device d WHERE d.version = :version") })
 public class Device extends BaseEntity {
 
-    public final static String FIND_BY_MOBILE = "Device.findByMobilenumber";
-    
-    private String mobileNumber;
-    private String simCard;
-    private Integer batery;
-    private Integer temperature;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastConnection;
-    @ManyToOne
-    @JoinColumn(nullable = true)
-    // aunq no es lo normal, puede ser nulo!
-    private Affected owner;
+	private static final long serialVersionUID = 1L;
 
-    public Date getLastConnection() {
-        return lastConnection;
-    }
+	public final static String FIND_BY_MOBILE = "Device.findByMobilenumber";
 
-    public void setLastConnection(Date lastConnection) {
-        this.lastConnection = lastConnection;
-    }
+	private String mobileNumber;
 
-    public Integer getTemperature() {
-        return temperature;
-    }
+	private String simCard;
 
-    public void setTemperature(Integer temperature) {
-        this.temperature = temperature;
-    }
+	private Integer batery;
 
-    public Affected getOwner() {
-        return owner;
-    }
+	private Integer temperature;
 
-    public void setOwner(Affected owner) {
-        this.owner = owner;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastConnection;
 
-    public Integer getBatery() {
-        return batery;
-    }
+	@ManyToOne
+	@JoinColumn(nullable = true)
+	// aunq no es lo normal, puede ser nulo!
+	private Affected owner;
 
-    public void setBatery(Integer batery) {
-        this.batery = batery;
-    }
+	public Date getLastConnection() {
+		return lastConnection;
+	}
 
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
+	public void setLastConnection(Date lastConnection) {
+		this.lastConnection = lastConnection;
+	}
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
+	public Integer getTemperature() {
+		return temperature;
+	}
 
-    public String getSimCard() {
-        return simCard;
-    }
+	public void setTemperature(Integer temperature) {
+		this.temperature = temperature;
+	}
 
-    public void setSimCard(String simCard) {
-        this.simCard = simCard;
-    }
+	public Affected getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Affected owner) {
+		this.owner = owner;
+	}
+
+	public Integer getBatery() {
+		return batery;
+	}
+
+	public void setBatery(Integer batery) {
+		this.batery = batery;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getSimCard() {
+		return simCard;
+	}
+
+	public void setSimCard(String simCard) {
+		this.simCard = simCard;
+	}
 }

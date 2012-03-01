@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "Intervention.findAll", query = "SELECT i FROM Intervention i"),
-        @NamedQuery(name = "Intervention.findById", query = "SELECT i FROM Intervention i WHERE i.id = :id"),
+ @NamedQuery(name = "Intervention.findById", query = "SELECT i FROM Intervention i WHERE i.id = :id"),
         @NamedQuery(name = "Intervention.findByCreated", query = "SELECT i FROM Intervention i WHERE i.created = :created"),
         @NamedQuery(name = "Intervention.findByDescription", query = "SELECT i FROM Intervention i WHERE i.description = :description"),
         @NamedQuery(name = "Intervention.findByUpdated", query = "SELECT i FROM Intervention i WHERE i.updated = :updated"),
@@ -35,7 +35,7 @@ public class Intervention extends BaseEntity {
 
     public static final String COUNT_BY_TYPE = "Intervention.countByType";
 
-    private static final long serialVersionUID = 27387751321069701L;
+    private static final long serialVersionUID = 1L;
 
     @ManyToOne
     private Alert alert;

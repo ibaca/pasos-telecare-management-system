@@ -1,131 +1,154 @@
 package org.inftel.tms.domain;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.beoui.geocell.annotations.Geocells;
 import com.beoui.geocell.annotations.Latitude;
 import com.beoui.geocell.annotations.Longitude;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Las personas registradas en el sistema. Pueden ser tanto afectados como falmiliares.
- *
+ * 
  * @author ibaca
  */
 @Entity
 @Table(name = "people")
 @XmlRootElement
 @NamedQueries({
-  @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
-  @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id"),
-  @NamedQuery(name = "Person.findByCreated", query = "SELECT p FROM Person p WHERE p.created = :created"),
-  @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
-  @NamedQuery(name = "Person.findByFirstname", query = "SELECT p FROM Person p WHERE p.firstName = :firstname"),
-  @NamedQuery(name = "Person.findByLastname", query = "SELECT p FROM Person p WHERE p.lastName = :lastname"),
-  @NamedQuery(name = "Person.findByLatitude", query = "SELECT p FROM Person p WHERE p.latitude = :latitude"),
-  @NamedQuery(name = "Person.findByLongitude", query = "SELECT p FROM Person p WHERE p.longitude = :longitude"),
-  @NamedQuery(name = "Person.findByMobileNumber", query = "SELECT p FROM Person p WHERE p.mobileNumber = :mobilenumber"),
-  @NamedQuery(name = "Person.findByUpdated", query = "SELECT p FROM Person p WHERE p.updated = :updated"),
-  @NamedQuery(name = "Person.findByVersion", query = "SELECT p FROM Person p WHERE p.version = :version")})
+		@NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
+		@NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id"),
+		@NamedQuery(name = "Person.findByCreated", query = "SELECT p FROM Person p WHERE p.created = :created"),
+		@NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
+		@NamedQuery(name = "Person.findByFirstname", query = "SELECT p FROM Person p WHERE p.firstName = :firstname"),
+		@NamedQuery(name = "Person.findByLastname", query = "SELECT p FROM Person p WHERE p.lastName = :lastname"),
+		@NamedQuery(name = "Person.findByLatitude", query = "SELECT p FROM Person p WHERE p.latitude = :latitude"),
+		@NamedQuery(name = "Person.findByLongitude", query = "SELECT p FROM Person p WHERE p.longitude = :longitude"),
+		@NamedQuery(name = "Person.findByMobileNumber", query = "SELECT p FROM Person p WHERE p.mobileNumber = :mobilenumber"),
+		@NamedQuery(name = "Person.findByUpdated", query = "SELECT p FROM Person p WHERE p.updated = :updated"),
+		@NamedQuery(name = "Person.findByVersion", query = "SELECT p FROM Person p WHERE p.version = :version") })
 public class Person extends BaseEntity {
 
-  private String firstName;
-  private String lastName;
-  @Basic(optional = false)
-  @Column(nullable = false, unique = true)
-  private String email;
-  private String mobileNumber;
-  @Latitude
-  private double latitude;
-  @Longitude
-  private double longitude;
-  @Geocells
-  @ElementCollection
-  private List<String> geoCellsData = new ArrayList<String>();
-  @ManyToMany(mappedBy = "contacts", fetch = FetchType.LAZY)
-  private List<Affected> chargeOf;
-  @OneToOne(mappedBy = "data", optional = true, fetch = FetchType.LAZY)
-  private Affected affected;
+	private static final long serialVersionUID = 1L;
 
-  public List<String> getGeoCellsData() {
-    return geoCellsData;
-  }
+	private String firstName;
 
-  public void setGeoCellsData(List<String> geoCellsData) {
-    this.geoCellsData = geoCellsData;
-  }
+	private String lastName;
 
-  public Affected getAffected() {
-    return affected;
-  }
+	@Basic(optional = false)
+	@Column(nullable = false, unique = true)
+	private String email;
 
-  public void setAffected(Affected affected) {
-    this.affected = affected;
-  }
+	private String mobileNumber;
 
-  public List<Affected> getChargeOf() {
-    return chargeOf;
-  }
+	@Latitude
+	private double latitude;
 
-  public void setChargeOf(List<Affected> chargeOf) {
-    this.chargeOf = chargeOf;
-  }
+	@Longitude
+	private double longitude;
 
-  public String getEmail() {
-    return email;
-  }
+	@Geocells
+	@ElementCollection
+	private List<String> geoCellsData = new ArrayList<String>();
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	@ManyToMany(mappedBy = "contacts", fetch = FetchType.LAZY)
+	private List<Affected> chargeOf;
 
-  public String getFirstName() {
-    return firstName;
-  }
+	@OneToOne(mappedBy = "data", optional = true, fetch = FetchType.LAZY)
+	private Affected affected;
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+	public List<String> getGeoCellsData() {
+		return geoCellsData;
+	}
 
-  public String getLastName() {
-    return lastName;
-  }
+	public void setGeoCellsData(List<String> geoCellsData) {
+		this.geoCellsData = geoCellsData;
+	}
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+	public Affected getAffected() {
+		return affected;
+	}
 
-  public double getLatitude() {
-    return latitude;
-  }
+	public void setAffected(Affected affected) {
+		this.affected = affected;
+	}
 
-  public void setLatitude(double latitude) {
-    this.latitude = latitude;
-  }
+	public List<Affected> getChargeOf() {
+		return chargeOf;
+	}
 
-  public double getLongitude() {
-    return longitude;
-  }
+	public void setChargeOf(List<Affected> chargeOf) {
+		this.chargeOf = chargeOf;
+	}
 
-  public void setLongitude(double longitude) {
-    this.longitude = longitude;
-  }
+	public String getEmail() {
+		return email;
+	}
 
-  public String getMobileNumber() {
-    return mobileNumber;
-  }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-  public void setMobileNumber(String mobileNumber) {
-    this.mobileNumber = mobileNumber;
-  }
+	public String getFirstName() {
+		return firstName;
+	}
 
-  public boolean isAffected() {
-    return getAffected() == null;
-  }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-  public String getSimpleName() {
-    return (isBlank(getFirstName())) ? getEmail() : (getFirstName() + " " + getLastName()).trim();
-  }
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public boolean isAffected() {
+		return getAffected() == null;
+	}
+
+	public String getSimpleName() {
+		return (isBlank(getFirstName())) ? getEmail() : (getFirstName() + " " + getLastName())
+				.trim();
+	}
 }
