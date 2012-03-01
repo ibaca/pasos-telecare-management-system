@@ -26,6 +26,7 @@
     <module>tms-bundle</module>
     <module>tms-connector</module>
     <module>tms-core</module>
+    <module>tms-mobile</module>
     <module>tms-simulator</module>
     <module>tms-statistics</module>
     <module>tms-web</module>
@@ -101,6 +102,12 @@
         <artifactId>tms-core</artifactId>
         <version>${project.version}</version>
         <type>ejb</type>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>tms-mobile</artifactId>
+        <version>${project.version}</version>
+        <type>apk</type>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
