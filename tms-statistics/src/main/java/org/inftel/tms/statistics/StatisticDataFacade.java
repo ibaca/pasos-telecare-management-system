@@ -17,7 +17,7 @@ import javax.persistence.TypedQuery;
  * @author agumpg
  */
 @Stateless
-public class StatisticDataFacade extends AbstractFacade<StatisticData> {
+public class StatisticDataFacade extends AbstractFacade<StatisticDataEntity> {
 
     @PersistenceContext(unitName = "tms-statistic-unit")
     private EntityManager em;
@@ -28,7 +28,7 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
     }
 
     public StatisticDataFacade() {
-        super(StatisticData.class);
+        super(StatisticDataEntity.class);
     }
 
     /**
@@ -47,20 +47,20 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
      */
     public Map<String, BigDecimal> sumStatictics(String startWith, StatisticDataPeriod period,
             Date fromDate, Date toDate) {
-        TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o "
+        TypedQuery<StatisticDataEntity> query = em.createQuery("SELECT o FROM StatisticDataEntity o "
                 + "WHERE o.name LIKE :name AND o.periodType = :period "
-                + "AND o.periodDate BETWEEN :fromDate AND :toDate", StatisticData.class);
+                + "AND o.periodDate BETWEEN :fromDate AND :toDate", StatisticDataEntity.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
         query.setParameter("fromDate", fromDate);
         query.setParameter("toDate", toDate);
 
-        List<StatisticData> queryResult = query.getResultList();
+        List<StatisticDataEntity> queryResult = query.getResultList();
         Map<String, BigDecimal> result = new HashMap<String, BigDecimal>(2);
         // Initialize result
         result.put("sum", new BigDecimal(0));
         result.put("count", new BigDecimal(0));
-        for (StatisticData data : queryResult) {
+        for (StatisticDataEntity data : queryResult) {
             if (data.getDataSum() != null) {
                 result.put("sum", result.get("sum").add(new BigDecimal(data.getDataSum())));
             }
@@ -83,14 +83,14 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
      * @return parejas de nombre de estadistica y valor para el periodo y facha pasados
      */
     public Map<String, Long> findStatistics(String startWith, StatisticDataPeriod period, Date date) {
-        TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o "
+        TypedQuery<StatisticDataEntity> query = em.createQuery("SELECT o FROM StatisticData o "
                 + "WHERE o.name LIKE :name AND o.periodType = :period AND o.periodDate = :date",
-                StatisticData.class);
+                StatisticDataEntity.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("period", period);
         query.setParameter("date", date);
         Map<String, Long> result = new TreeMap<String, Long>();
-        for (StatisticData data : query.getResultList()) {
+        for (StatisticDataEntity data : query.getResultList()) {
             // FIXME deberia devolverse BigDecimal
             result.put(data.getName(), data.getDataValue().longValue());
         }
@@ -115,34 +115,34 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
      *            fin de intervalo
      * @return
      */
-    public Map<Date, Long> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
+    public Map<Date, StatisticData> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
             Date toDate) {
         fromDate = period.beginsAt(fromDate);
         toDate = period.endsAt(toDate);
 
-        TypedQuery<StatisticData> query = em.createQuery("SELECT o "
+        TypedQuery<StatisticDataEntity> query = em.createQuery("SELECT o "
                 + "FROM StatisticData o WHERE o.name = :name AND o.periodType = :period "
-                + "AND o.periodDate " + "BETWEEN :fromDate AND :toDate", StatisticData.class);
+                + "AND o.periodDate " + "BETWEEN :fromDate AND :toDate", StatisticDataEntity.class);
         query.setParameter("name", name);
         query.setParameter("period", period);
         query.setParameter("fromDate", fromDate);
         query.setParameter("toDate", toDate);
 
-        Map<Date, Long> result = new TreeMap<Date, Long>();
-        for (StatisticData data : query.getResultList()) {
-            result.put(data.getPeriodDate(), data.getDataValue().longValue());
+        Map<Date, StatisticData> result = new TreeMap<Date, StatisticData>();
+        for (StatisticDataEntity data : query.getResultList()) {
+            result.put(data.getPeriodDate(), data);
         }
         return result;
     }
 
-    public StatisticData findByDate(String startWith, Date date) {
-        TypedQuery<StatisticData> query = em.createQuery("SELECT o FROM StatisticData o "
-                + "WHERE o.name LIKE :name AND o.periodDate = :date", StatisticData.class);
+    public StatisticDataEntity findByDate(String startWith, Date date) {
+        TypedQuery<StatisticDataEntity> query = em.createQuery("SELECT o FROM StatisticDataEntity o "
+                + "WHERE o.name LIKE :name AND o.periodDate = :date", StatisticDataEntity.class);
         query.setParameter("name", startWith + "%");
         query.setParameter("date", date);
         query.setMaxResults(1); // aunq el modelo no debe devolver mas de uno
 
-        List<StatisticData> result = query.getResultList();
+        List<StatisticDataEntity> result = query.getResultList();
         return (result.size() > 0) ? result.get(0) : null;
     }
 
@@ -153,7 +153,7 @@ public class StatisticDataFacade extends AbstractFacade<StatisticData> {
     }
 
     StatisticDataFacade(EntityManager em) {
-        super(StatisticData.class);
+        super(StatisticDataEntity.class);
         this.em = em;
     }
 }

@@ -72,7 +72,7 @@ public class StatisticProcessorImpl implements StatisticProcessor {
     public void process(String name, Date date, Double accumulated, Long samples) {
         try {
             // Crea una StatisticData temporal, es decir, sin periodo definido
-            sendJMSMessageToStatistics(new StatisticData(name, date, accumulated, samples));
+            sendJMSMessageToStatistics(new StatisticDataEntity(name, date, accumulated, samples));
         } catch (JMSException ex) {
             logger.log(WARNING, "fallo enviando estadistica a la cola de proceso", ex);
         }
@@ -158,15 +158,15 @@ public class StatisticProcessorImpl implements StatisticProcessor {
      * periodo minimo es diario. Los periodos superiores, como mensual o anual, se van actualizando
      * cuando de forma independiente.
      */
-    public void updateDaylyStatistic(StatisticData dataOrigin) {
+    public void updateDaylyStatistic(StatisticDataEntity dataOrigin) {
         // Actualmente el nivel minimo de periodo es DAILY
         Date processDate = DAYLY.beginsAt(dataOrigin.getPeriodDate());
-        StatisticData data = statisticDataFacade.findByDate(dataOrigin.getName(), processDate);
+        StatisticDataEntity data = statisticDataFacade.findByDate(dataOrigin.getName(), processDate);
 
         // ¿Hay datos de hoy?
         if (data == null) {
             // No existe ninguna entrada
-            data = new StatisticData();
+            data = new StatisticDataEntity();
             data.setName(dataOrigin.getName());
             data.setPeriodType(DAYLY);
             data.setPeriodDate(processDate);
@@ -197,7 +197,7 @@ public class StatisticProcessorImpl implements StatisticProcessor {
      */
     private void saveStatisticData(String name, StatisticDataPeriod period, Calendar date,
             Long count, Double sum) {
-        StatisticData data = new StatisticData();
+        StatisticDataEntity data = new StatisticDataEntity();
         data.setName(name);
         data.setPeriodType(period);
         data.setPeriodDate(period.beginsAt(date).getTime());
@@ -207,7 +207,7 @@ public class StatisticProcessorImpl implements StatisticProcessor {
     }
 
     @Override
-    public Map<Date, Long> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
+    public Map<Date, StatisticData> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
             Date toDate) {
         logger.log(INFO, "consultando estadisticas {0} para periodo {1} y fechas entre {2} y {3}",
                 new Object[] { name, period, fromDate, toDate });

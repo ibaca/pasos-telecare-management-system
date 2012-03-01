@@ -107,7 +107,7 @@ public interface StatisticProcessor {
      * @return mapa donde las claves son los nombre completos estadisticos y los enteros son el
      *         valor para la muestra y periodo concretoF
      */
-    public Map<Date, Long> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
+    public Map<Date, StatisticData> findStatistics(String name, StatisticDataPeriod period, Date fromDate,
             Date toDate);
 
     /**

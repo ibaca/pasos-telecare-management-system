@@ -42,9 +42,9 @@ public class StatisticListener implements MessageListener {
     public void onMessage(Message message) {
         try {
             Object content = ((ObjectMessage) message).getObject();
-            if (content instanceof StatisticData) {
+            if (content instanceof StatisticDataEntity) {
                 logger.log(FINE, "mensaje recibido: " + content);
-                statisticProcessor.updateDaylyStatistic((StatisticData) content);
+                statisticProcessor.updateDaylyStatistic((StatisticDataEntity) content);
             } else {
                 logger.log(WARNING, "mensaje recibido de tipo desconocido: " + content);
             }

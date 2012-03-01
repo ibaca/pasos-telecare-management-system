@@ -5,11 +5,9 @@ package org.inftel.tms.web.jsfbean;
  * @author Administrador
  */
 import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
-import static org.inftel.tms.statistics.StatisticDataPeriod.MONTHLY;
 
 import java.io.Serializable;
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -22,9 +20,8 @@ import javax.faces.bean.RequestScoped;
 import org.inftel.tms.domain.AffectedType;
 import org.inftel.tms.domain.AlertType;
 import org.inftel.tms.services.AffectedFacade;
-import org.inftel.tms.statistics.StatisticDataPeriod;
+import org.inftel.tms.statistics.StatisticData;
 import org.inftel.tms.statistics.StatisticProcessor;
-import org.primefaces.component.calendar.CalendarUtils;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
@@ -71,11 +68,11 @@ public class ChartBean implements Serializable {
             LineChartSeries series = new LineChartSeries(alertType.toString());
             String name = "alert.type." + alertType.name().toLowerCase();
 
-            Map<Date, Long> samples; // todos los datos por fecha
+            Map<Date, StatisticData> samples; // todos los datos por fecha
             samples = statistics.findStatistics(name, DAYLY, new Date(0), new Date());
             DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("es"));
             for (Date date : samples.keySet()) {
-                series.set(df.format(date), samples.get(date));
+                series.set(df.format(date), samples.get(date).getDataCount());
             }
 
             alertsModel.addSeries(series);
