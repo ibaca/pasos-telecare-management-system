@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
 
-  <users id='1' fullname='Administrador del Sistema' nickname='admin' email='admin@mail.com' password='admin' userRole='1' created='2012-01-15' updated='2012-01-16' version='1' />
-  <users id='2' fullname='Ignacio Baca' nickname='ibaca' email='ignacio@bacamt.com' password='ibaca' userRole='0' created='2012-01-15' updated='2012-01-16' version='1' />
+  <users id='-1' fullname='Administrador del Sistema' nickname='admin' email='admin@mail.com' password='admin' userRole='1' created='2012-01-15' updated='2012-01-16' version='1' />
+  <users id='-2' fullname='Ignacio Baca' nickname='ibaca' email='ignacio@bacamt.com' password='ibaca' userRole='0' created='2012-01-15' updated='2012-01-16' version='1' />
 
-  <people id='1' firstname='Marco' lastname='Polo' email='marco@polo.com' mobilenumber='666000111' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
-  <people id='2' firstname='Ernesto' lastname='Rivera' email='ernesto@rivera.com' mobilenumber='666000222' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
-  <people id='3' firstname='Francisco' lastname='Lopez' email='flopez@mail.com' mobilenumber='666000223' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
-  <people id='4' firstname='Ambrosio' lastname='Jacinto' email='ajacinto@mail.com' mobilenumber='666000224' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
-  <people id='5' firstname='Yosue' lastname='Itare' email='yi@mail.com' mobilenumber='666000225' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
+  <people id='-1' firstname='Marco' lastname='Polo' email='marco@polo.com' mobilenumber='666000111' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
+  <people id='-2' firstname='Ernesto' lastname='Rivera' email='ernesto@rivera.com' mobilenumber='666000222' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
+  <people id='-3' firstname='Francisco' lastname='Lopez' email='flopez@mail.com' mobilenumber='666000223' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
+  <people id='-4' firstname='Ambrosio' lastname='Jacinto' email='ajacinto@mail.com' mobilenumber='666000224' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
+  <people id='-5' firstname='Yosue' lastname='Itare' email='yi@mail.com' mobilenumber='666000225' latitude='36.731' longitude='-4.417' created='2012-01-15' updated='2012-01-16' version='1' />
 
-  <affected id='1' data_id='1' type='0' created='2012-01-15' updated='2012-01-16' version='1' />
-  <affected_contacts contacts_id='2' chargeof_id='1' />
-  <affected_contacts contacts_id='3' chargeof_id='1' />
+  <affected id='-1' data_id='-1' type='0' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected_contacts contacts_id='-2' chargeof_id='-1' />
+  <affected_contacts contacts_id='-3' chargeof_id='-1' />
 
-  <affected id='2' data_id='4' type='1' created='2012-01-15' updated='2012-01-16' version='1' />
-  <affected_contacts contacts_id='5' chargeof_id='2' />
+  <affected id='-2' data_id='-4' type='1' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected_contacts contacts_id='-5' chargeof_id='-2' />
 
-  <affected id='3' data_id='4' type='1' created='2012-01-15' updated='2012-01-16' version='1' />
-  <affected id='4' data_id='4' type='1' created='2012-01-15' updated='2012-01-16' version='1' />
-  <affected id='5' data_id='4' type='2' created='2012-01-15' updated='2012-01-16' version='1' />
-  <affected id='6' data_id='4' type='2' created='2012-01-15' updated='2012-01-16' version='1' />
-  <affected id='7' data_id='4' type='2' created='2012-01-15' updated='2012-01-16' version='1' />
-  <affected id='8' data_id='4' type='3' created='2012-01-15' updated='2012-01-16' version='1' />
-  <affected id='9' data_id='4' type='4' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected id='-3' data_id='-4' type='1' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected id='-4' data_id='-4' type='1' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected id='-5' data_id='-4' type='2' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected id='-6' data_id='-4' type='2' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected id='-7' data_id='-4' type='2' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected id='-8' data_id='-4' type='3' created='2012-01-15' updated='2012-01-16' version='1' />
+  <affected id='-9' data_id='-4' type='4' created='2012-01-15' updated='2012-01-16' version='1' />
 
-  <devices id='1' owner_id='1' batery='50' lastconnection='2012-01-16' mobilenumber='666123123' simcard='1234' temperature='28' created='2012-01-15' updated='2012-01-16' version='1' />
+  <devices id='-1' owner_id='-1' batery='50' lastconnection='2012-01-16' mobilenumber='666123123' simcard='1234' temperature='28' created='2012-01-15' updated='2012-01-16' version='1' />
 
-  <alerts_raw id='1000' origin='666123123' rawData='$AU11&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;PB50#' version='1' />
-  <alerts_raw id='1001' origin='666123123' rawData='$AU11&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;PB50#' version='1' />
-  <alerts_raw id='1002' origin='666123123' rawData='$AU11&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;PB50#' version='1' />
-  <alerts_raw id='1003' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
-  <alerts_raw id='1004' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='-1000' origin='666123123' rawData='$AU11&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;PB50#' version='1' />
+  <alerts_raw id='-1001' origin='666123123' rawData='$AU11&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;PB50#' version='1' />
+  <alerts_raw id='-1002' origin='666123123' rawData='$AU11&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;PB50#' version='1' />
+  <alerts_raw id='-1003' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
+  <alerts_raw id='-1004' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
 
-  <alerts id='1000' affected_id='1' origin_id='1' cause='se ha caido' type='0' priority='0' raw_id='1000' created='2012-01-15' updated='2012-01-16' version='1' />
-  <alerts id='1001' affected_id='1' origin_id='1' cause='ha tropezado' type='0' priority='0' raw_id='1001' created='2012-01-15' updated='2012-01-16' version='1' />
-  <alerts id='1002' affected_id='1' origin_id='1' cause='se ha perdido' type='0' priority='0' raw_id='1002' created='2012-01-15' updated='2012-01-16' version='1' />
-  <alerts id='1003' affected_id='1' origin_id='1' cause='ha pulsado el boton' type='1' priority='1' raw_id='1003' created='2012-01-15' updated='2012-01-16' version='1' />
-  <alerts id='1004' affected_id='1' origin_id='1' cause='otra cosa' type='1' priority='1' raw_id='1004' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='-1000' affected_id='-1' origin_id='-1' cause='se ha caido' type='0' priority='0' raw_id='-1000' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='-1001' affected_id='-1' origin_id='-1' cause='ha tropezado' type='0' priority='0' raw_id='-1001' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='-1002' affected_id='-1' origin_id='-1' cause='se ha perdido' type='0' priority='0' raw_id='-1002' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='-1003' affected_id='-1' origin_id='-1' cause='ha pulsado el boton' type='1' priority='1' raw_id='-1003' created='2012-01-15' updated='2012-01-16' version='1' />
+  <alerts id='-1004' affected_id='-1' origin_id='-1' cause='otra cosa' type='1' priority='1' raw_id='-1004' created='2012-01-15' updated='2012-01-16' version='1' />
 
-  <interventions id='1' description='descripcion1' alert_id='1000' by_id='1' created='2012-01-15' updated='2012-01-16' version='1' />
-  <interventions id='2' description='descripcion2' alert_id='1000' by_id='1' created='2012-01-15' updated='2012-01-16' version='1' />
+  <interventions id='-1' description='descripcion1' alert_id='-1000' by_id='-1' created='2012-01-15' updated='2012-01-16' version='1' />
+  <interventions id='-2' description='descripcion2' alert_id='-1000' by_id='-1' created='2012-01-15' updated='2012-01-16' version='1' />
 
 </dataset>
