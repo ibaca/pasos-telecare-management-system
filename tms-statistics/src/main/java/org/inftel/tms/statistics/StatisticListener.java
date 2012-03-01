@@ -1,63 +1,50 @@
 package org.inftel.tms.statistics;
 
+import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.logging.Level.FINE;
-import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
+import static javax.ejb.ConcurrencyManagementType.CONTAINER;
+import static javax.ejb.LockType.WRITE;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PreDestroy;
-import javax.ejb.ActivationConfigProperty;
+import javax.ejb.AccessTimeout;
+import javax.ejb.ConcurrencyManagement;
 import javax.ejb.EJB;
-import javax.ejb.MessageDriven;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
+import javax.ejb.Lock;
+import javax.ejb.Singleton;
 
 /**
- * Se encarga de procesar la cola de estadistiacs e ir acutalizando la tabla de
- * estadistica. El pool de beans esta configurado para tener un maximo de 1, por
- * lo tanto no hay problema de actualizar las filas de la tabla. Ademas, el
- * MessageDriven es no transaccional, y se recomienda usar acceso a las tablas
- * no transaccional.
+ * Se encarga de procesar la cola de estadistiacs e ir acutalizando la tabla de estadistica. El pool
+ * de beans esta configurado para tener un maximo de 1, por lo tanto no hay problema de actualizar
+ * las filas de la tabla. Ademas, el MessageDriven es no transaccional, y se recomienda usar acceso
+ * a las tablas no transaccional.
  */
-//@MessageDriven(mappedName = "jms/statistics", activationConfig = {
-//    @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
-//    @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
-//})
-public class StatisticListener implements MessageListener {
+@Singleton
+@ConcurrencyManagement(CONTAINER)
+public class StatisticListener {
 
-    private static final Logger logger = getLogger(StatisticListener.class.getName());
-    
-    @EJB
-    private StatisticProcessorImpl statisticProcessor;
+	private static final Logger logger = getLogger(StatisticListener.class.getName());
 
-    public StatisticListener() {
-    }
+	@EJB
+	private StatisticProcessorImpl statisticProcessor;
 
-    /** Delega el procesado de los mensajes a StatisticProcessorImpl. */
-    @Override
-    public void onMessage(Message message) {
-        try {
-            Object content = ((ObjectMessage) message).getObject();
-            if (content instanceof StatisticDataEntity) {
-                logger.log(FINE, "mensaje recibido: " + content);
-                statisticProcessor.updateDaylyStatistic((StatisticDataEntity) content);
-            } else {
-                logger.log(WARNING, "mensaje recibido de tipo desconocido: " + content);
-            }
-        } catch (JMSException ex) {
-            Logger.getLogger(StatisticListener.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	/** Delega el procesado de los mensajes a StatisticProcessorImpl. */
+	@Lock(WRITE)
+	@AccessTimeout(value = 5, unit = MINUTES)
+	public void onMessage(StatisticDataEntity content) {
+		logger.log(FINE, "mensaje recibido: " + content);
+		statisticProcessor.updateDaylyStatistic(content);
+	}
 
-    @PreDestroy
-    public void flush() {
-        // Se podrian acumular las estadisticas en queues en memoria, de forma q se acumulasen por tipo
-        // y solo cada cierto tiempo se volcasen a la base de datos, en esta situacion de tener mensajes
-        // en memoria, deberia asegurarse en este metodo PreDestroy que las colas de memoria estan vacia
-        // y en caso contrario escribirlas en la tabla.
-    }
+	@PreDestroy
+	public void flush() {
+		/*
+		 * Se podrian acumular las estadisticas en queues en memoria, de forma q se acumulasen
+		 * portipo y solo cada cierto tiempo se volcasen a la base de datos, en esta situacion de
+		 * tener mensajes en memoria, deberia asegurarse en este metodo PreDestroy que las colas de
+		 * memoria estan vacia y en caso contrario escribirlas en la tabla.
+		 */
+	}
 }

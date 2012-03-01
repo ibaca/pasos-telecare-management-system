@@ -4,33 +4,22 @@ import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
 import static org.inftel.tms.statistics.StatisticDataPeriod.ANNUAL;
 import static org.inftel.tms.statistics.StatisticDataPeriod.DAYLY;
 import static org.inftel.tms.statistics.StatisticDataPeriod.MONTHLY;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.Resource;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
 
 /**
  * Debe sacar la informacion necesaria a traves de los metodos expuestos en el interfaz remoto, y
@@ -46,12 +35,12 @@ import javax.jms.Session;
 public class StatisticProcessorImpl implements StatisticProcessor {
 
     private final static Logger logger = getLogger(StatisticProcessorImpl.class.getName());
+    
     @EJB
     private StatisticDataFacade statisticDataFacade;
-    //@Resource(mappedName = "jms/statistics")
-    private Queue statistics;
-    //@Resource(mappedName = "jms/statisticsFactory")
-    private ConnectionFactory statisticsFactory;
+    
+    @EJB
+    private StatisticListener statisticListener;
 
     @Override
     public void process(String name, Date date) {
@@ -69,42 +58,9 @@ public class StatisticProcessorImpl implements StatisticProcessor {
     }
 
     @Override
+    @Asynchronous
     public void process(String name, Date date, Double accumulated, Long samples) {
-        try {
-            // Crea una StatisticData temporal, es decir, sin periodo definido
-            sendJMSMessageToStatistics(new StatisticDataEntity(name, date, accumulated, samples));
-        } catch (JMSException ex) {
-            logger.log(WARNING, "fallo enviando estadistica a la cola de proceso", ex);
-        }
-    }
-
-    private Message createJMSMessageForjmsStatistics(Session session, Serializable messageData)
-            throws JMSException {
-        ObjectMessage tm = session.createObjectMessage(messageData);
-        return tm;
-    }
-
-    private void sendJMSMessageToStatistics(Serializable messageData) throws JMSException {
-        Connection connection = null;
-        Session session = null;
-        try {
-            connection = statisticsFactory.createConnection();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer messageProducer = session.createProducer(statistics);
-            messageProducer.send(createJMSMessageForjmsStatistics(session, messageData));
-        } finally {
-            if (session != null) {
-                try {
-                    session.close();
-                } catch (JMSException e) {
-                    Logger.getLogger(this.getClass().getName()).log(Level.WARNING,
-                            "Cannot close session", e);
-                }
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
+    	statisticListener.onMessage(new StatisticDataEntity(name, date, accumulated, samples));
     }
 
     /**
