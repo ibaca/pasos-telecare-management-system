@@ -31,6 +31,8 @@
         </activity>
         <activity android:name=".PreferencesFormActivity" >
         </activity>
+        <activity android:name=".ui.FencesActivity" >
+        </activity>
 
         <receiver
             android:name=".receivers.ConnectivityChangedReceiver"
@@ -51,6 +53,11 @@
                 <action android:name="android.intent.action.ACTION_BATTERY_OKAY" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name=".contentproviders.FencesContentProvider"
+            android:authorities="org.inftel.tms.mobile.provider.fences" >
+        </provider>
     </application>
 
 </manifest>

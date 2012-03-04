@@ -9,6 +9,8 @@
     <string name="battery_level">Battery Level</string>
     <string name="location_button">Location Button</string>
     <string name="form_button">Form Button</string>
+    <string name="fences_button">Configure Fences</string>
+    <string name="add_fence">Add Fence</string>
 
     <!-- String para PREFERENCIAS -->
     <string name="call_center_preferences">Ajustes servidor Call Center</string>

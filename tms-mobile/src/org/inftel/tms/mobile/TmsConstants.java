@@ -103,6 +103,7 @@ public class TmsConstants {
 
 	public static String ARGUMENTS_KEY_REFERENCE = "reference";
 	public static String ARGUMENTS_KEY_ID = "id";
+	public static String ARGUMENTS_CONTENT_URI = "content_uri";
 
 	public static String NEW_CHECKIN_ACTION = "com.radioactiveyak.places.NEW_CHECKIN_ACTION";
 	public static String RETRY_QUEUED_CHECKINS_ACTION = "com.radioactiveyak.places.retry_queued_checkins";

@@ -1,5 +1,6 @@
 package org.inftel.tms.mobile;
 
+import static com.beoui.geocell.GeocellManager.generateGeoCell;
 import static java.math.RoundingMode.CEILING;
 import static java.text.DateFormat.SHORT;
 
@@ -8,6 +9,11 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import org.inftel.tms.mobile.ui.FencesActivity;
+
+import com.beoui.geocell.GeocellManager;
+import com.beoui.geocell.model.Point;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -62,13 +68,12 @@ public class MainActivity extends Activity {
 		((Button) findViewById(R.id.batteryButton)).setOnClickListener(mBatteryListener);
 		((Button) findViewById(R.id.locationButton)).setOnClickListener(mLocationListener);
 		((Button) findViewById(R.id.formButton)).setOnClickListener(mPreferencesForm);
+		((Button) findViewById(R.id.fencesButton)).setOnClickListener(mFencesActivity);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// append(getSharedPreferences("MySamplePreferences", MODE_PRIVATE).getString("txt",
-		// "no hay nada!"));
 	};
 
 	private void pickContact() {
@@ -142,12 +147,26 @@ public class MainActivity extends Activity {
 		append("Consulta última localización...");
 		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		List<String> matchingProviders = locationManager.getAllProviders();
+		Location validLocation = null;
 		for (String provider : matchingProviders) {
 			Location location = locationManager.getLastKnownLocation(provider);
 			printLocationByType(location, provider, "Last");
 			// Se le pide a cada proveedor que intente obtener la posicion actual
 			locationManager.requestLocationUpdates(provider, 0, 0, singeUpdateListener,
 				context.getMainLooper());
+			if (location != null) {
+				validLocation = location;
+			}
+		}
+
+		if (validLocation != null) {
+			List<String> cells = null;
+			cells = generateGeoCell(new Point(validLocation.getAltitude(),
+				validLocation.getLongitude()));
+			append("GeoCells");
+			for (String cell : cells) {
+				append(cell);
+			}
 		}
 
 		// Construct the Pending Intent that will be broadcast by the oneshot
@@ -230,9 +249,14 @@ public class MainActivity extends Activity {
 	};
 
 	OnClickListener mPreferencesForm = new OnClickListener() {
-
 		public void onClick(View v) {
 			startActivity(new Intent(MainActivity.this, PreferencesFormActivity.class));
+		}
+	};
+
+	OnClickListener mFencesActivity = new OnClickListener() {
+		public void onClick(View v) {
+			startActivity(new Intent(MainActivity.this, FencesActivity.class));
 		}
 	};
 
