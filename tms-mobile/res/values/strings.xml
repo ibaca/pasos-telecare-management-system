@@ -10,4 +10,13 @@
     <string name="location_button">Location Button</string>
     <string name="form_button">Form Button</string>
 
+    <!-- String para PREFERENCIAS -->
+    <string name="call_center_preferences">Ajustes servidor Call Center</string>
+    <string name="title_ip_preference">IP del servidor</string>
+    <string name="sumary_ip_preference">Dirección IP del servidor Call Center</string>
+    <string name="dialog_title_ip_preference">Introduzca dirección IP</string>
+    <string name="title_port_preference">Puerto</string>
+    <string name="sumary_port_preference">Puerto TCP del servidor Call Center</string>
+    <string name="dialog_title_port_preference">Introduzca número de puerto</string>
+
 </resources>

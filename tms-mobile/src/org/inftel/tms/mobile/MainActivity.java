@@ -67,8 +67,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		append(getSharedPreferences("MySamplePreferences", MODE_PRIVATE).getString("txt",
-				"no hay nada!"));
+		// append(getSharedPreferences("MySamplePreferences", MODE_PRIVATE).getString("txt",
+		// "no hay nada!"));
 	};
 
 	private void pickContact() {
@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
 		if (resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT_REQUEST) {
 			// Perform a query to the contact's content provider for the contact's name
 			Cursor cursor = getContentResolver().query(data.getData(),
-					new String[] { Contacts.DISPLAY_NAME }, null, null, null);
+				new String[] { Contacts.DISPLAY_NAME }, null, null, null);
 			if (cursor.moveToFirst()) { // True if the cursor is not empty
 				int columnIndex = cursor.getColumnIndex(Contacts.DISPLAY_NAME);
 				String name = cursor.getString(columnIndex);
@@ -132,7 +132,7 @@ public class MainActivity extends Activity {
 		// initialize
 		Context context = getApplicationContext();
 		locationManager = (LocationManager) getApplicationContext().getSystemService(
-				Context.LOCATION_SERVICE);
+			Context.LOCATION_SERVICE);
 		// Coarse accuracy is specified here to get the fastest possible result.
 		// The calling Activity will likely (or have already) request ongoing
 		// updates using the Fine location provider.
@@ -147,7 +147,7 @@ public class MainActivity extends Activity {
 			printLocationByType(location, provider, "Last");
 			// Se le pide a cada proveedor que intente obtener la posicion actual
 			locationManager.requestLocationUpdates(provider, 0, 0, singeUpdateListener,
-					context.getMainLooper());
+				context.getMainLooper());
 		}
 
 		// Construct the Pending Intent that will be broadcast by the oneshot
@@ -160,8 +160,8 @@ public class MainActivity extends Activity {
 	protected LocationListener singeUpdateListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
 			Log.d("HelloWorldActivity",
-					"Single Location Update Received: " + location.getLatitude() + ","
-							+ location.getLongitude());
+				"Single Location Update Received: " + location.getLatitude() + ","
+					+ location.getLongitude());
 			printLocationByType(location, location.getProvider(), "Actual");
 			locationManager.removeUpdates(singeUpdateListener);
 		}
@@ -182,8 +182,8 @@ public class MainActivity extends Activity {
 			float accuracy = location.getAccuracy();
 			long time = location.getTime();
 			append("\n  accuracy=" + accuracy + ", time=" + dateFormat.format(new Date(time))
-					+ "\n  lat=" + new BigDecimal(location.getLatitude()).setScale(4, CEILING)
-					+ ", longitude=" + new BigDecimal(location.getLongitude()).setScale(4, CEILING));
+				+ "\n  lat=" + new BigDecimal(location.getLatitude()).setScale(4, CEILING)
+				+ ", longitude=" + new BigDecimal(location.getLongitude()).setScale(4, CEILING));
 
 		}
 		append("");

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	PREFERENCIAS tms-mobile:
+
+	Categoría: Ajustes del servidor Call Center
+		- Dirección IP
+		- Puerto de conexión
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/call_center_preferences" >
+        <EditTextPreference
+            android:key="ip_preference"
+            android:title="@string/title_ip_preference"
+            android:summary="@string/sumary_ip_preference"
+            android:dialogTitle="@string/dialog_title_ip_preference" />
+        <EditTextPreference
+            android:key="port_preference"
+            android:title="@string/title_port_preference"
+            android:summary="@string/sumary_port_preference"
+            android:dialogTitle="@string/dialog_title_port_preference" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
