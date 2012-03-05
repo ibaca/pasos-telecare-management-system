@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.inftel.tms.mobile.userAlarmaInterface;
+package org.inftel.tms.mobile;
 
 import org.inftel.tms.mobile.R;
 
@@ -34,6 +34,7 @@ public class sendAU extends Activity {
         
         //Enviando los datos de Ususario a traves de la API de MigueQ
         //con los datos recuperados del intent padre
+        
         
     }
 }

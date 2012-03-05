@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
 		((Button) findViewById(R.id.locationButton)).setOnClickListener(mLocationListener);
 		((Button) findViewById(R.id.formButton)).setOnClickListener(mPreferencesForm);
 		((Button) findViewById(R.id.fencesButton)).setOnClickListener(mFencesActivity);
+		((Button) findViewById(R.id.buttonUserAlarm)).setOnClickListener(mUserAlarm);
 	}
 
 	@Override
@@ -259,5 +260,10 @@ public class MainActivity extends Activity {
 			startActivity(new Intent(MainActivity.this, FencesActivity.class));
 		}
 	};
-
+	
+	OnClickListener mUserAlarm = new OnClickListener() {
+		public void onClick(View v) {
+			startActivity(new Intent(MainActivity.this, ExampleAlarmUserActivity.class));
+		}
+	};
 }

@@ -1,4 +1,4 @@
-package org.inftel.tms.mobile.userAlarmaInterface;
+package org.inftel.tms.mobile;
 
 import org.inftel.tms.mobile.R;
 
