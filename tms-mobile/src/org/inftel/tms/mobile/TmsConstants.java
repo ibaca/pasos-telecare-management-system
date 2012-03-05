@@ -86,11 +86,18 @@ public class TmsConstants {
 	 */
 	public static String SHARED_PREFERENCE_FILE = "SHARED_PREFERENCE_FILE";
 	public static String SP_KEY_FOLLOW_LOCATION_CHANGES = "SP_KEY_FOLLOW_LOCATION_CHANGES";
-	public static String SP_KEY_LAST_LIST_UPDATE_TIME = "SP_KEY_LAST_LIST_UPDATE_TIME";
-	public static String SP_KEY_LAST_LIST_UPDATE_LAT = "SP_KEY_LAST_LIST_UPDATE_LAT";
-	public static String SP_KEY_LAST_LIST_UPDATE_LNG = "SP_KEY_LAST_LIST_UPDATE_LNG";
+	/* Datos de la ultima comprobacion de las vallas */
+	public static String SP_KEY_LAST_FENCES_CHECK_TIME = "SP_KEY_LAST_FENCES_CHECKTIME";
+	public static String SP_KEY_LAST_FENCES_CHECK_LAT = "SP_KEY_LAST_FENCES_CHECKLAT";
+	public static String SP_KEY_LAST_FENCES_CHECK_LNG = "SP_KEY_LAST_FENCES_CHECKLNG";
+	/* Datos del ultimo envio de posicion */
+	public static String SP_KEY_LAST_TRACKING_TIME = "SP_KEY_LAST_TRACKING_TIME";
+	public static String SP_KEY_LAST_TRACKING_LAT = "SP_KEY_LAST_TRACKING_LAT";
+	public static String SP_KEY_LAST_TRACKING_LNG = "SP_KEY_LAST_TRACKING_LNG";
+	
 	public static String SP_KEY_LAST_CHECKIN_ID = "SP_KEY_LAST_CHECKIN_ID";
 	public static String SP_KEY_LAST_CHECKIN_TIMESTAMP = "SP_KEY_LAST_CHECKIN_TIMESTAMP";
+	/* Aplicacion ejecutada almenos una vez */
 	public static String SP_KEY_RUN_ONCE = "SP_KEY_RUN_ONCE";
 
 	public static String EXTRA_KEY_REFERENCE = "reference";
@@ -99,6 +106,7 @@ public class TmsConstants {
 	public static String EXTRA_KEY_RADIUS = "radius";
 	public static String EXTRA_KEY_TIME_STAMP = "time_stamp";
 	public static String EXTRA_KEY_FORCEREFRESH = "force_refresh";
+	public static String EXTRA_KEY_FORCETRACK = "force_track";
 	public static String EXTRA_KEY_IN_BACKGROUND = "EXTRA_KEY_IN_BACKGROUND";
 
 	public static String ARGUMENTS_KEY_REFERENCE = "reference";

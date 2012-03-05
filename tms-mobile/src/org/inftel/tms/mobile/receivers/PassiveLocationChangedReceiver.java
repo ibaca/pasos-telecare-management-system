@@ -17,12 +17,15 @@
 package org.inftel.tms.mobile.receivers;
 
 import static android.content.Context.MODE_PRIVATE;
+import static org.inftel.tms.mobile.TmsConstants.DEFAULT_RADIUS;
 import static org.inftel.tms.mobile.TmsConstants.SHARED_PREFERENCE_FILE;
-import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_LIST_UPDATE_LAT;
-import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_LIST_UPDATE_LNG;
-import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_LIST_UPDATE_TIME;
+import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_FENCES_CHECK_LAT;
+import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_FENCES_CHECK_LNG;
+import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_FENCES_CHECK_TIME;
 
 import org.inftel.tms.mobile.TmsConstants;
+import org.inftel.tms.mobile.services.EclairTrackingService;
+import org.inftel.tms.mobile.services.TrackingService;
 import org.inftel.tms.mobile.util.LegacyLastLocationFinder;
 
 import android.content.BroadcastReceiver;
@@ -52,14 +55,16 @@ public class PassiveLocationChangedReceiver extends BroadcastReceiver {
 	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		Log.d(TAG, "PassivlyLocationChanged called.");
 		String key = LocationManager.KEY_LOCATION_CHANGED;
 		Location location = null;
 
 		if (intent.hasExtra(key)) {
-			// This update came from Passive provider, so we can extract the location
-			// directly.
+			Log.d(TAG, "Location changed from a passive provider.");
+			// ...so we can extract the location directly.
 			location = (Location) intent.getExtras().get(key);
 		} else {
+			Log.d(TAG, "Location changed from a recurring alarm.");
 			// This update came from a recurring alarm. We need to determine if there
 			// has been a more recent Location received than the last location we used.
 
@@ -70,10 +75,10 @@ public class PassiveLocationChangedReceiver extends BroadcastReceiver {
 			SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCE_FILE,
 				MODE_PRIVATE);
 
-			// Get the last location we used to get a listing.
-			long lastTime = prefs.getLong(SP_KEY_LAST_LIST_UPDATE_TIME, Long.MIN_VALUE);
-			long lastLat = prefs.getLong(SP_KEY_LAST_LIST_UPDATE_LAT, Long.MIN_VALUE);
-			long lastLng = prefs.getLong(SP_KEY_LAST_LIST_UPDATE_LNG, Long.MIN_VALUE);
+			// Get the last location we used to check fences.
+			long lastTime = prefs.getLong(SP_KEY_LAST_FENCES_CHECK_TIME, Long.MIN_VALUE);
+			float lastLat = prefs.getFloat(SP_KEY_LAST_FENCES_CHECK_LAT, Float.MIN_VALUE);
+			float lastLng = prefs.getFloat(SP_KEY_LAST_FENCES_CHECK_LNG, Float.MIN_VALUE);
 			Location lastLocation = new Location(TmsConstants.CONSTRUCTED_LOCATION_PROVIDER);
 			lastLocation.setLatitude(lastLat);
 			lastLocation.setLongitude(lastLng);
@@ -90,14 +95,13 @@ public class PassiveLocationChangedReceiver extends BroadcastReceiver {
 		/* Start the Service used to find nearby points of interest based on the last detected
 		 * location. */
 		if (location != null) {
-			Log.d(TAG, "Passivly updating place list.");
-			// Intent updateServiceIntent = new Intent(context, TmsConstants.SUPPORTS_ECLAIR ?
-			// EclairPlacesUpdateService.class : PlacesUpdateService.class);
-			// updateServiceIntent.putExtra(TmsConstants.EXTRA_KEY_LOCATION, location);
-			// updateServiceIntent
-			// .putExtra(TmsConstants.EXTRA_KEY_RADIUS, TmsConstants.DEFAULT_RADIUS);
-			// updateServiceIntent.putExtra(TmsConstants.EXTRA_KEY_FORCEREFRESH, false);
-			// context.startService(updateServiceIntent);
+			Log.d(TAG, "Passivly checking fences.");
+			Intent checkServiceIntent = new Intent(context, TmsConstants.SUPPORTS_ECLAIR ?
+				EclairTrackingService.class : TrackingService.class);
+			checkServiceIntent.putExtra(TmsConstants.EXTRA_KEY_LOCATION, location);
+			checkServiceIntent.putExtra(TmsConstants.EXTRA_KEY_RADIUS, DEFAULT_RADIUS);
+			checkServiceIntent.putExtra(TmsConstants.EXTRA_KEY_FORCEREFRESH, false);
+			context.startService(checkServiceIntent);
 		}
 	}
 }

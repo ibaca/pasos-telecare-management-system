@@ -52,8 +52,8 @@ public class LocationChangedReceiver extends BroadcastReceiver {
 		if (intent.hasExtra(locationKey)) {
 			Location location = (Location) intent.getExtras().get(locationKey);
 			Log.d(TAG, "Actively Updating place list");
-			// Intent updateServiceIntent = new Intent(context,
-			// SUPPORTS_ECLAIR ? EclairPlacesUpdateService.class : PlacesUpdateService.class);
+			// Intent fencesServiceIntent = new Intent(context,
+			// SUPPORTS_ECLAIR ? EclairTrackingService.class : TrackingService.class);
 			// updateServiceIntent.putExtra(EXTRA_KEY_LOCATION, location);
 			// updateServiceIntent.putExtra(EXTRA_KEY_RADIUS, DEFAULT_RADIUS);
 			// updateServiceIntent.putExtra(EXTRA_KEY_FORCEREFRESH, true);
