@@ -13,7 +13,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class PasosHTTPTransmitter extends AbstractPasosTrasmitter implements PasosTransmitter{	
-	private String url;
+	//URL del servidor, por defecto
+	private String url = "http://localhost:8080/tms-web/connector";
 
 	public String getUrl() {
 		return url;
@@ -22,8 +23,16 @@ public class PasosHTTPTransmitter extends AbstractPasosTrasmitter implements Pas
 	public void setUrl(String url) {
 		this.url = url;
 	}	
+		
+	public PasosHTTPTransmitter() {
+		super();
+	}
 
-	
+	public PasosHTTPTransmitter(String url) {
+		super();
+		this.url = url;
+	}
+
 	/**
 	 * Manda un mensaje vacío, para pedir los remote parameters.Por si lo usamos.
 	 * 
