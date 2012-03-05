@@ -32,9 +32,9 @@
         </activity>
         <activity android:name=".ui.FencesActivity" >
         </activity>
-        <activity android:name=".ExampleAlarmUserActivity" >
+        <activity android:name=".ui.ExampleAlarmUserActivity" >
         </activity>
-        <activity android:name=".sendAU" >
+        <activity android:name=".ui.SendUserAlertActivity" >
         </activity>
 
         <receiver

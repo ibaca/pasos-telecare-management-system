@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.inftel.tms.mobile.ExampleAlarmUserActivity;
 import org.inftel.tms.mobile.R;
 import org.inftel.tms.mobile.TmsConstants;
 import org.inftel.tms.mobile.util.PlatformSpecificImplementationFactory;

@@ -1,9 +1,8 @@
-/**
- * 
- */
-package org.inftel.tms.mobile;
+package org.inftel.tms.mobile.ui;
 
 import org.inftel.tms.mobile.R;
+import org.inftel.tms.mobile.R.id;
+import org.inftel.tms.mobile.R.layout;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
@@ -13,11 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
+ * ¿QUE HACE ESTA ACTIVIDAD????
  * @author Cristian
  *
  */
-public class sendAU extends Activity {
-    /** Called when the activity is first created. */
+public class SendUserAlertActivity extends Activity {
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
