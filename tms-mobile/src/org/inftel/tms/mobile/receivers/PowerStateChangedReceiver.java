@@ -16,36 +16,102 @@
 
 package org.inftel.tms.mobile.receivers;
 
-import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
-import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-import static android.content.pm.PackageManager.DONT_KILL_APP;
+import org.inftel.tms.mobile.pasos.PasosHTTPTransmitter;
+
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.os.BatteryManager;
+import android.util.Log;
 
 /**
- * The manifest Receiver is used to detect changes in battery state. When the system broadcasts a
- * "Battery Low" warning we turn off the passive location updates to conserve battery when the app
- * is in the background.
- * 
- * When the system broadcasts "Battery OK" to indicate the battery has returned to an okay state,
- * the passive location updates are resumed.
+ * The manifest Receiver is used to detect changes in battery state. When the
+ * system broadcasts a "Battery Low" warning we turn off the passive location
+ * updates to conserve battery when the app is in the background. When the
+ * system broadcasts "Battery OK" to indicate the battery has returned to an
+ * okay state, the passive location updates are resumed.
  */
 public class PowerStateChangedReceiver extends BroadcastReceiver {
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		boolean batteryLow = intent.getAction().equals(Intent.ACTION_BATTERY_LOW);
+    private static final String TAG = "BatteryReceiver"; // for debug
 
-		PackageManager pm = context.getPackageManager();
-		ComponentName passiveLocationReceiver =
-			new ComponentName(context, PassiveLocationChangedReceiver.class);
+    @Override
+    public void onReceive(Context context, Intent intent) {
 
-		// Disable the passive location update receiver when the battery state is low.
-		// Disabling the Receiver will prevent the app from initiating the background
-		// downloads of nearby locations.
-		pm.setComponentEnabledSetting(passiveLocationReceiver, batteryLow ?
-			COMPONENT_ENABLED_STATE_DISABLED : COMPONENT_ENABLED_STATE_DEFAULT, DONT_KILL_APP);
-	}
+        Log.d(TAG, "STARTED");
+
+        boolean batteryLow = intent.getAction().equals(Intent.ACTION_BATTERY_LOW);
+
+        String batteryLevel = parseBatteryLevel(intent);
+        boolean isCharging = isCharging(intent);
+
+        // if battery low, sends an alarm with the level of the battery,
+        // location and if the
+        // mobile is charging
+        if (batteryLow) {
+            sendTechnicalAlarm(null, batteryLevel, isCharging);
+        }
+        //
+        // PackageManager pm = context.getPackageManager();
+        // ComponentName passiveLocationReceiver =
+        // new ComponentName(context, PassiveLocationChangedReceiver.class);
+        //
+        // // Disable the passive location update receiver when the battery
+        // state
+        // // is low.
+        // // Disabling the Receiver will prevent the app from initiating the
+        // // background
+        // // downloads of nearby locations.
+        // pm.setComponentEnabledSetting(passiveLocationReceiver, batteryLow ?
+        // COMPONENT_ENABLED_STATE_DISABLED : COMPONENT_ENABLED_STATE_DEFAULT,
+        // DONT_KILL_APP);
+    }
+
+    /**
+     * Send a technical Alarm using HTTTPTransmitter
+     */
+    private void sendTechnicalAlarm(String location, String batteryLevel, boolean charging) {
+        PasosHTTPTransmitter transmitter = new PasosHTTPTransmitter();
+        // try {
+        // transmitter.sendTechnicalAlarm(location, batteryLevel, charging);
+        // } catch (UnsupportedEncodingException e) {
+        // // TODO pantallita o algo para excepciones
+        // e.printStackTrace();
+        // } catch (URISyntaxException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // } catch (IOException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+    }
+
+    /**
+     * Converts the level of the battery in % value
+     * 
+     * @return the String value of the level
+     */
+    private String parseBatteryLevel(Intent intent) {
+        int rawlevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+        int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+        int level = -1;
+        if (rawlevel >= 0 && scale > 0) {
+            level = (rawlevel * 100) / scale;
+        }
+        Log.d(TAG, "nivel de bateria:" + level);
+        return String.valueOf(level);
+    }
+
+    /**
+     * Obtains if the mobile is charging
+     * 
+     * @return isCharging
+     */
+    private boolean isCharging(Intent intent) {
+        int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                status == BatteryManager.BATTERY_STATUS_FULL;
+        Log.d(TAG, "enchufado??:" + String.valueOf(isCharging));
+        return isCharging;
+
+    }
 }

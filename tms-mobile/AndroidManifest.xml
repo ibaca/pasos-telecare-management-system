@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BATTERY_STATS"/>
 
     <application
         android:name="TmsApplication"
@@ -39,7 +40,12 @@
         </activity>
         
         <service android:name=".services.TrackingService"/>
-
+		<service android:name=".services.AutomaticAlarmSendingService">
+            <intent-filter>
+                <action android:name="org.inftel.tms.mobile.services.AutomaticAlarmSendingService"/>
+            </intent-filter>
+        </service>
+        
         <receiver android:name=".receivers.LocationChangedReceiver" />
         <receiver android:name=".receivers.PassiveLocationChangedReceiver" />
         <receiver
@@ -50,15 +56,16 @@
                 <action android:name="com.radioactiveyak.places.retry_queued_checkins" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.BootReceiver" >
+        <receiver android:name="org.inftel.tms.mobile.receivers.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.PowerStateChangedReceiver" >
+        <receiver android:name="org.inftel.tms.mobile.receivers.PowerStateChangedReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.ACTION_BATTERY_LOW" />
-                <action android:name="android.intent.action.ACTION_BATTERY_OKAY" />
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
             </intent-filter>
         </receiver>
 

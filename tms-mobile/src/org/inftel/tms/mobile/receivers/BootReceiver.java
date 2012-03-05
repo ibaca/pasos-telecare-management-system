@@ -41,6 +41,14 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        Log.d(TAG, "STARTED");
+        // Starting automatic alarm sending
+        Intent service = new Intent();
+        service.setAction("org.inftel.tms.mobile.services.AutomaticAlarmSendingService");
+        context.startService(service);
+        Log.d(TAG, "GO BACK");
+
         SharedPreferences prefs = context.getSharedPreferences(
                 TmsConstants.SHARED_PREFERENCE_FILE, Context.MODE_PRIVATE);
         boolean runOnce = prefs.getBoolean(TmsConstants.SP_KEY_RUN_ONCE, false);
