@@ -11,15 +11,15 @@
 
     <PreferenceCategory android:title="@string/call_center_preferences" >
         <EditTextPreference
+            android:dialogTitle="@string/dialog_title_ip_preference"
             android:key="ip_preference"
-            android:title="@string/title_ip_preference"
             android:summary="@string/sumary_ip_preference"
-            android:dialogTitle="@string/dialog_title_ip_preference" />
+            android:title="@string/title_ip_preference" />
         <EditTextPreference
+            android:dialogTitle="@string/dialog_title_port_preference"
             android:key="port_preference"
-            android:title="@string/title_port_preference"
             android:summary="@string/sumary_port_preference"
-            android:dialogTitle="@string/dialog_title_port_preference" />
+            android:title="@string/title_port_preference" />
     </PreferenceCategory>
 
 </PreferenceScreen>

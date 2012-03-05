@@ -93,7 +93,7 @@ public class TmsConstants {
      * These values are constants used for intents, exteas, and shared
      * preferences. You shouldn't need to modify them.
      */
-    public static String SHARED_PREFERENCE_FILE = "SHARED_PREFERENCE_FILE";
+
     public static String SP_KEY_FOLLOW_LOCATION_CHANGES = "SP_KEY_FOLLOW_LOCATION_CHANGES";
     /* Datos de la ultima comprobacion de las vallas */
     public static String SP_KEY_LAST_FENCES_CHECK_TIME = "SP_KEY_LAST_FENCES_CHECKTIME";
@@ -134,4 +134,13 @@ public class TmsConstants {
     public static String CONSTRUCTED_LOCATION_PROVIDER = "CONSTRUCTED_LOCATION_PROVIDER";
 
     public static int CHECKIN_NOTIFICATION = 0;
+
+    /**
+     * PREFERENCES: Se corresponden con las keys definidas en
+     * res/xml/preferences.xml
+     */
+    public static String SHARED_PREFERENCE_FILE = "SHARED_PREFERENCE_FILE";
+    public static String KEY_IP_PREFERENCE = "ip_preference";
+    public static String KEY_PORT_PREFERENCE = "port_preference";
+
 }
