@@ -1,7 +1,7 @@
+
 package org.inftel.tms.mobile.pasos;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -12,117 +12,80 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-public class PasosHTTPTransmitter extends AbstractPasosTrasmitter implements PasosTransmitter{	
-	//URL del servidor, por defecto
-	private String url = "http://localhost:8080/tms-web/connector";
+public class PasosHTTPTransmitter implements PasosTransmitter {
+    private String url = "http://localhost:8080/tms-web/connector";
+    protected String senderNumber;
+    private PasosMessage message;
 
-	public String getUrl() {
-		return url;
-	}
+    public PasosMessage getMessage() {
+        return message;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}	
-		
-	public PasosHTTPTransmitter() {
-		super();
-	}
+    public void setMessage(PasosMessage message) {
+        this.message = message;
+    }
 
-	public PasosHTTPTransmitter(String url) {
-		super();
-		this.url = url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	/**
-	 * Manda un mensaje vacío, para pedir los remote parameters.Por si lo usamos.
-	 * 
-	 * @return HttpResponse
-	 * @throws URISyntaxException
-	 * @throws IOException
-	 */
-	public HttpResponse sendEmptyMessage() throws URISyntaxException,
-		IOException {
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost();
-		post.setHeader("senderNumber", this.senderNumber);
-		URI uri = new URI(this.url);
-		post.setURI(uri);
-		return client.execute(post);
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	
-	/**
-	 * Envia una alerta de usuario (AU)
-	 * 
-	 * @return HttpResponse
-	 * @throws URISyntaxException 
-	 * @throws IOException 
-	 * @throws ClientProtocolException 
-	 */
-	public HttpResponse sendUserAlarm(String location) throws URISyntaxException, ClientProtocolException, IOException {
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost();
-		post.setHeader("sender-mobile-number", this.senderNumber);
-		URI uri = new URI(this.url);
-		post.setURI(uri);
-		setDateandTime();
-		post.setEntity(new StringEntity("*$AU11&" + date + time + location
-			+ "#"));
-		return client.execute(post);
-	}
+    public String getSenderNumber() {
+        return senderNumber;
+    }
 
-	/**
-	 * Envia una alerta de dispositivo (AD), por temperatura.
-	 * 
-	 * @return HttpResponse
-	 * @throws URISyntaxException
-	 * @throws UnsupportedEncodingException
-	 * @throws IOException
-	 */
-	public HttpResponse sendDeviceAlarm(String location, String temp)
-		throws URISyntaxException, UnsupportedEncodingException,
-		IOException {
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost();
-		post.setHeader("sender-mobile-number", senderNumber);
-		URI uri = new URI(url);
-		post.setURI(uri);
-		setDateandTime();
-		post.setEntity(new StringEntity("*$AD31&" + date + time + location
-			+ "&DT" + temp + "#"));
-		return client.execute(post);
-	}
+    public void setSenderNumber(String senderNumber) {
+        this.senderNumber = senderNumber;
+    }
 
-	/**
-	 * Envia una alarma técnica (AT), por el nivel bajo de batería, indicando además si el terminal
-	 * está conectado al cargador o no.
-	 * 
-	 * @return HttpRespose
-	 * @throws URISyntaxException
-	 * @throws UnsupportedEncodingException
-	 * @throws IOException
-	 */
-	public HttpResponse sendTechnicalAlarm(String location, String batteryLevel, boolean charging)
-		throws URISyntaxException,
-		UnsupportedEncodingException,
-		IOException {
-		String charger = "&PC000";
-		if (charging)
-			charger = "&PC999";
+    public PasosHTTPTransmitter() {
+        super();
+    }
 
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost();
-		post.setHeader("sender-mobile-number", senderNumber);
-		URI uri = new URI(url);
-		post.setURI(uri);
-		setDateandTime();
-		post.setEntity(new StringEntity("*$AT2&"
-			+ date
-			+ time
-			+ location
-			+ "&PB" + batteryLevel
-			+ charger
-			+ "#"));
-		return client.execute(post);
-	}
+    public PasosHTTPTransmitter(String url, String senderNumber, PasosMessage message) {
+        super();
+        this.url = url;
+        this.senderNumber = senderNumber;
+        this.message = message;
+    }
+
+    /**
+     * Manda un mensaje vacío, para pedir los remote parameters.Por si lo
+     * usamos.
+     * 
+     * @return HttpResponse
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    public HttpResponse sendEmptyMessage() throws URISyntaxException,
+            IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost();
+        post.setHeader("senderNumber", this.senderNumber);
+        URI uri = new URI(this.url);
+        post.setURI(uri);
+        return client.execute(post);
+    }
+
+    /**
+     * Send PASOS message
+     * 
+     * @return HttpResponse
+     * @throws URISyntaxException
+     * @throws IOException
+     * @throws ClientProtocolException
+     */
+    public HttpResponse sendPasosMessage() throws URISyntaxException,
+            ClientProtocolException, IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost();
+        post.setHeader("sender-mobile-number", this.senderNumber);
+        URI uri = new URI(this.url);
+        post.setURI(uri);
+        post.setEntity(new StringEntity(message.toString()));
+        return client.execute(post);
+    }
 }
