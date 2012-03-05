@@ -29,7 +29,10 @@
             <EditText
                 android:id="@+id/fence_detail_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" >
+
+                <requestFocus />
+            </EditText>
 
             <TextView
                 android:id="@+id/detailLatLonLabel"
@@ -57,8 +60,6 @@
                         android:layout_alignParentLeft="true"
                         android:layout_below="@+id/detail_latlon_label"
                         android:inputType="numberDecimal" >
-
-                        <requestFocus />
                     </EditText>
                 </LinearLayout>
 

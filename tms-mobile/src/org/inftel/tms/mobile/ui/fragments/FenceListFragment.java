@@ -35,6 +35,9 @@ public class FenceListFragment extends ListFragment implements LoaderCallbacks<C
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		// this is very important in order to save the state across screen configuration changes
+		setRetainInstance(true);
+
 		activity = (FencesActivity) getActivity();
 
 		// Create a new SimpleCursorAdapter that displays the name of each nearby
