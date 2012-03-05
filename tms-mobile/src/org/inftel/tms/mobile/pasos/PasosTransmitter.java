@@ -9,7 +9,7 @@ import org.apache.http.client.ClientProtocolException;
 
 public interface PasosTransmitter {
 
-    public HttpResponse sendPasosMessage() throws URISyntaxException,
+    public HttpResponse sendPasosMessage(PasosMessage message) throws URISyntaxException,
             ClientProtocolException, IOException;
 
     public HttpResponse sendEmptyMessage() throws URISyntaxException,

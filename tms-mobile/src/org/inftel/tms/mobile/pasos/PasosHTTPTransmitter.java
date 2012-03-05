@@ -15,15 +15,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 public class PasosHTTPTransmitter implements PasosTransmitter {
     private String url = "http://localhost:8080/tms-web/connector";
     protected String senderNumber;
-    private PasosMessage message;
-
-    public PasosMessage getMessage() {
-        return message;
-    }
-
-    public void setMessage(PasosMessage message) {
-        this.message = message;
-    }
 
     public String getUrl() {
         return url;
@@ -49,7 +40,6 @@ public class PasosHTTPTransmitter implements PasosTransmitter {
         super();
         this.url = url;
         this.senderNumber = senderNumber;
-        this.message = message;
     }
 
     /**
@@ -78,7 +68,7 @@ public class PasosHTTPTransmitter implements PasosTransmitter {
      * @throws IOException
      * @throws ClientProtocolException
      */
-    public HttpResponse sendPasosMessage() throws URISyntaxException,
+    public HttpResponse sendPasosMessage(PasosMessage message) throws URISyntaxException,
             ClientProtocolException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();
