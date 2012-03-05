@@ -9,9 +9,9 @@ import org.apache.http.client.ClientProtocolException;
 
 public interface PasosTransmitter {
 	
-	public HttpResponse enviarTechnicalAlarm(String location, String batteryLevel, boolean charging) throws URISyntaxException, UnsupportedEncodingException, IOException;
+	public HttpResponse sendTechnicalAlarm(String location, String batteryLevel, boolean charging) throws URISyntaxException, UnsupportedEncodingException, IOException;
 	
-	public HttpResponse enviarDeviceAlarm(String location, String temp) throws URISyntaxException, UnsupportedEncodingException, IOException;
+	public HttpResponse sendDeviceAlarm(String location, String temp) throws URISyntaxException, UnsupportedEncodingException, IOException;
 	
 	public HttpResponse sendUserAlarm(String location) throws URISyntaxException, UnsupportedEncodingException, ClientProtocolException, IOException;
 	

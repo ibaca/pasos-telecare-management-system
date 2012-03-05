@@ -79,7 +79,7 @@ public class PasosHTTPTransmitter extends AbstractPasosTrasmitter implements Pas
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
 	 */
-	public HttpResponse enviarDeviceAlarm(String location, String temp)
+	public HttpResponse sendDeviceAlarm(String location, String temp)
 		throws URISyntaxException, UnsupportedEncodingException,
 		IOException {
 		HttpClient client = new DefaultHttpClient();
@@ -102,7 +102,7 @@ public class PasosHTTPTransmitter extends AbstractPasosTrasmitter implements Pas
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
 	 */
-	public HttpResponse enviarTechnicalAlarm(String location, String batteryLevel, boolean charging)
+	public HttpResponse sendTechnicalAlarm(String location, String batteryLevel, boolean charging)
 		throws URISyntaxException,
 		UnsupportedEncodingException,
 		IOException {
