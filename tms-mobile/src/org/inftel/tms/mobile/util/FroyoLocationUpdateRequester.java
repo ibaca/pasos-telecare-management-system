@@ -16,34 +16,37 @@
 
 package org.inftel.tms.mobile.util;
 
-import org.inftel.tms.mobile.TmsConstants;
 import org.inftel.tms.mobile.util.base.LocationUpdateRequester;
 
 import android.app.PendingIntent;
 import android.location.LocationManager;
+import android.util.Log;
 
 /**
- * Provides support for initiating active and passive location updates optimized for the Froyo
- * release. Includes use of the Passive Location Provider.
- * 
- * Uses broadcast Intents to notify the app of location changes.
+ * Provides support for initiating active and passive location updates optimized
+ * for the Froyo release. Includes use of the Passive Location Provider. Uses
+ * broadcast Intents to notify the app of location changes.
  */
 public class FroyoLocationUpdateRequester extends LocationUpdateRequester {
 
-	public FroyoLocationUpdateRequester(LocationManager locationManager) {
-		super(locationManager);
-	}
+    public FroyoLocationUpdateRequester(LocationManager locationManager) {
+        super(locationManager);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void requestPassiveLocationUpdates(long minTime, long minDistance,
-			PendingIntent pendingIntent) {
-		// Froyo introduced the Passive Location Provider, which receives updates whenever a 3rd
-		// party app
-		// receives location updates.
-		locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
-				TmsConstants.MAX_TIME, TmsConstants.MAX_DISTANCE, pendingIntent);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void requestPassiveLocationUpdates(long minTime, long minDistance,
+            PendingIntent pendingIntent) {
+        Log.d("LocationUpdateRequester", "Froyo subscription.");
+        /*
+         * Froyo introduced the Passive Location Provider, which receives
+         * updates whenever a 3rd party app receives location updates.
+         */
+        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
+                // TmsConstants.MAX_TIME, TmsConstants.MAX_DISTANCE
+                0, 0,
+                pendingIntent);
+    }
 }

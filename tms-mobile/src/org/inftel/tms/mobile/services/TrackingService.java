@@ -48,14 +48,19 @@ public class TrackingService extends IntentService {
 
     public TrackingService() {
         super(TAG);
-        setIntentRedeliveryMode(false);
+        setIntentRedeliveryMode();
     }
 
     /**
      * Set the Intent Redelivery mode to true to ensure the Service starts
-     * "Sticky" Defaults to "true" on legacy devices.
+     * "Sticky". Defaults to "true" on legacy devices. And force Intent
+     * redelivery on Eclaire+ devices, where this defaults to false.
      */
-    protected void setIntentRedeliveryMode(boolean enable) {
+    protected void setIntentRedeliveryMode() {
+        // legacy default true
+        if (TmsConstants.SUPPORTS_ECLAIR) {
+            setIntentRedelivery(true);
+        }
     }
 
     /**
@@ -91,6 +96,7 @@ public class TrackingService extends IntentService {
         boolean backgroundAllowed = cm.getBackgroundDataSetting();
 
         if (!backgroundAllowed) {
+            Log.d(TAG, "Skipping tracking for background process not allowed");
             return;
         }
 
@@ -103,6 +109,8 @@ public class TrackingService extends IntentService {
             location = (Location) (extras.get(TmsConstants.EXTRA_KEY_LOCATION));
             radius = extras.getInt(TmsConstants.EXTRA_KEY_RADIUS, TmsConstants.DEFAULT_RADIUS);
         }
+
+        Log.d(TAG, "Tracking location " + location.getLatitude() + ", " + location.getLongitude());
 
         // Check if we're in a low battery situation.
         IntentFilter batIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
@@ -169,6 +177,7 @@ public class TrackingService extends IntentService {
      * @param radius Radius
      */
     protected void sendLocation(Location location, int radius) {
+        Log.d(TAG, "Sending location");
         long currentTime = System.currentTimeMillis();
         float latitude = Double.valueOf(location.getLatitude()).floatValue();
         float longitude = Double.valueOf(location.getLongitude()).floatValue();
@@ -177,7 +186,8 @@ public class TrackingService extends IntentService {
         PasosTransmitter transmitter = new PasosHTTPTransmitter();
         try {
             // TODO debería enviarse un mensaje tipo tracking
-            transmitter.sendUserAlarm(locationFormatted);
+
+            transmitter.sendPasosMessage();
 
             // Actualizar utlimos tracking enviado
             prefsEditor.putLong(SP_KEY_LAST_TRACKING_TIME, currentTime);
