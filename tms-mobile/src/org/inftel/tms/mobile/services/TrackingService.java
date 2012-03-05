@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import org.apache.http.client.ClientProtocolException;
 import org.inftel.tms.mobile.TmsConstants;
 import org.inftel.tms.mobile.pasos.PasosHTTPTransmitter;
+import org.inftel.tms.mobile.pasos.PasosMessage;
 import org.inftel.tms.mobile.pasos.PasosTransmitter;
 import org.inftel.tms.mobile.receivers.ConnectivityChangedReceiver;
 
@@ -181,13 +182,13 @@ public class TrackingService extends IntentService {
         long currentTime = System.currentTimeMillis();
         float latitude = Double.valueOf(location.getLatitude()).floatValue();
         float longitude = Double.valueOf(location.getLongitude()).floatValue();
-        String locationFormatted = latitude + "," + longitude;
 
         PasosTransmitter transmitter = new PasosHTTPTransmitter();
         try {
             // TODO debería enviarse un mensaje tipo tracking
 
-            transmitter.sendPasosMessage();
+            PasosMessage message = PasosMessage.userAlarm(latitude + "", longitude + "");
+            transmitter.sendPasosMessage(message);
 
             // Actualizar utlimos tracking enviado
             prefsEditor.putLong(SP_KEY_LAST_TRACKING_TIME, currentTime);

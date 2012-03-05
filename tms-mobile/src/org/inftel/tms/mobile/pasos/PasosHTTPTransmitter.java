@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -13,7 +12,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class PasosHTTPTransmitter implements PasosTransmitter {
-    private String url = "http://localhost:8080/tms-web/connector";
+
+    protected String url = "http://localhost:8080/tms-web/connector";
     protected String senderNumber;
 
     public String getUrl() {
@@ -32,16 +32,6 @@ public class PasosHTTPTransmitter implements PasosTransmitter {
         this.senderNumber = senderNumber;
     }
 
-    public PasosHTTPTransmitter() {
-        super();
-    }
-
-    public PasosHTTPTransmitter(String url, String senderNumber, PasosMessage message) {
-        super();
-        this.url = url;
-        this.senderNumber = senderNumber;
-    }
-
     /**
      * Manda un mensaje vacío, para pedir los remote parameters.Por si lo
      * usamos.
@@ -50,14 +40,15 @@ public class PasosHTTPTransmitter implements PasosTransmitter {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public HttpResponse sendEmptyMessage() throws URISyntaxException,
+    @Override
+    public void sendEmptyMessage() throws URISyntaxException,
             IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();
         post.setHeader("senderNumber", this.senderNumber);
         URI uri = new URI(this.url);
         post.setURI(uri);
-        return client.execute(post);
+        client.execute(post);
     }
 
     /**
@@ -68,7 +59,8 @@ public class PasosHTTPTransmitter implements PasosTransmitter {
      * @throws IOException
      * @throws ClientProtocolException
      */
-    public HttpResponse sendPasosMessage(PasosMessage message) throws URISyntaxException,
+    @Override
+    public void sendPasosMessage(PasosMessage message) throws URISyntaxException,
             ClientProtocolException, IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost();
@@ -76,6 +68,6 @@ public class PasosHTTPTransmitter implements PasosTransmitter {
         URI uri = new URI(this.url);
         post.setURI(uri);
         post.setEntity(new StringEntity(message.toString()));
-        return client.execute(post);
+        client.execute(post);
     }
 }

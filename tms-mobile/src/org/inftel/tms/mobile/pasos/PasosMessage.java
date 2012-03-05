@@ -4,7 +4,7 @@ package org.inftel.tms.mobile.pasos;
 import java.util.Calendar;
 
 public class PasosMessage {
-    private Type type;
+    private String type;
     private int temperature;
     private int batteryLevel;
     private String longitude;
@@ -13,49 +13,85 @@ public class PasosMessage {
     private String date;
     private String time;
 
-    // Generic constructor
-    public PasosMessage(Type type) {
-        super();
-        setDateandTime();
-        this.type = type;
+    /**
+     * Nueva instancia mensaje PaSOS con datos Data y Time inicializados.
+     */
+    public PasosMessage() {
+        initializeDateTime();
     }
 
-    // User Alarm constructor
-    public PasosMessage(Type type, String latitude, String longitude) {
-        super();
-        this.type = type;
-        setDateandTime();
-        this.latitude = latitude;
-        this.longitude = longitude;
+    /**
+     * User Alarm constructor
+     * 
+     * @param latitude
+     * @param longitude
+     */
+    public static PasosMessage userAlarm(String latitude, String longitude) {
+        PasosMessage message = new PasosMessage();
+        message.type = PasosMessageType.USER_ALARM;
+        message.latitude = latitude;
+        message.longitude = longitude;
+        return message;
     }
 
-    // Device Alarm constructor
-    public PasosMessage(Type type, int temperature, String latitude, String longitude) {
-        super();
-        this.type = type;
-        setDateandTime();
-        this.temperature = temperature;
-        this.latitude = latitude;
-        this.longitude = longitude;
+    /**
+     * Device Alarm Hight Temp constructor
+     * 
+     * @param temperature
+     * @param latitude
+     * @param longitude
+     */
+    public static PasosMessage deviceAlarmHighTemp(int temperature, String latitude,
+            String longitude) {
+        PasosMessage message = new PasosMessage();
+        message.type = PasosMessageType.DEVICE_ALARM_HIGHTEMP;
+        message.temperature = temperature;
+        message.latitude = latitude;
+        message.longitude = longitude;
+        return message;
     }
 
-    // Technical Alarm constructor
-    public PasosMessage(Type type, int batteryLevel, String latitude, String longitude,
+    /**
+     * Device Alarm Low Temp constructor
+     * 
+     * @param temperature
+     * @param latitude
+     * @param longitude
+     */
+    public static PasosMessage deviceAlarmLowTemp(int temperature, String latitude, String longitude) {
+        PasosMessage message = new PasosMessage();
+        message.type = PasosMessageType.DEVICE_ALARM_LOWTEMP;
+        message.temperature = temperature;
+        message.latitude = latitude;
+        message.longitude = longitude;
+        return message;
+    }
+
+    /**
+     * Technical Alarm constructor
+     * 
+     * @param batteryLevel
+     * @param latitude
+     * @param longitude
+     * @param charging
+     */
+    public static PasosMessage technicalAlarm(int batteryLevel, String latitude,
+            String longitude,
             boolean charging) {
-        super();
-        this.type = type;
-        setDateandTime();
-        this.batteryLevel = batteryLevel;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.charging = charging;
+        PasosMessage message = new PasosMessage();
+        message.type = PasosMessageType.TECHNICAL_ALARM;
+        message.batteryLevel = batteryLevel;
+        message.latitude = latitude;
+        message.longitude = longitude;
+        message.charging = charging;
+        return message;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -118,7 +154,7 @@ public class PasosMessage {
     /**
      * Set Date and Time to actual, in PASOS format
      */
-    public void setDateandTime() {
+    public void initializeDateTime() {
         Calendar calendar = Calendar.getInstance();
 
         String dayString = String.format("%td", calendar);
@@ -138,13 +174,13 @@ public class PasosMessage {
         if (charging)
             charger = "&PC999";
 
-        if (type.equals(Type.USER_ALARM)) {
+        if (type.equals(PasosMessageType.USER_ALARM)) {
             return type + date + time + "&LN" + longitude + "&LT" + latitude + "#";
         }
-        else if (type.equals(Type.DEVICE_ALARM_LOWTEMP)) {
+        else if (type.equals(PasosMessageType.DEVICE_ALARM_LOWTEMP)) {
             return type + date + time + longitude + "&LT" + latitude + "&DT" + temperature + "#";
         }
-        else if (type.equals(Type.DEVICE_ALARM_HIGHTEMP)) {
+        else if (type.equals(PasosMessageType.DEVICE_ALARM_HIGHTEMP)) {
             return type + date + time + longitude + "&LT" + latitude + "&DT" + temperature + "#";
         }
         // otherwise is technical alarm

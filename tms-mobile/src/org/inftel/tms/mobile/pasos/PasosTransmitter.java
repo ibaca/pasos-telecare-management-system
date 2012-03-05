@@ -4,14 +4,21 @@ package org.inftel.tms.mobile.pasos;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 
 public interface PasosTransmitter {
 
-    public HttpResponse sendPasosMessage(PasosMessage message) throws URISyntaxException,
+    /**
+     * Envia un mensaje pasos con el contenido del mensaje pasado como
+     * argumento.
+     */
+    public void sendPasosMessage(PasosMessage message) throws URISyntaxException,
             ClientProtocolException, IOException;
 
-    public HttpResponse sendEmptyMessage() throws URISyntaxException,
+    /**
+     * Envia un mensaje vacio al servidor. Usado para recibir informacion
+     * inicial.
+     */
+    public void sendEmptyMessage() throws URISyntaxException,
             IOException;
 }
