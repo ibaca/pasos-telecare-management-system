@@ -16,6 +16,16 @@ public class PasosHTTPTransmitter implements PasosTransmitter {
     protected String url = "http://localhost:8080/tms-web/connector";
     protected String senderNumber;
 
+    public PasosHTTPTransmitter() {
+        super();
+    }
+
+    public PasosHTTPTransmitter(String url, String senderNumber) {
+        super();
+        this.url = url;
+        this.senderNumber = senderNumber;
+    }
+
     public String getUrl() {
         return url;
     }
