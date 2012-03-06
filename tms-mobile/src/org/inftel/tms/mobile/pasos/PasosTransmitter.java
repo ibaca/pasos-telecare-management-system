@@ -9,8 +9,7 @@ import org.apache.http.client.ClientProtocolException;
 public interface PasosTransmitter {
 
     /**
-     * Envia un mensaje pasos con el contenido del mensaje pasado como
-     * argumento.
+     * Envia un mensaje pasos con el mensaje PASOS pasado como argumento.
      */
     public void sendPasosMessage(PasosMessage message) throws URISyntaxException,
             ClientProtocolException, IOException;
@@ -20,5 +19,12 @@ public interface PasosTransmitter {
      * inicial.
      */
     public void sendEmptyMessage() throws URISyntaxException,
+            IOException;
+
+    /**
+     * Envia un mensaje pasos con el contenido del mensaje pasado como
+     * argumento.
+     */
+    void sendPasosMessage(String message) throws URISyntaxException, ClientProtocolException,
             IOException;
 }

@@ -70,4 +70,16 @@ public class PasosHTTPTransmitter implements PasosTransmitter {
         post.setEntity(new StringEntity(message.toString()));
         client.execute(post);
     }
+
+    @Override
+    public void sendPasosMessage(String message) throws URISyntaxException,
+            ClientProtocolException, IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost();
+        post.setHeader("sender-mobile-number", this.senderNumber);
+        URI uri = new URI(this.url);
+        post.setURI(uri);
+        post.setEntity(new StringEntity(message));
+        client.execute(post);
+    }
 }

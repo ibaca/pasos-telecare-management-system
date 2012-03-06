@@ -46,6 +46,9 @@
             </intent-filter>
         </service>
         
+		<service android:name=".MSendPasosMessageIntentFilter" android:enabled="true"/>
+		
+        
         <receiver android:name=".receivers.LocationChangedReceiver" />
         <receiver android:name=".receivers.PassiveLocationChangedReceiver" />
         <receiver
