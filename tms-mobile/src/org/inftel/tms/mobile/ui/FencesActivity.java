@@ -2,9 +2,14 @@
 package org.inftel.tms.mobile.ui;
 
 import org.inftel.tms.mobile.R;
+import org.inftel.tms.mobile.TmsConstants;
 import org.inftel.tms.mobile.ui.fragments.FenceDetailFragment;
 import org.inftel.tms.mobile.ui.fragments.FenceListFragment;
+import org.inftel.tms.mobile.util.PlatformSpecificImplementationFactory;
+import org.inftel.tms.mobile.util.base.ILastLocationFinder;
 
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +27,8 @@ public class FencesActivity extends FragmentActivity {
 
     private FenceDetailFragment fenceDetailFragment;
 
+    private ILastLocationFinder lastLocationFinder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +39,9 @@ public class FencesActivity extends FragmentActivity {
         // Get a handle to the Fragments
         fenceListFragment = (FenceListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fences_list_fragment);
+
+        // Last location helper
+        lastLocationFinder = PlatformSpecificImplementationFactory.getLastLocationFinder(this);
     }
 
     @Override
@@ -85,4 +95,28 @@ public class FencesActivity extends FragmentActivity {
         }
     }
 
+    /**
+     * Busca la ultima posicion conocida (usando {@link ILastLocationFinder}).
+     * Find the last known location (using a {@link LastLocationFinder}) and
+     * updates the place list accordingly.
+     * 
+     * @param updateWhenLocationChanges Request location updates
+     */
+    protected void getLastLocation(int maxDistance, int maxTime) {
+        // This isn't directly affecting the UI, so put it on a worker thread.
+        final AsyncTask<Void, Void, Location> findLationTask = new AsyncTask<Void, Void, Location>() {
+            @Override
+            protected Location doInBackground(Void... params) {
+                Location lastKnownLocation = lastLocationFinder.getLastBestLocation(
+                        TmsConstants.MAX_DISTANCE,
+                        System.currentTimeMillis() - TmsConstants.MAX_TIME);
+                return lastKnownLocation;
+            }
+
+            protected void onPostExecute(Location result) {
+                // Aqui se puede actualizar el IU
+            }
+        };
+        findLationTask.execute();
+    }
 }
