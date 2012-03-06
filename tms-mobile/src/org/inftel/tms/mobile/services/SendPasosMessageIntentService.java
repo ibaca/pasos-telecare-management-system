@@ -24,7 +24,9 @@ public class SendPasosMessageIntentService extends IntentService {
         Log.i(TAG, "SendPasosMessageIntentService constructed");
         Bundle bundle = intent.getExtras();
         String message = bundle.getString("message");
-        PasosHTTPTransmitter transmitter = new PasosHTTPTransmitter();
+        String url = bundle.getString("url");
+        String senderNumber = bundle.getString("senderNumber");
+        PasosHTTPTransmitter transmitter = new PasosHTTPTransmitter(url, senderNumber);
         try {
             transmitter.sendPasosMessage(message);
             Log.i(TAG, "Message sent!");
