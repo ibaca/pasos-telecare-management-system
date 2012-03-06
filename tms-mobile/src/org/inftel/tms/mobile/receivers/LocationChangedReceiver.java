@@ -25,39 +25,41 @@ import android.location.LocationManager;
 import android.util.Log;
 
 /**
- * This Receiver class is used to listen for Broadcast Intents that announce that a location change
- * has occurred. This is used instead of a LocationListener within an Activity is our only action is
- * to start a service.
+ * This Receiver class is used to listen for Broadcast Intents that announce
+ * that a location change has occurred. This is used instead of a
+ * LocationListener within an Activity is our only action is to start a service.
  */
 public class LocationChangedReceiver extends BroadcastReceiver {
 
-	protected static String TAG = "LocationChangedReceiver";
+    protected static String TAG = "LocationChangedReceiver";
 
-	/**
-	 * When a new location is received, extract it from the Intent and use it to start the Service
-	 * used to update the list of nearby places.
-	 * 
-	 * This is the Active receiver, used to receive Location updates when the Activity is visible.
-	 */
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		String locationKey = LocationManager.KEY_LOCATION_CHANGED;
-		String providerEnabledKey = LocationManager.KEY_PROVIDER_ENABLED;
-		if (intent.hasExtra(providerEnabledKey)) {
-			if (!intent.getBooleanExtra(providerEnabledKey, true)) {
-				Intent providerDisabledIntent = new Intent(ACTIVE_LOCATION_UPDATE_PROVIDER_DISABLED);
-				context.sendBroadcast(providerDisabledIntent);
-			}
-		}
-		if (intent.hasExtra(locationKey)) {
-			Location location = (Location) intent.getExtras().get(locationKey);
-			Log.d(TAG, "Actively Updating place list");
-			// Intent fencesServiceIntent = new Intent(context,
-			// SUPPORTS_ECLAIR ? EclairTrackingService.class : TrackingService.class);
-			// updateServiceIntent.putExtra(EXTRA_KEY_LOCATION, location);
-			// updateServiceIntent.putExtra(EXTRA_KEY_RADIUS, DEFAULT_RADIUS);
-			// updateServiceIntent.putExtra(EXTRA_KEY_FORCEREFRESH, true);
-			// context.startService(updateServiceIntent);
-		}
-	}
+    /**
+     * When a new location is received, extract it from the Intent and use it to
+     * start the Service used to update the list of nearby places. This is the
+     * Active receiver, used to receive Location updates when the Activity is
+     * visible.
+     */
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, "Location chaged recived");
+        String locationKey = LocationManager.KEY_LOCATION_CHANGED;
+        String providerEnabledKey = LocationManager.KEY_PROVIDER_ENABLED;
+        if (intent.hasExtra(providerEnabledKey)) {
+            if (!intent.getBooleanExtra(providerEnabledKey, true)) {
+                Intent providerDisabledIntent = new Intent(ACTIVE_LOCATION_UPDATE_PROVIDER_DISABLED);
+                context.sendBroadcast(providerDisabledIntent);
+            }
+        }
+        if (intent.hasExtra(locationKey)) {
+            Location location = (Location) intent.getExtras().get(locationKey);
+            Log.d(TAG, "Actively Updating place list");
+            // Intent fencesServiceIntent = new Intent(context,
+            // SUPPORTS_ECLAIR ? EclairTrackingService.class :
+            // TrackingService.class);
+            // updateServiceIntent.putExtra(EXTRA_KEY_LOCATION, location);
+            // updateServiceIntent.putExtra(EXTRA_KEY_RADIUS, DEFAULT_RADIUS);
+            // updateServiceIntent.putExtra(EXTRA_KEY_FORCEREFRESH, true);
+            // context.startService(updateServiceIntent);
+        }
+    }
 }

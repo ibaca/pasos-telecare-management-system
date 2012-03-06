@@ -56,6 +56,7 @@
         </service>
 		<service android:name=".MSendPasosMessageIntentFilter" android:enabled="true"/>
 		
+
         <receiver android:name="org.inftel.tms.mobile.receivers.AutomaticAlarmReceiver" />
         <receiver android:name=".receivers.LocationChangedReceiver" />
         <receiver android:name=".receivers.PassiveLocationChangedReceiver" />
@@ -67,7 +68,7 @@
                 <action android:name="com.radioactiveyak.places.retry_queued_checkins" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.inftel.tms.mobile.receivers.BootReceiver" >
+        <receiver android:name=".receivers.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
