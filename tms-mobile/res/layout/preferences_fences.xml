@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
 
-    <FrameLayout
-        android:id="@+id/fences_container"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_margin="5dp"
         android:layout_weight="3" >
 
-        <RelativeLayout
+        <fragment
+            android:id="@+id/fences_list_fragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_margin="5dp" >
+            class="org.inftel.tms.mobile.ui.fragments.FenceListFragment" >
+        </fragment>
+    </RelativeLayout>
 
-            <fragment
-                android:id="@+id/fences_list_fragment"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                class="org.inftel.tms.mobile.ui.fragments.FenceListFragment" >
-            </fragment>
-        </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/fences_details_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="2" >
     </FrameLayout>
 
 </LinearLayout>
