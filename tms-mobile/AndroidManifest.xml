@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.BATTERY_STATS"/>
 
     <application
         android:name="TmsApplication"
@@ -45,10 +44,19 @@
                 <action android:name="org.inftel.tms.mobile.services.AutomaticAlarmSendingService"/>
             </intent-filter>
         </service>
-        
+        <service android:name=".services.LowPowerService">
+            <intent-filter>
+                <action android:name="org.inftel.tms.mobile.services.LowPowerService"/>
+            </intent-filter>
+        </service>
+        <service android:name=".services.AutomaticAlarmService">
+            <intent-filter>
+                <action android:name="org.inftel.tms.mobile.services.AutomaticAlarmService"/>
+            </intent-filter>
+        </service>
 		<service android:name=".MSendPasosMessageIntentFilter" android:enabled="true"/>
 		
-        
+        <receiver android:name="org.inftel.tms.mobile.receivers.AutomaticAlarmReceiver" />
         <receiver android:name=".receivers.LocationChangedReceiver" />
         <receiver android:name=".receivers.PassiveLocationChangedReceiver" />
         <receiver
@@ -68,7 +76,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
                 <action android:name="android.intent.action.BATTERY_OKAY" />
-                <action android:name="android.intent.action.BATTERY_CHANGED" />
             </intent-filter>
         </receiver>
 

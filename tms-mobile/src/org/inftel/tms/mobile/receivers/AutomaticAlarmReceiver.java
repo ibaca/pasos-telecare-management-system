@@ -28,34 +28,17 @@ import android.util.Log;
  * system broadcasts "Battery OK" to indicate the battery has returned to an
  * okay state, the passive location updates are resumed.
  */
-public class PowerStateChangedReceiver extends BroadcastReceiver {
-    private static final String TAG = "BatteryReceiver"; // for debug
+public class AutomaticAlarmReceiver extends BroadcastReceiver {
+    private static final String TAG = "AutomaticAlarmReceiver"; // for debug
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        boolean batteryLow = intent.getAction().equals(Intent.ACTION_BATTERY_LOW);
-
         Log.d(TAG, "STARTED");
-        // Alarm sending by service if low power detected
-        if (batteryLow) {
-            Intent service = new Intent();
-            service.setAction("org.inftel.tms.mobile.services.LowPowerService");
-            context.startService(service);
-            Log.d(TAG, "GO BACK");
-        }
-        //
-        // PackageManager pm = context.getPackageManager();
-        // ComponentName passiveLocationReceiver =
-        // new ComponentName(context, PassiveLocationChangedReceiver.class);
-        //
-        // // Disable the passive location update receiver when the battery
-        // state
-        // // is low.
-        // // Disabling the Receiver will prevent the app from initiating the
-        // // background
-        // // downloads of nearby locations.
-        // pm.setComponentEnabledSetting(passiveLocationReceiver, batteryLow ?
-        // COMPONENT_ENABLED_STATE_DISABLED : COMPONENT_ENABLED_STATE_DEFAULT,
-        // DONT_KILL_APP);
+        // Alarm sending by service
+        Intent service = new Intent();
+        service.setAction("org.inftel.tms.mobile.services.AutomaticAlarmService");
+        context.startService(service);
+        Log.d(TAG, "GO BACK");
+
     }
 }
