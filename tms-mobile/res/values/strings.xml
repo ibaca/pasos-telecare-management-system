@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World, HelloWorldActivity!</string>
-    <string name="app_name">HelloWorld</string>
-    <string name="pick_contact">Pick Contanct</string>
-    <string name="send_something">Send Something</string>
-    <string name="dial_phone">Dial Phone Number</string>
-    <string name="battery_level">Battery Level</string>
-    <string name="location_button">Location Button</string>
-    <string name="form_button">Form Button</string>
-    <string name="fences_button">Configure Fences</string>
-    <string name="add_fence">Add Fence</string>
+    <string name="app_name">TMS Mobile</string>
+    <string name="preferences_label">Preferencias</string>
+    <string name="fences_label">Configurar vallas</string>
+    <string name="add_fence">Nueva valla</string>
+    <string name="remove_fence">Borrar valla</string>
+    <string name="send_alert">Enviar Alerta Usuario</string>
 
     <!-- String para PREFERENCIAS -->
     <string name="call_center_preferences">Ajustes servidor Call Center</string>

@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonUserAlarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/send_alert" />
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -19,86 +25,8 @@
             <TextView
                 android:id="@+id/text"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/hello" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/darker_gray"
-        android:paddingTop="5dp" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/fencesButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fences_button" />
-
-            <Button
-                android:id="@+id/formButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/form_button" />
-
-            <Button
-                android:id="@+id/locationButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/location_button" />
-
-            <Button
-                android:id="@+id/batteryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/battery_level" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".5"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/sendButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/send_something" />
-
-            <Button
-                android:id="@+id/dialButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dial_phone" />
-
-            <Button
-                android:id="@+id/pickButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pick_contact" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonUserAlarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout3"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="104dp"
-        android:layout_marginLeft="138dp"
-        android:text="Button" />
-
-</RelativeLayout>
+</LinearLayout>
