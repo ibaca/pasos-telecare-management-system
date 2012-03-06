@@ -20,6 +20,18 @@
             android:key="port_preference"
             android:summary="@string/sumary_port_preference"
             android:title="@string/title_port_preference" />
+        <EditTextPreference
+            android:dialogTitle="@string/dialog_title_path_preference"
+            android:key="path_preference"
+            android:summary="@string/sumary_path_preference"
+            android:title="@string/title_path_preference" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/phone_preferences" >
+        <EditTextPreference
+            android:dialogTitle="@string/dialog_title_phone_number_preference"
+            android:key="phone_number_preference"
+            android:summary="@string/sumary_phone_number_preference"
+            android:title="@string/title_phone_number_preference" />
     </PreferenceCategory>
 
 </PreferenceScreen>

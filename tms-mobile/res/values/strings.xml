@@ -20,5 +20,13 @@
     <string name="title_port_preference">Puerto</string>
     <string name="sumary_port_preference">Puerto TCP del servidor Call Center</string>
     <string name="dialog_title_port_preference">Introduzca número de puerto</string>
-
+    <string name="title_path_preference">Path</string>
+    <string name="sumary_path_preference">PATH relativo del servidor</string>
+    <string name="dialog_title_path_preference">Introduzca PATH</string>
+    <string name="phone_preferences">Ajustes del terminal</string>
+    <string name="title_phone_number_preference">Número de teléfono</string>
+    <string name="sumary_phone_number_preference">Número del terminal de teleasistencia</string>
+    <string name="dialog_title_phone_number_preference">Introduzca Número de Teléfono</string>
+    
+    
 </resources>

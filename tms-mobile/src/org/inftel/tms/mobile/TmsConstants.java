@@ -142,5 +142,7 @@ public class TmsConstants {
     public static String SHARED_PREFERENCE_FILE = "SHARED_PREFERENCE_FILE";
     public static String KEY_IP_PREFERENCE = "ip_preference";
     public static String KEY_PORT_PREFERENCE = "port_preference";
+    public static String KEY_PATH_PREFERENCE = "path_preference";
+    public static String KEY_PHONE_NUMBER_PREFERENCE = "phone_number_preference";
 
 }
