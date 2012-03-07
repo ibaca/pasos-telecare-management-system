@@ -54,7 +54,7 @@
                 <action android:name="org.inftel.tms.mobile.services.AutomaticAlarmService"/>
             </intent-filter>
         </service>
-		<service android:name=".MSendPasosMessageIntentFilter" android:enabled="true"/>
+		
 		
 
         <receiver android:name="org.inftel.tms.mobile.receivers.AutomaticAlarmReceiver" />
@@ -84,6 +84,7 @@
             android:name=".contentproviders.FencesContentProvider"
             android:authorities="org.inftel.tms.mobile.provider.fences" >
         </provider>
+        <service android:name=".services.SendPasosMessageIntentService"></service>
     </application>
 
 </manifest>
