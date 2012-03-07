@@ -21,6 +21,7 @@ import android.location.Criteria;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -55,6 +56,10 @@ public class TmsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        // Requerido para coger las preferencias por defecto definidas en
+        // /xml/preferences.xml
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
 
         // Get a reference to the Shared Preferences and a Shared Preference
         // Editor.

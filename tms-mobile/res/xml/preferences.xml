@@ -11,16 +11,19 @@
 
     <PreferenceCategory android:title="@string/call_center_preferences" >
         <EditTextPreference
+            android:defaultValue="@string/default_ip_preference"
             android:dialogTitle="@string/dialog_title_ip_preference"
             android:key="ip_preference"
             android:summary="@string/sumary_ip_preference"
             android:title="@string/title_ip_preference" />
         <EditTextPreference
+         	android:defaultValue="@string/default_port_preference"
             android:dialogTitle="@string/dialog_title_port_preference"
             android:key="port_preference"
             android:summary="@string/sumary_port_preference"
             android:title="@string/title_port_preference" />
         <EditTextPreference
+        	android:defaultValue="@string/default_path_preference"
             android:dialogTitle="@string/dialog_title_path_preference"
             android:key="path_preference"
             android:summary="@string/sumary_path_preference"
@@ -28,6 +31,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/phone_preferences" >
         <EditTextPreference
+        	android:defaultValue="@string/default_phone_number_preference"
             android:dialogTitle="@string/dialog_title_phone_number_preference"
             android:key="phone_number_preference"
             android:summary="@string/sumary_phone_number_preference"

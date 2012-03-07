@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">TMS Mobile</string>
     <string name="preferences_label">Preferencias</string>
     <string name="fences_label">Configurar vallas</string>
@@ -12,16 +13,19 @@
     <string name="title_ip_preference">IP del servidor</string>
     <string name="sumary_ip_preference">Dirección IP del servidor Call Center</string>
     <string name="dialog_title_ip_preference">Introduzca dirección IP</string>
+    <string name="default_ip_preference">localhost</string>
     <string name="title_port_preference">Puerto</string>
     <string name="sumary_port_preference">Puerto TCP del servidor Call Center</string>
     <string name="dialog_title_port_preference">Introduzca número de puerto</string>
+    <string name="default_port_preference">80</string>
     <string name="title_path_preference">Path</string>
     <string name="sumary_path_preference">PATH relativo del servidor</string>
     <string name="dialog_title_path_preference">Introduzca PATH</string>
+    <string name="default_path_preference">/tms-web/connector</string>
     <string name="phone_preferences">Ajustes del terminal</string>
     <string name="title_phone_number_preference">Número de teléfono</string>
     <string name="sumary_phone_number_preference">Número del terminal de teleasistencia</string>
     <string name="dialog_title_phone_number_preference">Introduzca Número de Teléfono</string>
-    
-    
+    <string name="default_phone_number_preference">600123123</string>
+
 </resources>
