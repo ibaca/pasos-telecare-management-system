@@ -5,16 +5,10 @@ import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_TRACKING_LAT;
 import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_TRACKING_LNG;
 import static org.inftel.tms.mobile.TmsConstants.SP_KEY_LAST_TRACKING_TIME;
+import static org.inftel.tms.mobile.pasos.PasosMessage.buildTechnicalAlarm;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-
-import org.apache.http.client.ClientProtocolException;
 import org.inftel.tms.mobile.TmsConstants;
-import org.inftel.tms.mobile.pasos.PasosHTTPTransmitter;
 import org.inftel.tms.mobile.pasos.PasosMessage;
-import org.inftel.tms.mobile.pasos.PasosTransmitter;
 import org.inftel.tms.mobile.receivers.ConnectivityChangedReceiver;
 
 import android.app.IntentService;
@@ -180,30 +174,21 @@ public class TrackingService extends IntentService {
     protected void sendLocation(Location location, int radius) {
         Log.d(TAG, "Sending location");
         long currentTime = System.currentTimeMillis();
-        float latitude = Double.valueOf(location.getLatitude()).floatValue();
-        float longitude = Double.valueOf(location.getLongitude()).floatValue();
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
 
-        PasosTransmitter transmitter = new PasosHTTPTransmitter();
-        try {
-            // TODO debería enviarse un mensaje tipo tracking
+        // TODO debería enviarse un mensaje tipo tracking
+        PasosMessage message = buildTechnicalAlarm().location(latitude, longitude).build();
 
-            PasosMessage message = PasosMessage.userAlarm(latitude + "", longitude + "");
-            transmitter.sendPasosMessage(message);
+        Intent sendService = new Intent(this, SendPasosMessageIntentService.class);
+        sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
+        startService(sendService);
 
-            // Actualizar utlimos tracking enviado
-            prefsEditor.putLong(SP_KEY_LAST_TRACKING_TIME, currentTime);
-            prefsEditor.putFloat(SP_KEY_LAST_TRACKING_LAT, latitude);
-            prefsEditor.putFloat(SP_KEY_LAST_TRACKING_LNG, longitude);
-            prefsEditor.commit();
-        } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, e.getMessage());
-        } catch (ClientProtocolException e) {
-            Log.e(TAG, e.getMessage());
-        } catch (URISyntaxException e) {
-            Log.e(TAG, e.getMessage());
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-        }
+        // Actualizar utlimos tracking enviado
+        prefsEditor.putLong(SP_KEY_LAST_TRACKING_TIME, currentTime);
+        prefsEditor.putFloat(SP_KEY_LAST_TRACKING_LAT, Double.valueOf(latitude).floatValue());
+        prefsEditor.putFloat(SP_KEY_LAST_TRACKING_LNG, Double.valueOf(longitude).floatValue());
+        prefsEditor.commit();
     }
 
 }

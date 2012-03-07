@@ -13,11 +13,11 @@
     <string name="title_ip_preference">IP del servidor</string>
     <string name="sumary_ip_preference">Dirección IP del servidor Call Center</string>
     <string name="dialog_title_ip_preference">Introduzca dirección IP</string>
-    <string name="default_ip_preference">localhost</string>
+    <string name="default_ip_preference">home.bacamt.com</string>
     <string name="title_port_preference">Puerto</string>
     <string name="sumary_port_preference">Puerto TCP del servidor Call Center</string>
     <string name="dialog_title_port_preference">Introduzca número de puerto</string>
-    <string name="default_port_preference">80</string>
+    <string name="default_port_preference">83</string>
     <string name="title_path_preference">Path</string>
     <string name="sumary_path_preference">PATH relativo del servidor</string>
     <string name="dialog_title_path_preference">Introduzca PATH</string>

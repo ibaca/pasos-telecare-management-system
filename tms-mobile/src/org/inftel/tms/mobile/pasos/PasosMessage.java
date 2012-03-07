@@ -5,86 +5,81 @@ import java.util.Calendar;
 
 public class PasosMessage {
     private String type;
-    private int temperature;
-    private int batteryLevel;
+    private Integer temperature;
+    private Integer batteryLevel;
     private Double longitude;
     private Double latitude;
-    private boolean charging;
+    private Boolean charging;
     private String date;
     private String time;
+
+    public static class Builder {
+        private String _type;
+        private Integer _temperature;
+        private Integer _batteryLevel;
+        private Double _longitude;
+        private Double _latitude;
+        private Boolean _charging;
+
+        public Builder(String alarmType) {
+            _type = alarmType;
+        }
+
+        public Builder temperature(int temperature) {
+            _temperature = temperature;
+            return this;
+        }
+
+        public Builder battery(int battery) {
+            _batteryLevel = battery;
+            return this;
+        }
+
+        public Builder location(double latitude, double longitude) {
+            _latitude = latitude;
+            _longitude = longitude;
+            return this;
+        }
+
+        public Builder charging(boolean charging) {
+            _charging = charging;
+            return this;
+        }
+
+        public PasosMessage build() {
+            PasosMessage message = new PasosMessage();
+            message.setType(_type);
+            message.setTemperature(_temperature);
+            message.setBatteryLevel(_batteryLevel);
+            message.setLongitude(_longitude);
+            message.setLatitude(_latitude);
+            message.setCharging(_charging);
+            return message;
+        }
+
+    }
 
     /**
      * Nueva instancia mensaje PaSOS con datos Data y Time inicializados.
      */
-    public PasosMessage() {
+    private PasosMessage() {
         initializeDateTime();
     }
 
-    /**
-     * User Alarm constructor
-     * 
-     * @param latitude
-     * @param longitude
-     */
-    public static PasosMessage userAlarm(Double latitude, Double longitude) {
-        PasosMessage message = new PasosMessage();
-        message.type = PasosMessageType.USER_ALARM;
-        message.latitude = latitude;
-        message.longitude = longitude;
-        return message;
+    public static Builder buildUserAlarm(Double latitude, Double longitude) {
+        return new Builder(PasosMessageType.USER_ALARM).location(latitude, longitude);
     }
 
-    /**
-     * Device Alarm Hight Temp constructor
-     * 
-     * @param temperature
-     * @param latitude
-     * @param longitude
-     */
-    public static PasosMessage deviceAlarmHighTemp(int temperature, Double latitude,
-            Double longitude) {
-        PasosMessage message = new PasosMessage();
-        message.type = PasosMessageType.DEVICE_ALARM_HIGHTEMP;
-        message.temperature = temperature;
-        message.latitude = latitude;
-        message.longitude = longitude;
-        return message;
+    public static Builder buildDeviceAlarmHighTemp(int temperature) {
+        return new Builder(PasosMessageType.DEVICE_ALARM_HIGHTEMP).temperature(temperature);
     }
 
-    /**
-     * Device Alarm Low Temp constructor
-     * 
-     * @param temperature
-     * @param latitude
-     * @param longitude
-     */
-    public static PasosMessage deviceAlarmLowTemp(int temperature, Double latitude, Double longitude) {
-        PasosMessage message = new PasosMessage();
-        message.type = PasosMessageType.DEVICE_ALARM_LOWTEMP;
-        message.temperature = temperature;
-        message.latitude = latitude;
-        message.longitude = longitude;
-        return message;
+    public static Builder buildDeviceAlarmLowTemp(int temperature) {
+        return new Builder(PasosMessageType.DEVICE_ALARM_LOWTEMP).temperature(temperature);
     }
 
-    /**
-     * Technical Alarm constructor
-     * 
-     * @param batteryLevel
-     * @param latitude
-     * @param longitude
-     * @param charging
-     */
-    public static PasosMessage technicalAlarm(int batteryLevel, Double latitude,
-            Double longitude,
-            boolean charging) {
-        PasosMessage message = new PasosMessage();
-        message.type = PasosMessageType.TECHNICAL_ALARM;
-        message.batteryLevel = batteryLevel;
-        message.latitude = latitude;
-        message.longitude = longitude;
-        message.charging = charging;
-        return message;
+    public static Builder buildTechnicalAlarm() {
+        return new Builder(PasosMessageType.TECHNICAL_ALARM);
     }
 
     public String getType() {
@@ -95,19 +90,19 @@ public class PasosMessage {
         this.type = type;
     }
 
-    public int getTemperature() {
+    public Integer getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(Integer temperature) {
         this.temperature = temperature;
     }
 
-    public int getBatteryLevel() {
+    public Integer getBatteryLevel() {
         return batteryLevel;
     }
 
-    public void setBatteryLevel(int batteryLevel) {
+    public void setBatteryLevel(Integer batteryLevel) {
         this.batteryLevel = batteryLevel;
     }
 
@@ -127,11 +122,11 @@ public class PasosMessage {
         this.latitude = latitude;
     }
 
-    public boolean isCharging() {
+    public Boolean isCharging() {
         return charging;
     }
 
-    public void setCharging(boolean charging) {
+    public void setCharging(Boolean charging) {
         this.charging = charging;
     }
 
@@ -170,23 +165,32 @@ public class PasosMessage {
 
     @Override
     public String toString() {
-        String charger = "&PC000";
-        if (charging)
-            charger = "&PC999";
+        StringBuilder message = new StringBuilder();
+        message.append(type).append(date).append(time);
 
-        if (type.equals(PasosMessageType.USER_ALARM)) {
-            return type + date + time + "&LN" + longitude + "&LT" + latitude + "#";
+        // Localización
+        if (latitude != null && longitude != null) {
+            message.append("&LT").append(latitude);
+            message.append("&LN").append(longitude);
         }
-        else if (type.equals(PasosMessageType.DEVICE_ALARM_LOWTEMP)) {
-            return type + date + time + longitude + "&LT" + latitude + "&DT" + temperature + "#";
+
+        // Cargando
+        if (charging != null && charging == true) {
+            message.append("&PC999");
+        } else if (charging != null) {
+            message.append("&PC000");
         }
-        else if (type.equals(PasosMessageType.DEVICE_ALARM_HIGHTEMP)) {
-            return type + date + time + longitude + "&LT" + latitude + "&DT" + temperature + "#";
+
+        // Nivel de batería
+        if (batteryLevel != null) {
+            message.append("&PB").append(batteryLevel);
         }
-        // otherwise is technical alarm
-        else {
-            return type + date + time + longitude + "&LT" + latitude + "&PB" + batteryLevel
-                    + charger + "#";
+
+        // Temperatura
+        if (temperature != null) {
+            message.append("&DT").append(temperature);
         }
+
+        return message.append("#").toString();
     }
 }

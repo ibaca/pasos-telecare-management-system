@@ -117,6 +117,7 @@ public class TmsConstants {
     public static String EXTRA_KEY_FORCEREFRESH = "force_refresh";
     public static String EXTRA_KEY_FORCETRACK = "force_track";
     public static String EXTRA_KEY_IN_BACKGROUND = "EXTRA_KEY_IN_BACKGROUND";
+    public static String EXTRA_KEY_MESSAGE_CONTENT = "message_content";
 
     public static String ARGUMENTS_KEY_REFERENCE = "reference";
     public static String ARGUMENTS_KEY_ID = "id";
