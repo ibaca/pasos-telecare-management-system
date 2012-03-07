@@ -40,8 +40,8 @@
 	<alerts_raw id='-1010' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
 	<alerts_raw id='-1011' origin='666123123' rawData='$AD31&amp;LD20160303&amp;LH060654&amp;LN1008052067&amp;LT153052067&amp;DT75#' version='1' />
 
-	<alerts id='-1000' affected_id='-1' origin_id='-1' cause='se ha caido' type='0' priority='0' raw_id='-1000' created='2012-01-15' updated='2012-01-16' version='1' />
-	<alerts id='-1001' affected_id='-1' origin_id='-1' cause='ha tropezado' type='0' priority='0' raw_id='-1001' created='2012-01-15' updated='2012-01-16' version='1' />
+	<alerts id='-1000' affected_id='-1' origin_id='-1' cause='se ha caido' type='0' priority='0' raw_id='-1000' created='2012-01-15' latitude='36.729' longitude='-4.399' updated='2012-01-16' version='1' />
+	<alerts id='-1001' affected_id='-1' origin_id='-1' cause='ha tropezado' type='0' priority='0' raw_id='-1001' created='2012-01-15' latitude='36.717' longitude='-4.460' updated='2012-01-16' version='1' />
 	<alerts id='-1002' affected_id='-1' origin_id='-1' cause='se ha perdido' type='0' priority='0' raw_id='-1002' created='2012-01-15' updated='2012-01-16' version='1' />
 	<alerts id='-1003' affected_id='-1' origin_id='-1' cause='ha pulsado el boton' type='1' priority='1' raw_id='-1003' created='2012-01-15' updated='2012-01-16' version='1' />
 	<alerts id='-1004' affected_id='-1' origin_id='-1' cause='otra cosa' type='1' priority='1' raw_id='-1004' created='2012-01-15' updated='2012-01-16' version='1' />

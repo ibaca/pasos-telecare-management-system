@@ -1,10 +1,12 @@
 
 package org.inftel.tms.web;
 
-import javax.annotation.ManagedBean;
+import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -16,9 +18,11 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
-@ViewScoped
 @ManagedBean
+@ViewScoped
 public class MapBean {
+
+    private final static Logger logger = Logger.getLogger(MapBean.class.getName());
 
     @EJB
     private AlertFacade alerts;
@@ -28,11 +32,14 @@ public class MapBean {
 
     @PostConstruct
     protected void initialize() {
+        logger.info("Inicializando bean");
         for (Alert alert : alerts.findAll()) {
             if (alert.getLatitude() != null) {
                 LatLng latLng = new LatLng(alert.getLatitude(), alert.getLongitude());
-                Marker marker = new Marker(latLng, alert.getCreated().toString() + ": "
-                        + alert.getCause());
+                Marker marker = new Marker(latLng);
+                marker.setTitle(alert.getCreated().toString() + ": " + alert.getCause());
+                marker.setIcon("/tms-web/resources/img/skull.png");
+                logger.info("Creado marker: " + marker);
                 if (center == null) {
                     center = latLng;
                 }
@@ -46,7 +53,6 @@ public class MapBean {
 
     public void onMarkerSelect(OverlaySelectEvent event) {
         Marker marker = (Marker) event.getOverlay();
-
         addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Selected",
                 marker.getTitle()));
     }
