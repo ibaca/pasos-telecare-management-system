@@ -7,8 +7,8 @@ public class PasosMessage {
     private String type;
     private int temperature;
     private int batteryLevel;
-    private String longitude;
-    private String latitude;
+    private Double longitude;
+    private Double latitude;
     private boolean charging;
     private String date;
     private String time;
@@ -26,7 +26,7 @@ public class PasosMessage {
      * @param latitude
      * @param longitude
      */
-    public static PasosMessage userAlarm(String latitude, String longitude) {
+    public static PasosMessage userAlarm(Double latitude, Double longitude) {
         PasosMessage message = new PasosMessage();
         message.type = PasosMessageType.USER_ALARM;
         message.latitude = latitude;
@@ -41,8 +41,8 @@ public class PasosMessage {
      * @param latitude
      * @param longitude
      */
-    public static PasosMessage deviceAlarmHighTemp(int temperature, String latitude,
-            String longitude) {
+    public static PasosMessage deviceAlarmHighTemp(int temperature, Double latitude,
+            Double longitude) {
         PasosMessage message = new PasosMessage();
         message.type = PasosMessageType.DEVICE_ALARM_HIGHTEMP;
         message.temperature = temperature;
@@ -58,7 +58,7 @@ public class PasosMessage {
      * @param latitude
      * @param longitude
      */
-    public static PasosMessage deviceAlarmLowTemp(int temperature, String latitude, String longitude) {
+    public static PasosMessage deviceAlarmLowTemp(int temperature, Double latitude, Double longitude) {
         PasosMessage message = new PasosMessage();
         message.type = PasosMessageType.DEVICE_ALARM_LOWTEMP;
         message.temperature = temperature;
@@ -75,8 +75,8 @@ public class PasosMessage {
      * @param longitude
      * @param charging
      */
-    public static PasosMessage technicalAlarm(int batteryLevel, String latitude,
-            String longitude,
+    public static PasosMessage technicalAlarm(int batteryLevel, Double latitude,
+            Double longitude,
             boolean charging) {
         PasosMessage message = new PasosMessage();
         message.type = PasosMessageType.TECHNICAL_ALARM;
@@ -111,19 +111,19 @@ public class PasosMessage {
         this.batteryLevel = batteryLevel;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
