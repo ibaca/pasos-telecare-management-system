@@ -33,8 +33,8 @@ public class SendPasosMessageIntentService extends IntentService {
         String url = "http://" + ip + ":" + port + "/" + path;
         String senderNumber = prefs.getString(TmsConstants.KEY_PHONE_NUMBER_PREFERENCE, "");
 
-        Bundle bundle = intent.getExtras();
-        String message = bundle.getString("message");
+        Bundle bundle = intent.getBundleExtra("BUNDLEMESSAGE");
+        String message = bundle.getString("MESSAGE");
 
         PasosHTTPTransmitter transmitter = new PasosHTTPTransmitter(url, senderNumber);
         try {
