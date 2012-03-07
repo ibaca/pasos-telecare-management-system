@@ -1,4 +1,7 @@
+
 package org.inftel.tms.mobile.ui;
+
+import static java.lang.System.currentTimeMillis;
 
 import org.inftel.tms.mobile.R;
 import org.inftel.tms.mobile.TmsConstants;
@@ -17,88 +20,56 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 
 public class ExampleAlarmUserActivity extends Activity {
 
-	private static final String TAG = "ExampleAlarmUserActivity";
-	private ILastLocationFinder lastLocationFinder = PlatformSpecificImplementationFactory
-			.getLastLocationFinder(this);
+    private static final String TAG = "ExampleAlarmUserActivity";
+    private ILastLocationFinder lastLocationFinder;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.alarmuser);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.alarmuser);
 
-		// Preferencias de usurio parte de agustin creo
-		// SharedPreferences prefs = getSharedPreferences("MisPreferencias",
-		// MODE_PRIVATE);
-		// SharedPreferences.Editor editor = prefs.edit();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Log.i(TAG, prefs.getString(TmsConstants.KEY_IP_PREFERENCE, ""));
+        Log.i(TAG, prefs.getString(TmsConstants.KEY_PORT_PREFERENCE, ""));
 
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(ExampleAlarmUserActivity.this);
-		Log.i(TAG, prefs.getString(TmsConstants.KEY_IP_PREFERENCE, ""));
-		Log.i(TAG, prefs.getString(TmsConstants.KEY_PORT_PREFERENCE, ""));
+        // Configura location finder
+        lastLocationFinder = PlatformSpecificImplementationFactory.getLastLocationFinder(this);
 
-		// Aqui van los datos de prueba de SharedPreference
-		// editor.putString("NAME", "Cristian Jimenez");
-		// editor.putString("URI", "www.mipaginilla.com");
-		// editor.commit();
+        // Configura el listener para el boton 'enviar alerta'
+        findViewById(R.id.button1).setOnClickListener(sendAlarmListener);
+    }
 
-		((Button) findViewById(R.id.button1))
-				.setOnClickListener(sendAUListener);
-	}
+    // Delega en envio al serviceIntent SendPasosMessage
+    OnClickListener sendAlarmListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Location location = lastLocationFinder.getLastBestLocation(
+                    TmsConstants.MAX_DISTANCE, TmsConstants.MAX_TIME);
+            PasosMessage message = PasosMessage.buildUserAlarm(
+                    location.getLatitude(), location.getLongitude()).build();
 
-	OnClickListener sendAUListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Intent i = new Intent(ExampleAlarmUserActivity.this,
-					SendPasosMessageIntentService.class);
-			SharedPreferences prefs = getSharedPreferences("MisPreferencias",
-					MODE_PRIVATE);
+            Intent sendService = new Intent(view.getContext(), SendPasosMessageIntentService.class);
+            sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
+            startService(sendService);
+        }
+    };
 
-			// Recolectamos los datos necesarios de las SharedPreferences
-			String name = prefs.getString("NAME", "");
-			String uri = prefs.getString("URI", "");
+    protected void getLastLocation(int maxDistance, int maxTime) {
+        final AsyncTask<Void, Void, Location> findLationTask = new AsyncTask<Void, Void, Location>() {
+            @Override
+            protected Location doInBackground(Void... params) {
+                Location location = lastLocationFinder.getLastBestLocation(
+                        TmsConstants.MAX_DISTANCE, currentTimeMillis() - TmsConstants.MAX_TIME);
+                return location;
+            }
 
-			// Los a�adimos al activity
-			Bundle bundle = new Bundle();
-			// bundle.putString("NAME", name);
-			// i.putExtra("USERDATA", bundle);
-			// bundle.putString("URI", uri);
-			// i.putExtra("SERVERDATA", bundle);
-
-			// Enviamos el activity
-			// startActivity(i);
-			Location lastKnownLocation = lastLocationFinder
-					.getLastBestLocation(TmsConstants.MAX_DISTANCE,
-							TmsConstants.MAX_TIME);
-			PasosMessage message = PasosMessage.userAlarm(
-					lastKnownLocation.getLatitude(),
-					lastKnownLocation.getLongitude());
-			bundle.putString("MESSAGE", message.toString());
-			i.putExtra("BUNDLEMESSAGE", bundle);
-			startService(i);
-
-		}
-	};
-
-	protected void getLastLocation(int maxDistance, int maxTime) {
-		// This isn't directly affecting the UI, so put it on a worker thread.
-		final AsyncTask<Void, Void, Location> findLationTask = new AsyncTask<Void, Void, Location>() {
-			@Override
-			protected Location doInBackground(Void... params) {
-				Location lastKnownLocation = lastLocationFinder
-						.getLastBestLocation(TmsConstants.MAX_DISTANCE,
-								System.currentTimeMillis()
-										- TmsConstants.MAX_TIME);
-				return lastKnownLocation;
-			}
-
-			protected void onPostExecute(Location result) {
-				// Aqui se puede actualizar el IU
-			}
-		};
-		findLationTask.execute();
-	}
+            protected void onPostExecute(Location result) {
+                // Aqui se puede actualizar el IU
+            }
+        };
+        findLationTask.execute();
+    }
 }
