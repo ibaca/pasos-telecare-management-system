@@ -26,6 +26,6 @@
     <string name="title_phone_number_preference">Número de teléfono</string>
     <string name="sumary_phone_number_preference">Número del terminal de teleasistencia</string>
     <string name="dialog_title_phone_number_preference">Introduzca Número de Teléfono</string>
-    <string name="default_phone_number_preference">600123123</string>
+    <string name="default_phone_number_preference">666123123</string>
 
 </resources>

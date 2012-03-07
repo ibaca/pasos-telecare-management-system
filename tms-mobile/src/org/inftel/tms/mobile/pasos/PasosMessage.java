@@ -12,6 +12,7 @@ public class PasosMessage {
     private Boolean charging;
     private String date;
     private String time;
+    private String key = "&RK123456"; // TODO configurable?
 
     public static class Builder {
         private String _type;
@@ -166,7 +167,8 @@ public class PasosMessage {
     @Override
     public String toString() {
         StringBuilder message = new StringBuilder();
-        message.append(type).append(date).append(time);
+        // Valores por defecto, tipo, clave y fecha de envio
+        message.append(type).append(key).append(date).append(time);
 
         // Localización
         if (latitude != null && longitude != null) {

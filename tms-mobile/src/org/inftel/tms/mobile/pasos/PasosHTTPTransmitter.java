@@ -13,7 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class PasosHTTPTransmitter implements PasosTransmitter {
 
-    protected String url = "http://localhost:8080/tms-web/connector";
+    protected String url; // http://localhost:8080/tms-web/connector
     protected String senderNumber;
 
     public PasosHTTPTransmitter() {
