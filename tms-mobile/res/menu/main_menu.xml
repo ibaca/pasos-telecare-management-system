@@ -3,12 +3,15 @@
 
     <item
         android:id="@+id/mainMenuFences"
-        android:title="@string/fences_label"/>
+        android:title="@string/fences_label"
+        android:icon="@android:drawable/ic_menu_manage" />
     <item
         android:id="@+id/mainMenuPreferences"
-        android:title="@string/preferences_label"/>
+        android:title="@string/preferences_label"
+        android:icon="@android:drawable/ic_menu_preferences" />
     <item
         android:id="@+id/mainMenuAbout"
-        android:title="@string/about_label"/>
+        android:title="@string/about_label"
+        android:icon="@android:drawable/ic_menu_info_details" />
 
 </menu>

@@ -8,6 +8,7 @@ import static org.inftel.tms.mobile.contentproviders.FencesContentProvider.KEY_N
 import static org.inftel.tms.mobile.contentproviders.FencesContentProvider.KEY_RADIUS;
 import static org.inftel.tms.mobile.contentproviders.FencesContentProvider.KEY_ZONE_TYPE;
 
+import org.inftel.tms.mobile.R;
 import org.inftel.tms.mobile.contentproviders.FencesContentProvider;
 import org.inftel.tms.mobile.ui.FencesActivity;
 
@@ -20,13 +21,22 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 
 /**
  * Fragmento UI para mostra lista de fences del dispositivo.
  */
 public class FenceListFragment extends ListFragment implements LoaderCallbacks<Cursor> {
+
+    private static final int EDIT_ID = Menu.FIRST + 1;
+    private static final int DELETE_ID = Menu.FIRST + 2;
 
     protected Cursor cursor = null;
     protected SimpleCursorAdapter adapter;
@@ -42,31 +52,27 @@ public class FenceListFragment extends ListFragment implements LoaderCallbacks<C
 
         activity = (FencesActivity) getActivity();
 
-        // Create a new SimpleCursorAdapter that displays the name of each
-        // nearby
-        // venue and the current distance to it.
         adapter = new SimpleCursorAdapter(
                 activity,
-                android.R.layout.two_line_list_item,
+                android.R.layout.simple_list_item_1,
                 cursor,
                 new String[] {
-                        FencesContentProvider.KEY_NAME, FencesContentProvider.KEY_ZONE_TYPE
+                        FencesContentProvider.KEY_NAME
                 },
                 new int[] {
-                        android.R.id.text1, android.R.id.text2
+                        android.R.id.text1
                 },
                 0);
         // Allocate the adapter to the List displayed within this fragment.
         setListAdapter(adapter);
 
+        // Enable context menu
+        registerForContextMenu(getListView());
+
         // Populate the adapter / list using a Cursor Loader.
         getLoaderManager().initLoader(0, null, this);
     }
 
-    /**
-     * {@inheritDoc} When a venue is clicked, fetch the details from your server
-     * and display the detail page.
-     */
     @Override
     public void onListItemClick(ListView l, View v, int position, long theid) {
         super.onListItemClick(l, v, position, theid);
@@ -82,11 +88,6 @@ public class FenceListFragment extends ListFragment implements LoaderCallbacks<C
         activity.selectDetail(fenceUri.toString());
     }
 
-    /**
-     * {@inheritDoc} This loader will return the ID, Reference, Name, and
-     * Distance of all the venues currently stored in the
-     * {@link PlacesContentProvider}.
-     */
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = new String[] {
                 KEY_ID, KEY_NAME, KEY_ZONE_TYPE,
@@ -97,18 +98,36 @@ public class FenceListFragment extends ListFragment implements LoaderCallbacks<C
                 null, null, null);
     }
 
-    /**
-     * {@inheritDoc} When the loading has completed, assign the cursor to the
-     * adapter / list.
-     */
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         adapter.swapCursor(data);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        Log.d("FencesList", "context menu created");
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, EDIT_ID, 0, R.string.menu_edit);
+        menu.add(0, DELETE_ID, 0, R.string.menu_delete);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Log.d("FencesList", "context menu selected");
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case EDIT_ID:
+                onListItemClick(getListView(), getView(), info.position, info.id);
+                return true;
+            case DELETE_ID:
+                Uri uri = ContentUris.withAppendedId(FencesContentProvider.CONTENT_URI, +info.id);
+                getActivity().getContentResolver().delete(uri, null, null);
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
 }

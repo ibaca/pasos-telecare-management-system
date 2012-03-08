@@ -3,6 +3,7 @@
 
     <item
         android:id="@+id/fencesAdd"
-        android:title="@string/add_fence"/>
+        android:title="@string/add_fence"
+        android:icon="@android:drawable/ic_menu_add" />
 
 </menu>

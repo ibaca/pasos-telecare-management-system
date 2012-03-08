@@ -6,6 +6,7 @@ package org.inftel.tms.mobile.ui.fragments;
 
 import static org.inftel.tms.mobile.contentproviders.FencesContentProvider.KEY_LOCATION_LAT;
 import static org.inftel.tms.mobile.contentproviders.FencesContentProvider.KEY_LOCATION_LNG;
+import static org.inftel.tms.mobile.util.PlatformSpecificImplementationFactory.getLastLocationFinder;
 
 import org.inftel.tms.mobile.R;
 import org.inftel.tms.mobile.TmsConstants;
@@ -15,6 +16,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -78,20 +80,19 @@ public class FenceDetailFragment extends Fragment implements LoaderCallbacks<Cur
         activity = getActivity();
         contentResolver = activity.getContentResolver();
 
-        // Query the PlacesDetails Content Provider using a Loader to find
-        // the details for the selected venue.
         if (fenceUri != null) {
             getLoaderManager().initLoader(0, null, this);
+        } else {
+            // New fence (set default values)
+            Location location = getLastLocationFinder(getActivity()).getLastBestLocation(0, 0);
+            if (location != null) {
+                nameEditText.setText("fence");
+                latitudeEditText.setText(location.getLatitude() + "");
+                longitudeEditText.setText(location.getLongitude() + "");
+                radiusEditText.setText("500");
+                typeRadioGroup.check(typeRadioGroup.getChildAt(0).getId());
+            }
         }
-
-        // Query the Shared Preferences to find the ID of the last venue checked
-        // in to.
-        // SharedPreferences sp = activity.getSharedPreferences(
-        // PlacesConstants.SHARED_PREFERENCE_FILE, Context.MODE_PRIVATE);
-        // String lastCheckin =
-        // sp.getString(PlacesConstants.SP_KEY_LAST_CHECKIN_ID, null);
-        // if (lastCheckin != null)
-        // checkedIn(lastCheckin);
     }
 
     @Override
@@ -117,40 +118,6 @@ public class FenceDetailFragment extends Fragment implements LoaderCallbacks<Cur
     @Override
     public void onResume() {
         super.onResume();
-
-        /*
-         * Always refresh the details on resume, but don't force a refresh to
-         * minimize the network usage. Forced updates are unnecessary as we
-         * force an update when a venue is selected in the Place List Activity.
-         */
-        if (fenceUri != null)
-            updatePlace(fenceUri, false);
-    }
-
-    /**
-     * Start the {@link PlaceDetailsUpdateService} to refresh the details for
-     * the selected venue.
-     * 
-     * @param reference Reference
-     * @param id Unique Identifier
-     * @param forceUpdate Force an update
-     */
-    protected void updatePlace(Uri fenceUri, boolean forceUpdate) {
-        if (fenceUri != null) {
-            // Start the PlaceDetailsUpdate Service to query the server for
-            // details
-            // on the specified venue. A "forced update" will ignore the caching
-            // latency
-            // rules and query the server.
-            // Intent updateServiceIntent = new Intent(activity,
-            // PlaceDetailsUpdateService.class);
-            // updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_REFERENCE,
-            // reference);
-            // updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_ID, id);
-            // updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_FORCEREFRESH,
-            // forceUpdate);
-            // activity.startService(updateServiceIntent);
-        }
     }
 
     /**
@@ -182,23 +149,13 @@ public class FenceDetailFragment extends Fragment implements LoaderCallbacks<Cur
             final int radius = data.getInt(data.getColumnIndex(FencesContentProvider.KEY_RADIUS));
             final int type = data.getInt(data.getColumnIndex(FencesContentProvider.KEY_ZONE_TYPE));
 
-            /*
-             * If we don't have a place reference passed in, we need to look it
-             * up and update our details accordingly.
-             */
-            // if (placeReference == null) {
-            // placeReference = data.getString(data
-            // .getColumnIndex(PlaceDetailsContentProvider.KEY_REFERENCE));
-            // updatePlace(placeReference, placeId, true);
-            // }
-
             handler.post(new Runnable() {
                 public void run() {
                     nameEditText.setText(name);
                     latitudeEditText.setText("" + latitude);
                     longitudeEditText.setText("" + longitude);
                     radiusEditText.setText("" + radius);
-                    typeRadioGroup.check(type);
+                    typeRadioGroup.check(typeRadioGroup.getChildAt(type).getId());
                 }
             });
         }
@@ -214,7 +171,7 @@ public class FenceDetailFragment extends Fragment implements LoaderCallbacks<Cur
                 latitudeEditText.setText("");
                 longitudeEditText.setText("");
                 radiusEditText.setText("");
-                typeRadioInclusive.setChecked(true);
+                typeRadioGroup.check(typeRadioGroup.getChildAt(0).getId());
             }
         });
     }
@@ -223,10 +180,21 @@ public class FenceDetailFragment extends Fragment implements LoaderCallbacks<Cur
         public void onClick(View view) {
             Log.i(TAG, "salvando cambios");
             String name = nameEditText.getText().toString().trim();
-            double latitude = Double.parseDouble(latitudeEditText.getText().toString());
-            double longitude = Double.parseDouble(longitudeEditText.getText().toString());
-            int radius = Integer.parseInt(radiusEditText.getText().toString());
-            int type = typeRadioGroup.getCheckedRadioButtonId();
+            Double latitude, longitude;
+            try {
+                latitude = Double.parseDouble(latitudeEditText.getText().toString());
+                longitude = Double.parseDouble(longitudeEditText.getText().toString());
+            } catch (Exception somethingGoesWrongWithParsingButDontCareICanSolveThis) {
+                latitude = .0;
+                longitude = .0;
+            }
+            Integer radius;
+            try {
+                radius = Integer.parseInt(radiusEditText.getText().toString());
+            } catch (Exception somethingGoesWrongWithParsingButDontCareICanSolveThis) {
+                radius = 0;
+            }
+            int type = (typeRadioInclusive.isChecked()) ? 0 : 1;
             long currentTime = System.currentTimeMillis();
             addFence(name, latitude, longitude, radius, type, currentTime);
         }

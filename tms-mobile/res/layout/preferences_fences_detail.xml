@@ -16,8 +16,7 @@
             android:id="@+id/layoutForm"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView3"
@@ -59,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_below="@+id/detail_latlon_label"
-                        android:inputType="numberDecimal" >
+                        android:inputType="numberDecimal|numberSigned" >
                     </EditText>
                 </LinearLayout>
 
@@ -77,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_below="@+id/detail_latlon_label"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal|numberSigned" />
                 </LinearLayout>
             </LinearLayout>
 
