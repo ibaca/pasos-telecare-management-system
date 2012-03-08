@@ -13,10 +13,7 @@ import javax.faces.context.FacesContext;
 import org.inftel.tms.domain.Alert;
 import org.inftel.tms.services.AlertFacade;
 import org.primefaces.event.map.OverlaySelectEvent;
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
-import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
+import org.primefaces.model.map.*;
 
 @ManagedBean
 @ViewScoped
@@ -33,12 +30,26 @@ public class MapBean {
     @PostConstruct
     protected void initialize() {
         logger.info("Inicializando bean");
+        Polyline tracking = new Polyline();
         for (Alert alert : alerts.findAll()) {
             if (alert.getLatitude() != null) {
                 LatLng latLng = new LatLng(alert.getLatitude(), alert.getLongitude());
                 Marker marker = new Marker(latLng);
                 marker.setTitle(alert.getCreated().toString() + ": " + alert.getCause());
-                marker.setIcon("/tms-web/resources/img/skull.png");
+                String cause = (alert.getCause() != null) ? alert.getCause() : "sin causa";
+                if (cause.startsWith("track")) {
+                    marker.setIcon("/tms-web/resources/img/footprint.png");
+                    tracking.getPaths().add(latLng);
+                } else if (cause.startsWith("fence")) {
+                    marker.setIcon("/tms-web/resources/img/stop.png");
+                } else if (cause.startsWith("batt")) {
+                    marker.setIcon("/tms-web/resources/img/poweroutage.png");
+                } else if (cause.startsWith("click")) {
+                    marker.setIcon("/tms-web/resources/img/skull.png");
+                } else {
+                    marker.setIcon("/tms-web/resources/img/flag-export.png");
+                }
+                
                 logger.info("Creado marker: " + marker);
                 if (center == null) {
                     center = latLng;
@@ -46,6 +57,7 @@ public class MapBean {
                 markers.addOverlay(marker);
             }
         }
+        markers.addOverlay(tracking);
         if (center == null) {
             center = new LatLng(120.0, 34.0);
         }
