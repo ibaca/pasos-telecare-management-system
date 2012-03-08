@@ -16,28 +16,41 @@
 
 package org.inftel.tms.mobile.services;
 
+import static org.inftel.tms.mobile.pasos.PasosMessage.buildTechnicalAlarm;
+
+import org.inftel.tms.mobile.TmsConstants;
+import org.inftel.tms.mobile.pasos.PasosMessage;
+import org.inftel.tms.mobile.pasos.PasosMessage.Builder;
+import org.inftel.tms.mobile.util.PlatformSpecificImplementationFactory;
+import org.openintents.sensorsimulator.hardware.Sensor;
+import org.openintents.sensorsimulator.hardware.SensorEvent;
+import org.openintents.sensorsimulator.hardware.SensorEventListener;
+import org.openintents.sensorsimulator.hardware.SensorManagerSimulator;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.SensorManager;
+import android.location.Location;
 import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
 
 /* WARNING!! uncomment the lines to NOT use the sensors simulator */
 
-public class AutomaticAlarmService extends Service {
+public class AutomaticAlarmService extends Service implements SensorEventListener {
     private static final String TAG = "AutomaticAlarmService";
     // SensorManager sm;
-    // SensorManagerSimulator sm;
-    // Sensor mTemperature;
+    SensorManagerSimulator sm;
+    Sensor mTemperature;
     private float temperature;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        // sm = SensorManagerSimulator.getSystemService(this, SENSOR_SERVICE);
-        // sm.connectSimulator();
+        sm = SensorManagerSimulator.getSystemService(this, SENSOR_SERVICE);
+        sm.connectSimulator();
 
         // sm = (SensorManager) getSystemService(SENSOR_SERVICE);
     }
@@ -45,15 +58,15 @@ public class AutomaticAlarmService extends Service {
     @Override
     public void onStart(final Intent intent, final int startId) {
         super.onStart(intent, startId);
-        // sm.registerListener(this,
-        // sm.getDefaultSensor(Sensor.TYPE_TEMPERATURE),
-        // SensorManager.SENSOR_DELAY_GAME);
+        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_TEMPERATURE),
+                SensorManager.SENSOR_DELAY_GAME);
 
-        Log.i(TAG, "RULANDOOOO  " + parseBatteryLevel() + " " + isCharging() + " " + temperature);
+        int batteryLevel = parseBatteryLevel();
+        boolean isCharging = isCharging();
 
-        // PasosHTTPTransmitter transmitter = new PasosHTTPTransmitter();
-        // transmitter.sendPasosMessage(PasosMessage.technicalAlarm(parseBatteryLevel(),
-        // latitude, longitude,isCharging()))
+        Log.i(TAG, "RULANDOOOO  " + batteryLevel + " " + isCharging + " " + temperature);
+
+        sendAlarmMessage(batteryLevel, (int) temperature, isCharging);
     }
 
     @Override
@@ -66,7 +79,7 @@ public class AutomaticAlarmService extends Service {
      * 
      * @return the String value of the level
      */
-    private String parseBatteryLevel() {
+    private int parseBatteryLevel() {
         Context context = getApplicationContext();
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent batteryStatus = context.registerReceiver(null, ifilter);
@@ -74,7 +87,7 @@ public class AutomaticAlarmService extends Service {
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
-        return String.valueOf(((int) level * 100 / (float) scale));
+        return (int) (level * 100 / (float) scale);
     }
 
     /**
@@ -110,4 +123,54 @@ public class AutomaticAlarmService extends Service {
         return String.valueOf(batteryLevel);
     }
 
+    /* Sends an Alarm */
+    protected void sendAlarmMessage(int batteryLevel, int temperature, boolean isCharging) {
+
+        Location location = PlatformSpecificImplementationFactory.getLastLocationFinder(
+                getApplicationContext()).getLastBestLocation(0, 0);
+
+        /* Constructs the message */
+        Builder messageBuilder = buildTechnicalAlarm();
+
+        double latitude, longitude;
+        try {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        } catch (NullPointerException e) {
+            latitude = 0.0;
+            longitude = 0.0;
+        }
+
+        if (temperature <= 0) {
+            messageBuilder.location(latitude, longitude).cause(
+                    "LowTemperature: La temeratura detectada en el dispositivo ha bajado de 0º");
+        } else if (temperature > 30) {
+            messageBuilder.location(latitude, longitude).cause(
+                    "HighTemperature: La temeratura detectada en el dispositivo ha superado 30º");
+        } else {
+            messageBuilder.location(latitude, longitude).cause(
+                    "AutomaticSending:OK");
+        }
+        messageBuilder.charging(isCharging);
+        messageBuilder.battery(batteryLevel);
+        messageBuilder.temperature(temperature);
+        PasosMessage message = messageBuilder.build();
+
+        /* Sends the message */
+        Intent sendService = new Intent(this, SendPasosMessageIntentService.class);
+        sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
+        startService(sendService);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor arg0, int arg1) {
+        // TODO Do something
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        temperature = event.values[0];
+        sm.unregisterListener(this);
+    }
 }
