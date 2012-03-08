@@ -11,7 +11,7 @@
 
         <TextView
             style="@style/title"
-            android:text="TMS-Mobile" />
+            android:text="@string/app_name" />
 
         <TextView
             style="@style/member"
