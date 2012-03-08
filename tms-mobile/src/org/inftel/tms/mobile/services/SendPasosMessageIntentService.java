@@ -70,12 +70,16 @@ public class SendPasosMessageIntentService extends IntentService {
             Log.d(TAG, "Message de alerta enviado al servidor");
         } catch (ClientProtocolException e) {
             Log.w(TAG, e.getMessage(), e);
+            Notifications.generateNotification(this, "Fallo enviando alerta", notificationId);
         } catch (URISyntaxException e) {
             Log.w(TAG, e.getMessage(), e);
+            Notifications.generateNotification(this, "Fallo enviando alerta", notificationId);
         } catch (IOException e) {
             Log.w(TAG, e.getMessage(), e);
+            Notifications.generateNotification(this, "Fallo enviando alerta", notificationId);
         } catch (Exception e) {
             Log.w(TAG, e.getMessage(), e);
+            Notifications.generateNotification(this, "Fallo enviando alerta", notificationId);
         }
     }
 
