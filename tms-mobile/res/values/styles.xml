@@ -32,7 +32,4 @@
         <item name="android:textColor">#BCBCBC</item>
         <item name="android:layout_marginTop">5px</item>
     </style>
-    <style name="alert_button" parent="@android:style/TextAppearance.Large">
-        <item name="android:text">30sp</item>
-    </style>
 </resources>

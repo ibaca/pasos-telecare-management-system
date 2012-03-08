@@ -24,14 +24,12 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
             <EditText
                 android:id="@+id/fence_detail_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <requestFocus />
-            </EditText>
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/detailLatLonLabel"
@@ -54,6 +52,7 @@
 
                     <EditText
                         android:id="@+id/detailLat"
+                        android:nextFocusDown="@+id/detailLon"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -71,7 +70,7 @@
                     android:orientation="vertical" >
 
                     <EditText
-                        android:id="@+id/detailLon"
+                        android:id="@id/detailLon"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"

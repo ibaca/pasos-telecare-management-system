@@ -33,14 +33,14 @@
 
     <!-- String para ABOUT -->
     <string name="member_agumpg">Agustín M. Pereña García</string>
-    <string name="desc_agumpg">Preferences y Diseño</string>
+    <string name="desc_agumpg">Preferencias y Diseño</string>
     <string name="member_miguelqm">Miguel Angel Quero Marín</string>
-    <string name="desc_miguelqm">Lorem ipsum</string>
+    <string name="desc_miguelqm">Sensores y Alertas</string>
     <string name="member_miguepintor">Miguel Pintor Moral</string>
-    <string name="desc_miguepintor">Lorem ipsum</string>
+    <string name="desc_miguepintor">Comunicación y Protocolos</string>
     <string name="member_cristian">Cristian Jiménez Salvatierra</string>
-    <string name="desc_cristian">Lorem Ipsum</string>
+    <string name="desc_cristian">Interfaz de usuario</string>
     <string name="member_ibaca">Ignacio Baca Moreno</string>
-    <string name="desc_ibaca">Lorem ipsum</string>
+    <string name="desc_ibaca">Geolocalización</string>
 
 </resources>

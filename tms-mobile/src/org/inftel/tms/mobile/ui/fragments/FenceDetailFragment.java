@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 /**
  * UI Fragment to display the details for a selected venue.
@@ -97,7 +98,7 @@ public class FenceDetailFragment extends Fragment implements LoaderCallbacks<Cur
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.preferences_fences_detail, container, false);
+        View view = inflater.inflate(R.layout.fences_detail, container, false);
         nameEditText = (EditText) view.findViewById(R.id.fence_detail_name);
         latitudeEditText = (EditText) view.findViewById(R.id.detailLat);
         longitudeEditText = (EditText) view.findViewById(R.id.detailLon);
@@ -225,11 +226,13 @@ public class FenceDetailFragment extends Fragment implements LoaderCallbacks<Cur
                 result = (count > 0);
                 if (result) {
                     Log.i(TAG, "Updated fence with uri " + fenceUri + ".");
+                    Toast.makeText(getActivity(), "Cambios guardados", Toast.LENGTH_LONG).show();
                 }
             } else {
                 fenceUri = contentResolver.insert(FencesContentProvider.CONTENT_URI, values);
                 result = (fenceUri != null);
                 Log.i(TAG, "New fence with uri " + fenceUri + ".");
+                Toast.makeText(getActivity(), "Nueva valla guardada", Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
             Log.e("PLACES", "Adding " + name + " failed.", ex);

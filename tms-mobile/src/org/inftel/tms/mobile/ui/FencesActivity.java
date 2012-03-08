@@ -34,7 +34,7 @@ public class FencesActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         // Inflate the layout
-        setContentView(R.layout.preferences_fences);
+        setContentView(R.layout.fences_container);
 
         // Get a handle to the Fragments
         fenceListFragment = (FenceListFragment) getSupportFragmentManager()
