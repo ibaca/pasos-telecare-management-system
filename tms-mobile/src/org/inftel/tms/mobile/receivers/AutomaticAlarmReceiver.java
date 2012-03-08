@@ -19,7 +19,6 @@ package org.inftel.tms.mobile.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /**
  * The manifest Receiver is used to detect changes in battery state. When the
@@ -33,12 +32,9 @@ public class AutomaticAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "STARTED");
         // Alarm sending by service
         Intent service = new Intent();
         service.setAction("org.inftel.tms.mobile.services.AutomaticAlarmService");
         context.startService(service);
-        Log.d(TAG, "GO BACK");
-
     }
 }

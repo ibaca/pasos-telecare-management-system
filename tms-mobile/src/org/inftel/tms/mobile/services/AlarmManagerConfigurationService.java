@@ -16,6 +16,8 @@
 
 package org.inftel.tms.mobile.services;
 
+import java.util.Calendar;
+
 import org.inftel.tms.mobile.receivers.AutomaticAlarmReceiver;
 
 import android.app.AlarmManager;
@@ -27,9 +29,9 @@ import android.os.IBinder;
 /*
  * AlarmManager's configuration. Automatic sending message every MSEC_TO_REPEAT
  */
-public class AutomaticAlarmSendingService extends Service {
-    private static final String TAG = "AutomaticAlarmSendingService";
-    private static final int MSEC_TO_REPEAT = 15000;
+public class AlarmManagerConfigurationService extends Service {
+    private static final String TAG = "AlarmManagerConfigurationService";
+    private static final int MSEC_TO_REPEAT = 15000; // Interval repeat time
 
     @Override
     public void onCreate() {
@@ -40,44 +42,38 @@ public class AutomaticAlarmSendingService extends Service {
     public void onStart(final Intent intent, final int startId) {
         super.onStart(intent, startId);
 
+        // Get a Calendar object with current time
+        Calendar cal = Calendar.getInstance();
+        // Add 5 minutes to the calendar object.
+        // This time will be passed to Alarm manager to set the first start.
+        cal.add(Calendar.MINUTE, 5);
+
         /*
          * Creation of the pending intent (targeting AutomaticAlarmReceiver)
          * that will be passed to the AlarmManager
          */
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 234324243, new Intent(this,
+                getApplicationContext(), 234324243, new Intent(this,
                         AutomaticAlarmReceiver.class), 0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                + MSEC_TO_REPEAT, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                cal.getTimeInMillis(),
+                MSEC_TO_REPEAT, pendingIntent);
 
-        // timer.scheduleAtFixedRate(new TimerTask() {
-        // SensorManager sm = (SensorManager) getSystemService(SENSOR_SERVICE);
-        //
-        // @Override
-        // public void run() {
-        //
-        // Context context = getApplicationContext();
-        // IntentFilter ifilter = new
-        // IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        // Intent batteryStatus = context.registerReceiver(null, ifilter);
-        //
-        // int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL,
-        // -1);
-        // int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE,
-        // -1);
-        //
-        // float batteryPct = level / (float) scale;
-        //
-        // Log.i(TAG, "RULANDOOOO  " + batteryPct);
-        //
-        //
-        //
-        // // sendPasosMessage(PasosMessage.technicalAlarm(batteryLevel,
-        // // null, null,false));
+        // /* Lista de sensores */
+        // List<Sensor> mList = sm.getSensorList(Sensor.TYPE_ALL);
+        // String sSensList = new String("");
+        // Sensor tmp;
+        // for (int i = 0; i < mList.size(); i++) {
+        // tmp = mList.get(i);
+        // sSensList = " " + sSensList + tmp.getName(); // Add the sensor name
+        // // to the string of
+        // // sensors available
         // }
-        // }, 0, MSEC_TO_REPEAT);
+        // /* END */
+        //
+        // Log.i(TAG, "Sensores: " + sSensList);
     }
 
     @Override

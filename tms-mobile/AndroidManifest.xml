@@ -42,21 +42,9 @@
 
         <service android:name=".services.TrackingService" />
         <service android:name=".services.SendPasosMessageIntentService" />
-        <service android:name=".services.AutomaticAlarmSendingService" >
-            <intent-filter>
-                <action android:name="org.inftel.tms.mobile.services.AutomaticAlarmSendingService" />
-            </intent-filter>
-        </service>
-        <service android:name=".services.LowPowerService" >
-            <intent-filter>
-                <action android:name="org.inftel.tms.mobile.services.LowPowerService" />
-            </intent-filter>
-        </service>
-        <service android:name=".services.AutomaticAlarmService" >
-            <intent-filter>
-                <action android:name="org.inftel.tms.mobile.services.AutomaticAlarmService" />
-            </intent-filter>
-        </service>
+        <service android:name=".services.AlarmManagerConfigurationService"/>
+        <service android:name=".services.LowPowerService" />
+        <service android:name=".services.AutomaticAlarmService" />
 
         <receiver android:name="org.inftel.tms.mobile.receivers.AutomaticAlarmReceiver" />
         <receiver android:name=".receivers.LocationChangedReceiver" />

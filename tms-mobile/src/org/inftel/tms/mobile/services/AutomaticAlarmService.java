@@ -16,29 +16,45 @@
 
 package org.inftel.tms.mobile.services;
 
+import org.openintents.sensorsimulator.hardware.Sensor;
+import org.openintents.sensorsimulator.hardware.SensorEvent;
+import org.openintents.sensorsimulator.hardware.SensorEventListener;
+import org.openintents.sensorsimulator.hardware.SensorManagerSimulator;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.SensorManager;
 import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
 
-public class AutomaticAlarmService extends Service {
+/* WARNING!! uncomment the lines to NOT use the sensors simulator */
+
+public class AutomaticAlarmService extends Service implements SensorEventListener {
     private static final String TAG = "AutomaticAlarmService";
+    // SensorManager sm;
+    SensorManagerSimulator sm;
+    Sensor mTemperature;
+    private float temperature;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        sm = SensorManagerSimulator.getSystemService(this, SENSOR_SERVICE);
+        sm.connectSimulator();
+
+        // sm = (SensorManager) getSystemService(SENSOR_SERVICE);
     }
 
     @Override
     public void onStart(final Intent intent, final int startId) {
         super.onStart(intent, startId);
+        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_TEMPERATURE),
+                SensorManager.SENSOR_DELAY_GAME);
 
-        Log.i(TAG, "RULANDOOOO  " + parseBatteryLevel() + " " + isCharging());
-
-        stopSelf();
+        Log.i(TAG, "RULANDOOOO  " + parseBatteryLevel() + " " + isCharging() + " " + temperature);
 
         // PasosHTTPTransmitter transmitter = new PasosHTTPTransmitter();
         // transmitter.sendPasosMessage(PasosMessage.technicalAlarm(parseBatteryLevel(),
@@ -82,5 +98,32 @@ public class AutomaticAlarmService extends Service {
                 status == BatteryManager.BATTERY_STATUS_FULL;
         return isCharging;
 
+    }
+
+    /**
+     * Obtains battery temperature
+     * 
+     * @return the String value of the temperature
+     */
+    private String getBatteryTemperature() {
+        Context context = getApplicationContext();
+        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent batteryStatus = context.registerReceiver(null, ifilter);
+
+        int batteryLevel = batteryStatus.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
+
+        return String.valueOf(batteryLevel);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor arg0, int arg1) {
+        // TODO Do something
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        temperature = event.values[0];
+        sm.unregisterListener(this);
     }
 }

@@ -41,11 +41,10 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Log.d(TAG, "STARTED");
-        // Starting automatic alarm sending
+        // Starting the Alarm manager service configuration
         Intent service = new Intent();
-        service.setAction("org.inftel.tms.mobile.services.AutomaticAlarmSendingService");
+        service.setAction("org.inftel.tms.mobile.services.AlarmManagerConfigurationService");
         context.startService(service);
         Log.d(TAG, "GO BACK");
 
