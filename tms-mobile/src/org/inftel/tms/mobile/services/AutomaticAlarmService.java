@@ -16,34 +16,28 @@
 
 package org.inftel.tms.mobile.services;
 
-import org.openintents.sensorsimulator.hardware.Sensor;
-import org.openintents.sensorsimulator.hardware.SensorEvent;
-import org.openintents.sensorsimulator.hardware.SensorEventListener;
-import org.openintents.sensorsimulator.hardware.SensorManagerSimulator;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.SensorManager;
 import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
 
 /* WARNING!! uncomment the lines to NOT use the sensors simulator */
 
-public class AutomaticAlarmService extends Service implements SensorEventListener {
+public class AutomaticAlarmService extends Service {
     private static final String TAG = "AutomaticAlarmService";
     // SensorManager sm;
-    SensorManagerSimulator sm;
-    Sensor mTemperature;
+    // SensorManagerSimulator sm;
+    // Sensor mTemperature;
     private float temperature;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        sm = SensorManagerSimulator.getSystemService(this, SENSOR_SERVICE);
-        sm.connectSimulator();
+        // sm = SensorManagerSimulator.getSystemService(this, SENSOR_SERVICE);
+        // sm.connectSimulator();
 
         // sm = (SensorManager) getSystemService(SENSOR_SERVICE);
     }
@@ -51,8 +45,9 @@ public class AutomaticAlarmService extends Service implements SensorEventListene
     @Override
     public void onStart(final Intent intent, final int startId) {
         super.onStart(intent, startId);
-        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_TEMPERATURE),
-                SensorManager.SENSOR_DELAY_GAME);
+        // sm.registerListener(this,
+        // sm.getDefaultSensor(Sensor.TYPE_TEMPERATURE),
+        // SensorManager.SENSOR_DELAY_GAME);
 
         Log.i(TAG, "RULANDOOOO  " + parseBatteryLevel() + " " + isCharging() + " " + temperature);
 
@@ -115,15 +110,4 @@ public class AutomaticAlarmService extends Service implements SensorEventListene
         return String.valueOf(batteryLevel);
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor arg0, int arg1) {
-        // TODO Do something
-
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        temperature = event.values[0];
-        sm.unregisterListener(this);
-    }
 }

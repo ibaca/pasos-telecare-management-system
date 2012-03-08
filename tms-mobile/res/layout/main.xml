@@ -3,19 +3,24 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:weightSum="1"
     android:orientation="vertical" >
 
     <Button
         android:id="@+id/buttonUserAlarm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:padding="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_marginTop="5dp"
+        android:layout_weight="0.40"
         android:text="@string/send_alert" />
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.60" >
 
         <LinearLayout
             android:id="@+id/linearLayout2"
