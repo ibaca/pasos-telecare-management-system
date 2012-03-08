@@ -16,10 +16,18 @@
 
 package org.inftel.tms.mobile.services;
 
+import static org.inftel.tms.mobile.pasos.PasosMessage.buildTechnicalAlarm;
+
+import org.inftel.tms.mobile.TmsConstants;
+import org.inftel.tms.mobile.pasos.PasosMessage;
+import org.inftel.tms.mobile.pasos.PasosMessage.Builder;
+import org.inftel.tms.mobile.util.PlatformSpecificImplementationFactory;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
@@ -35,12 +43,12 @@ public class LowPowerService extends Service {
     @Override
     public void onStart(final Intent intent, final int startId) {
         super.onStart(intent, startId);
+        int batteryLevel = parseBatteryLevel();
+        boolean isCharging = isCharging();
 
-        Log.i(TAG, "RULANDOOOO  " + parseBatteryLevel() + " " + isCharging());
+        Log.i(TAG, "RULANDOOOO  " + batteryLevel + " " + isCharging);
 
-        // PasosHTTPTransmitter transmitter = new PasosHTTPTransmitter();
-        // transmitter.sendPasosMessage(PasosMessage.technicalAlarm(parseBatteryLevel(),
-        // latitude, longitude,isCharging()))
+        sendAlarmMessage(batteryLevel, isCharging);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class LowPowerService extends Service {
      * 
      * @return the String value of the level
      */
-    private String parseBatteryLevel() {
+    private int parseBatteryLevel() {
         Context context = getApplicationContext();
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent batteryStatus = context.registerReceiver(null, ifilter);
@@ -61,7 +69,7 @@ public class LowPowerService extends Service {
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
-        return String.valueOf(((int) level * 100 / (float) scale));
+        return (int) (level * 100 / (float) scale);
     }
 
     /**
@@ -80,5 +88,40 @@ public class LowPowerService extends Service {
                 status == BatteryManager.BATTERY_STATUS_FULL;
         return isCharging;
 
+    }
+
+    /* Sends an Alarm */
+    protected void sendAlarmMessage(int batteryLevel, boolean isCharging) {
+
+        Location location = PlatformSpecificImplementationFactory.getLastLocationFinder(
+                getApplicationContext()).getLastBestLocation(0, 0);
+
+        /* Constructs the message */
+        Builder messageBuilder = buildTechnicalAlarm();
+
+        double latitude, longitude;
+        try {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        } catch (NullPointerException e) {
+            latitude = 0.0;
+            longitude = 0.0;
+        }
+
+        if (isCharging) {
+            messageBuilder.location(latitude, longitude)
+                    .cause("LowBattery:Batería baja pero cargando");
+        } else {
+            messageBuilder.location(latitude, longitude)
+                    .cause("LowBattery:Batería baja y SIN CARGAR");
+        }
+        messageBuilder.charging(isCharging);
+        messageBuilder.battery(batteryLevel);
+        PasosMessage message = messageBuilder.build();
+
+        /* Sends the message */
+        Intent sendService = new Intent(this, SendPasosMessageIntentService.class);
+        sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
+        startService(sendService);
     }
 }

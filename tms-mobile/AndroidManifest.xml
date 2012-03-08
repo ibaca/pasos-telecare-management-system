@@ -42,11 +42,23 @@
 
         <service android:name=".services.TrackingService" />
         <service android:name=".services.SendPasosMessageIntentService" />
-        <service android:name=".services.AlarmManagerConfigurationService"/>
-        <service android:name=".services.LowPowerService" />
-        <service android:name=".services.AutomaticAlarmService" />
+       	<service android:name=".services.AlarmManagerConfigurationService">
+        	<intent-filter>
+                <action android:name="org.inftel.tms.mobile.services.AlarmManagerConfigurationService"/>
+            </intent-filter>
+        </service>
+        <service android:name=".services.LowPowerService">
+            <intent-filter>
+                <action android:name="org.inftel.tms.mobile.services.LowPowerService"/>
+            </intent-filter>
+        </service>
+       	<service android:name=".services.AutomaticAlarmService">
+        	<intent-filter>
+                <action android:name="org.inftel.tms.mobile.services.AutomaticAlarmService"/>
+            </intent-filter>
+        </service>
 
-        <receiver android:name="org.inftel.tms.mobile.receivers.AutomaticAlarmReceiver" />
+        <receiver android:name=".receivers.AutomaticAlarmReceiver" />
         <receiver android:name=".receivers.LocationChangedReceiver" />
         <receiver android:name=".receivers.PassiveLocationChangedReceiver" />
         <receiver
@@ -62,7 +74,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.inftel.tms.mobile.receivers.PowerStateChangedReceiver" >
+        <receiver android:name=".receivers.PowerStateChangedReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
                 <action android:name="android.intent.action.BATTERY_OKAY" />

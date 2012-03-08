@@ -44,9 +44,9 @@ public class AlarmManagerConfigurationService extends Service {
 
         // Get a Calendar object with current time
         Calendar cal = Calendar.getInstance();
-        // Add 5 minutes to the calendar object.
+        // Add 1 minutes to the calendar object.
         // This time will be passed to Alarm manager to set the first start.
-        cal.add(Calendar.MINUTE, 5);
+        cal.add(Calendar.MINUTE, 1);
 
         /*
          * Creation of the pending intent (targeting AutomaticAlarmReceiver)
