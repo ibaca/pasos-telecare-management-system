@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import org.apache.http.client.ClientProtocolException;
 import org.inftel.tms.mobile.TmsConstants;
 import org.inftel.tms.mobile.pasos.PasosHTTPTransmitter;
+import org.inftel.tms.mobile.util.Notifications;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -46,7 +47,14 @@ public class SendPasosMessageIntentService extends IntentService {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "SendPasosMessageIntentService destroyed");
+    }
+
+    @Override
     protected void onHandleIntent(Intent intent) {
+        int notificationId = Notifications.generateNotification(this, "Enviando alerta");
         Bundle bundle = intent.getExtras();
         String message = bundle.getString(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT);
         if (message == null) {
@@ -58,12 +66,15 @@ public class SendPasosMessageIntentService extends IntentService {
         PasosHTTPTransmitter transmitter = new PasosHTTPTransmitter(url, senderNumber);
         try {
             transmitter.sendPasosMessage(message);
+            Notifications.generateNotification(this, "Alerta enviada", notificationId);
             Log.d(TAG, "Message de alerta enviado al servidor");
         } catch (ClientProtocolException e) {
             Log.w(TAG, e.getMessage(), e);
         } catch (URISyntaxException e) {
             Log.w(TAG, e.getMessage(), e);
         } catch (IOException e) {
+            Log.w(TAG, e.getMessage(), e);
+        } catch (Exception e) {
             Log.w(TAG, e.getMessage(), e);
         }
     }

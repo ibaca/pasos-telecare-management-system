@@ -48,7 +48,7 @@ public class ExampleAlarmUserActivity extends Activity {
         public void onClick(View view) {
             Location location = lastLocationFinder.getLastBestLocation(
                     TmsConstants.MAX_DISTANCE, TmsConstants.MAX_TIME);
-            PasosMessage message = PasosMessage.buildUserAlarm(
+            PasosMessage message = PasosMessage.buildUserAlarm().location(
                     location.getLatitude(), location.getLongitude()).build();
 
             Intent sendService = new Intent(view.getContext(), SendPasosMessageIntentService.class);

@@ -12,6 +12,7 @@ public class PasosMessage {
     private Boolean charging;
     private String date;
     private String time;
+    private String cause;
     private String key = "&RK123456"; // TODO configurable?
 
     public static class Builder {
@@ -21,6 +22,7 @@ public class PasosMessage {
         private Double _longitude;
         private Double _latitude;
         private Boolean _charging;
+        private String _cause;
 
         public Builder(String alarmType) {
             _type = alarmType;
@@ -47,6 +49,11 @@ public class PasosMessage {
             return this;
         }
 
+        public Builder cause(String cause) {
+            _cause = cause;
+            return this;
+        }
+
         public PasosMessage build() {
             PasosMessage message = new PasosMessage();
             message.setType(_type);
@@ -55,6 +62,7 @@ public class PasosMessage {
             message.setLongitude(_longitude);
             message.setLatitude(_latitude);
             message.setCharging(_charging);
+            message.setCause(_cause);
             return message;
         }
 
@@ -67,8 +75,8 @@ public class PasosMessage {
         initializeDateTime();
     }
 
-    public static Builder buildUserAlarm(Double latitude, Double longitude) {
-        return new Builder(PasosMessageType.USER_ALARM).location(latitude, longitude);
+    public static Builder buildUserAlarm() {
+        return new Builder(PasosMessageType.USER_ALARM);
     }
 
     public static Builder buildDeviceAlarmHighTemp(int temperature) {
@@ -147,6 +155,14 @@ public class PasosMessage {
         this.time = time;
     }
 
+    public String getCause() {
+        return cause;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause;
+    }
+
     /**
      * Set Date and Time to actual, in PASOS format
      */
@@ -191,6 +207,11 @@ public class PasosMessage {
         // Temperatura
         if (temperature != null) {
             message.append("&DT").append(temperature);
+        }
+
+        // Causa
+        if (cause != null) {
+            message.append("&XCU").append(cause.replaceAll("[&#]", "_"));
         }
 
         return message.append("#").toString();

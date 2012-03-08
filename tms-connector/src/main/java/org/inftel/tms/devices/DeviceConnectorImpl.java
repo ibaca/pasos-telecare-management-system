@@ -210,7 +210,7 @@ public class DeviceConnectorImpl implements DeviceConnector {
             if (!checkKey(message)) {
                 throw new RuntimeException("ERROR, 'access key' incorrecta.");
             }
-            createAlert(AlertType.DEVICE, AlertPriority.IMPORTANT, "Problemas de temperatura", raw,
+            createAlert(AlertType.DEVICE, AlertPriority.IMPORTANT, "Alerta dispositivo", raw,
                     from);
             return null;
         } else if (isTechnicalAlarm(message)) {
@@ -218,7 +218,7 @@ public class DeviceConnectorImpl implements DeviceConnector {
             if (!checkKey(message)) {
                 throw new RuntimeException("ERROR, 'access key' incorrecta.");
             }
-            createAlert(AlertType.TECHNICAL, AlertPriority.NORMAL, "Nivel de bateria bajo", raw,
+            createAlert(AlertType.TECHNICAL, AlertPriority.NORMAL, "Alerta tecnica", raw,
                     from);
             return null;
         } else {
@@ -238,6 +238,7 @@ public class DeviceConnectorImpl implements DeviceConnector {
 
     private static Pattern latPattern = Pattern.compile("&LT([-]?\\d+[.\\d]*)");
     private static Pattern lngPattern = Pattern.compile("&LN([-]?\\d+[.\\d]*)");
+    private static Pattern causePattern = Pattern.compile("&XCU([^&#]+)");
 
     /**
      * Crea una alerta con su alertRaw, persistentes en bbdd
@@ -283,6 +284,11 @@ public class DeviceConnectorImpl implements DeviceConnector {
         }
         if ((match = lngPattern.matcher(raw.getRawData())).find()) {
             alert.setLongitude(Double.parseDouble(match.group(1)));
+        }
+
+        // Custom cause
+        if ((match = causePattern.matcher(raw.getRawData())).find()) {
+            alert.setCause(match.group(1));
         }
 
         // Save alert and assign raw

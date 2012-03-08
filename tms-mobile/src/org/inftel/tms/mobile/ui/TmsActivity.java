@@ -2,6 +2,7 @@
 package org.inftel.tms.mobile.ui;
 
 import static java.text.DateFormat.SHORT;
+import static org.inftel.tms.mobile.pasos.PasosMessage.buildUserAlarm;
 
 import java.text.DateFormat;
 import java.util.Locale;
@@ -9,6 +10,7 @@ import java.util.Locale;
 import org.inftel.tms.mobile.R;
 import org.inftel.tms.mobile.TmsConstants;
 import org.inftel.tms.mobile.pasos.PasosMessage;
+import org.inftel.tms.mobile.pasos.PasosMessage.Builder;
 import org.inftel.tms.mobile.services.SendPasosMessageIntentService;
 import org.inftel.tms.mobile.util.PlatformSpecificImplementationFactory;
 import org.inftel.tms.mobile.util.base.ILastLocationFinder;
@@ -26,6 +28,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -136,8 +139,14 @@ public class TmsActivity extends Activity {
             // Obtener ultima posicion y construir PaSOS message
             Location location = lastLocationFinder.getLastBestLocation(
                     TmsConstants.MAX_DISTANCE, TmsConstants.MAX_TIME);
-            PasosMessage message = PasosMessage.buildUserAlarm(
-                    location.getLatitude(), location.getLongitude()).build();
+            Builder messageBuilder = buildUserAlarm().cause("click: solicitada asistencia");
+
+            if (location != null) {
+                messageBuilder.location(location.getLatitude(), location.getLongitude());
+            } else {
+                Log.w(TAG, "No se ha podido obtener localizacion al enviar una alerta de usuario");
+            }
+            PasosMessage message = messageBuilder.build();
 
             // Configurar y Lanzar servicio de envio de mensajes PaSOS
             Intent sendService = new Intent(view.getContext(), SendPasosMessageIntentService.class);

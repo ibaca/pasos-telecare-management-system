@@ -9,6 +9,7 @@ import static org.inftel.tms.mobile.pasos.PasosMessage.buildTechnicalAlarm;
 
 import org.inftel.tms.mobile.TmsConstants;
 import org.inftel.tms.mobile.pasos.PasosMessage;
+import org.inftel.tms.mobile.pasos.PasosMessage.Builder;
 import org.inftel.tms.mobile.receivers.ConnectivityChangedReceiver;
 
 import android.app.IntentService;
@@ -178,7 +179,9 @@ public class TrackingService extends IntentService {
         double longitude = location.getLongitude();
 
         // TODO debería enviarse un mensaje tipo tracking
-        PasosMessage message = buildTechnicalAlarm().location(latitude, longitude).build();
+        Builder messageBuilder = buildTechnicalAlarm();
+        messageBuilder.location(latitude, longitude).cause("tracking: seguimiento pasivo");
+        PasosMessage message = messageBuilder.build();
 
         Intent sendService = new Intent(this, SendPasosMessageIntentService.class);
         sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
