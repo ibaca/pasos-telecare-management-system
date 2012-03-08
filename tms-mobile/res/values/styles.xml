@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="title" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#FFFFFF</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1.2</item>
+        <item name="android:shadowRadius">0.2</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
-        <item name="android:textColor">#CCCCCC</item>
+        <item name="android:textColor">#CCC</item>
         <item name="android:paddingTop">10px</item>
         <item name="android:paddingBottom">10px</item>
-        <item name="android:background">#000000</item>
+        <item name="android:background">#80000000</item>
         <item name="android:layout_marginTop">0px</item>
     </style>
     <style name="member" parent="@android:style/TextAppearance.Large">
