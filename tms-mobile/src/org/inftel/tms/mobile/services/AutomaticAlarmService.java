@@ -136,30 +136,33 @@ public class AutomaticAlarmService extends Service implements SensorEventListene
         try {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+
+            if (temperature <= 0) {
+                messageBuilder
+                        .location(latitude, longitude)
+                        .cause(
+                                "LowTemperature: La temeratura detectada en el dispositivo ha bajado de 0º");
+            } else if (temperature > 30) {
+                messageBuilder
+                        .location(latitude, longitude)
+                        .cause(
+                                "HighTemperature: La temeratura detectada en el dispositivo ha superado 30º");
+            } else {
+                messageBuilder.location(latitude, longitude).cause(
+                        "AutomaticSending:OK");
+            }
         } catch (NullPointerException e) {
-            latitude = 0.0;
-            longitude = 0.0;
-        }
+        } finally {
+            messageBuilder.charging(isCharging);
+            messageBuilder.battery(batteryLevel);
+            messageBuilder.temperature(temperature);
+            PasosMessage message = messageBuilder.build();
 
-        if (temperature <= 0) {
-            messageBuilder.location(latitude, longitude).cause(
-                    "LowTemperature: La temeratura detectada en el dispositivo ha bajado de 0º");
-        } else if (temperature > 30) {
-            messageBuilder.location(latitude, longitude).cause(
-                    "HighTemperature: La temeratura detectada en el dispositivo ha superado 30º");
-        } else {
-            messageBuilder.location(latitude, longitude).cause(
-                    "AutomaticSending:OK");
+            /* Sends the message */
+            Intent sendService = new Intent(this, SendPasosMessageIntentService.class);
+            sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
+            startService(sendService);
         }
-        messageBuilder.charging(isCharging);
-        messageBuilder.battery(batteryLevel);
-        messageBuilder.temperature(temperature);
-        PasosMessage message = messageBuilder.build();
-
-        /* Sends the message */
-        Intent sendService = new Intent(this, SendPasosMessageIntentService.class);
-        sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
-        startService(sendService);
     }
 
     @Override

@@ -103,25 +103,24 @@ public class LowPowerService extends Service {
         try {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+
+            if (isCharging) {
+                messageBuilder.location(latitude, longitude)
+                        .cause("LowBattery:Batería baja pero cargando");
+            } else {
+                messageBuilder.location(latitude, longitude)
+                        .cause("LowBattery:Batería baja y SIN CARGAR");
+            }
         } catch (NullPointerException e) {
-            latitude = 0.0;
-            longitude = 0.0;
-        }
+        } finally {
+            messageBuilder.charging(isCharging);
+            messageBuilder.battery(batteryLevel);
+            PasosMessage message = messageBuilder.build();
 
-        if (isCharging) {
-            messageBuilder.location(latitude, longitude)
-                    .cause("LowBattery:Batería baja pero cargando");
-        } else {
-            messageBuilder.location(latitude, longitude)
-                    .cause("LowBattery:Batería baja y SIN CARGAR");
+            /* Sends the message */
+            Intent sendService = new Intent(this, SendPasosMessageIntentService.class);
+            sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
+            startService(sendService);
         }
-        messageBuilder.charging(isCharging);
-        messageBuilder.battery(batteryLevel);
-        PasosMessage message = messageBuilder.build();
-
-        /* Sends the message */
-        Intent sendService = new Intent(this, SendPasosMessageIntentService.class);
-        sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT, message.toString());
-        startService(sendService);
     }
 }
