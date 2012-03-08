@@ -72,6 +72,7 @@
         <receiver android:name=".receivers.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="org.inftel.tms.mobile.intent.action.RUN_ONCE" />
             </intent-filter>
         </receiver>
         <receiver android:name=".receivers.PowerStateChangedReceiver" >

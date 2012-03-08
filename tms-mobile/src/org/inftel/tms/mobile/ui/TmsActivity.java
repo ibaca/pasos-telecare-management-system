@@ -41,6 +41,7 @@ import android.widget.TextView;
 public class TmsActivity extends Activity {
 
     private static final String TAG = "TmsActivity";
+    public static final String CUSTOM_INTENT = "org.inftel.tms.mobile.intent.action.RUN_ONCE";
 
     static final int PICK_CONTACT_REQUEST = 0;
 
@@ -79,8 +80,13 @@ public class TmsActivity extends Activity {
         preferenceSaver = PlatformSpecificImplementationFactory.getSharedPreferenceSaver(this);
 
         // Save that we've been run once.
-        prefsEditor.putBoolean(TmsConstants.SP_KEY_RUN_ONCE, true);
-        preferenceSaver.savePreferences(prefsEditor, false);
+        if (!prefs.getBoolean(TmsConstants.SP_KEY_RUN_ONCE, false)) {
+            prefsEditor.putBoolean(TmsConstants.SP_KEY_RUN_ONCE, true);
+            preferenceSaver.savePreferences(prefsEditor, false);
+            Intent i = new Intent();
+            i.setAction(CUSTOM_INTENT);
+            getApplicationContext().sendBroadcast(i);
+        }
 
         // por si queremos poner algo!
         scroll = (ScrollView) findViewById(R.id.scroll);
