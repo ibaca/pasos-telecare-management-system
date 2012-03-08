@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title"
+        android:text="TMS-Mobile" />
+
+    <TextView
+        style="@style/member"
+        android:text="@string/member_agumpg" />
+    <TextView 
+        style="@style/description"
+        android:text="@string/desc_agumpg" />
+     <TextView
+        style="@style/member"
+        android:text="@string/member_miguelqm" />
+    <TextView 
+        style="@style/description"
+        android:text="@string/desc_miguelqm" />
+     <TextView
+        style="@style/member"
+        android:text="@string/member_miguepintor" />
+    <TextView 
+        style="@style/description"
+        android:text="@string/desc_miguepintor" />
+     <TextView
+        style="@style/member"
+        android:text="@string/member_cristian" />
+    <TextView 
+        style="@style/description"
+        android:text="@string/desc_cristian" />
+     <TextView
+        style="@style/member"
+        android:text="@string/member_ibaca" />
+    <TextView 
+        style="@style/description"
+        android:text="@string/desc_ibaca" />
+
+
+</LinearLayout>

@@ -113,6 +113,9 @@ public class TmsActivity extends Activity {
             case R.id.mainMenuPreferences:
                 startActivity(new Intent(TmsActivity.this, PreferencesActivity.class));
                 return true;
+            case R.id.mainMenuAbout:
+                startActivity(new Intent(TmsActivity.this, AboutActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

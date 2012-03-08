@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="title" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#CCCCCC</item>
+        <item name="android:paddingTop">10px</item>
+        <item name="android:paddingBottom">10px</item>
+        <item name="android:background">#000000</item>
+        <item name="android:layout_marginTop">0px</item>
+    </style>
+    <style name="member" parent="@android:style/TextAppearance.Large">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:layout_marginTop">35px</item>
+    </style>
+    <style name="description" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#BCBCBC</item>
+        <item name="android:layout_marginTop">5px</item>
+    </style>
+</resources>
