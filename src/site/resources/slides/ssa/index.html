@@ -56,8 +56,8 @@
 </article>
 
 <article>
-<h3>TMS en terminales moviles. Planteamiento.</h3>
-<ul>
+<h3>TMS en terminales moviles: Planteamiento</h3>
+<ul style="font-size:90%">
 <li>En esta practica nos planteamos el hecho de extender el	trabajo realizada en otros modulos a un terminal movil.</li>
 <li>En nuestro caso nos propusimos conservar todas las funcionalidades que ya poseia, y en caso de poder, ampliarlas.</li>
 <li>Algunas de las funcionalidades de nuestra aplicacion quedaban obsoletas (login), otras requerian de un complicado proceso para su implementacion el el terminal (mapas).</li>
@@ -66,9 +66,9 @@
 </ul>
 </article>
 
-<article>
-<h3>TMS en terminales moviles. Resolucion.</h3>
-<ul>
+<article class="nobackground">
+<h3>TMS en terminales moviles: Resolucion</h3>
+<ul style="font-size:95%; line-height: 100%">
 <li>Dada la buena experiencia con las metodologias de desarrollo del modulo anterior nos planteamos utilizar Scrum en	este proyecto y distribuir el trabajo en tareas en lugar de la distribucion por capas. Para esto hicimos uso de herramientas como Trello,...</li>
 <li>De cara a las funcionalidades desechamos el uso de la pantalla de login, ya que consideramos el terminal movil como algo personal.</li>
 <li>En cuanto a mostrar mapas de las alertas consideramos que para un usuario no era imprescindible ver la localizacion desde	donde se manda una alerta, de echo ni siquiera necesario.</li>
@@ -77,17 +77,27 @@
 </ul>
 </article>
 
+<article class="nobackground">
+<h3>Contenido de la presentación</h3>
+<ul style="font-size:95%; line-height: 100%">
+<li>Widgets y Activities
+<li>Protocolo PaSOS y Servicios Android
+<li>Sensores y Alarmas
+<li>Preferencias y Diseño
+<li>Localización e Interfaces Avanzadas
+</ul>
+<p>Terminando con conclusiones y preguntas
+</article>
+
 <!-- --------------------------------- Widget & Activity --------------------------------------- -->
 
 <article class='fill'>
-<h3>Widgets & Activities</h3>
+<h3>Widgets y Activities</h3>
 <p>
 <img src='images/android-dude.jpg'>
 </p>
-<!-- <div class='source'>Por: Alguien</div> -->
+<div class='source'>Por: Cristian Jimenez</div>
 </article>
-
-<!-- --------------------------------- Parte de Cristian----------------------------------------- -->
 
 <article>
 <h3>
@@ -103,7 +113,7 @@ PreferencesActivity<br>
 <p>
 Es el Activity encargado de gestionar los diferentes parametros	configurables de nuestra aplicacion.<br> Mas en concreto nos permite especificar: 
 <span style="font-size: 25px">
-<ul>
+<ul style="margin-top:5px">
 <li>Variables que definen la ruta donde se aloja el servidor.</li>
 <li>Numero de telefono del terminal.</li>
 </ul>
@@ -129,22 +139,24 @@ AboutActivity<br>
 <h3>
 Widget<br>
 </h3>
-<p>
-Pequeño Widget cuyo unico elemento es un boton.<br>Este boton lanza alarmas de usuario, con el mismo funcionamiento que la propia	aplicacion.<br>La ventaja es que con un solo dos clicks puedes mandar una alerta.<br>Las claves del widget: 
-<span style="font-size: 20px">
-<ul>
-<li>Obtener el ID del widget:</li>
-<pre>Intent intentOrigen = getIntent();
+<p style="font-size:80%">
+Pequeño Widget cuyo unico elemento es un boton. Este boton lanza alarmas de usuario, con el
+mismo funcionamiento que la propia	aplicacion. La ventaja es que con un solo dos clicks puedes 
+mandar una alerta. Las claves del widget: 
+<ul style="margin-top:5px">
+<li>Obtener el ID del widget:
+<pre style="margin:5px 0 0 0">
+Intent intentOrigen = getIntent();
 Bundle params = intentOrigen.getExtras();
 widgetId = params.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
 AppWidgetManager.INVALID_APPWIDGET_ID);</pre>
-<li>Lanzar adecuadamente un activity:</li>
-<pre>PendingIntent pendingIntent = PendingIntent.getActivity(context,
+<li>Lanzar adecuadamente un activity:
+<pre style="margin-top:5px">
+PendingIntent pendingIntent = PendingIntent.getActivity(context,
 widgetId, new Intent(context, aleluya.class),
 PendingIntent.FLAG_UPDATE_CURRENT);
 controles.setOnClickPendingIntent(R.id.BtnActualizar, pendingIntent);</pre>
 </ul>
-</span>
 </p>
 </article>
 
@@ -369,7 +381,7 @@ http://www.androidconnect.com.ar/2011/08/usando-los-sensores.html</li>
 
 <article>
 <h3>Localización: Por subscripción 2/2</h3>
-<p><b>Legacy &lt;=2.1</b> (se debe usar timmer)</p>
+<p><b>Legacy &lt;=2.1</b> (requiere usar timmer)</p>
 <p>Suscripción Activa, criteria se usa de forma manual
 <pre style="margin-top:10px;margin-bottom:-10px">
 String provider = locationManager.getBestProvider(criteria, true);
