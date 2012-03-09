@@ -284,21 +284,109 @@ http://www.androidconnect.com.ar/2011/08/usando-los-sensores.html</li>
 
 <!-- --------------------------------- Preferencias y Diseño ----------------------------------- -->
 
+
 <article class='fill'>
 <h3> Preferencias y Diseño </h3>
-<p> <img src='images/android-black.jpg'> </p>
-<div class='source'>Por: Alguien</div>
+<p> <img src='images/example.jpg'> </p>
+<div class='source'>Por: Agustín M. Pereña García</div>
 </article>
 
 <article>
-<h3>Slide with bullet points and paragraph</h3>
-<p>Esto es un parrafo normal ;)</p>
+<h3>Preferencias</h3>
+<p>Diferentes formas de gestionar las preferencias en Android</p>
 <ul>
-<li>This is an example of a list</li>
-<li>The list items</li>
-<li>Last one!</li>
+<li>
+<p style="color:green">Preferencias compartidas (SharedPreferences)</p>
+<p>Fichero de configuración:</p>
+<pre>
+data/data/org.inftel.tms.mobile/shared_prefs/
+org.inftel.tms.mobile_preferences.xml
+</pre>
+<p>Acceso a las preferencias</p>
+<pre>prefs = getSharedPreferences(TmsConstants.SHARED_PREFERENCE_FILE, Context.MODE_PRIVATE);
+prefsEditor = prefs.edit();
+prefsEditor.putBoolean(TmsConstants.SP_KEY_RUN_ONCE, true);
+prefsEditor.commit();
+</pre>
+</li>
 </ul>
 </article>
+
+<article class="nobackground">
+<h3>Preferencias</h3>
+<ul>
+<li>
+<p style="color:green">Pantalla prefererencias mediante xml</p>
+</li>
+<img src="images/preferences.png" style="width: 40%; float:right"/>
+<p>Tipos de Elementos:</p>
+<ul>
+<li><b>CheckBoxPreference</b></li>
+<li><b>EditTextPreference</b></li>
+<li><b>ListPreference</b></li>
+<li><b>MultiSelectListPreference</b></li>
+</ul>
+<p>Clasificación por categorías</p>
+</ul>
+</article>
+
+
+
+<article>
+<h3>Preferencias</h3>
+<ul>
+<li>
+<p style="color:gray">Definición del pantalla en xml</p>
+<pre style="font-size:55%">
+&lt;PreferenceScreen xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; &gt;
+    &lt;PreferenceCategory android:title=&quot;@string/phone_preferences&quot; &gt;
+        &lt;EditTextPreference
+        	android:defaultValue=&quot;@string/default_phone_number_preference&quot;
+            android:dialogTitle=&quot;@string/dialog_title_phone_number_preference&quot;
+            android:key=&quot;phone_number_preference&quot;
+            android:summary=&quot;@string/sumary_phone_number_preference&quot;
+            android:title=&quot;@string/title_phone_number_preference&quot; /&gt;
+    &lt;/PreferenceCategory&gt;
+&lt;/PreferenceScreen&gt;
+</pre>
+</article>
+
+
+<article>
+<h3>Preferencias</h3>
+<ul>
+<li>
+<p style="color:gray">Creación de la pantalla (PreferenceActivity)</p>
+<pre>
+public class PreferencesActivity extends PreferenceActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences);
+    }
+}
+</pre>
+</li>
+<li>
+<p>Declaración en el fichero AndroidManifest.xml</p>
+<pre>
+&lt;activity android:name=&quot;.ui.PreferencesActivity&quot; &gt;
+&lt;/activity&gt;
+</pre>
+</li>
+</ul>
+</article>
+
+
+
+<article>
+<h3>Preferencias</h3>
+<p>
+<img src="images/preferences_2.png" style="width: 40%"/>
+</p>
+</article>
+
+
 
 <!-- --------------------------------- Localizacion y Fragments -------------------------------- -->
 
