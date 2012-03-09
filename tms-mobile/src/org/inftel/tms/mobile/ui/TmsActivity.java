@@ -34,7 +34,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -88,16 +88,11 @@ public class TmsActivity extends Activity {
             getApplicationContext().sendBroadcast(i);
         }
 
-        // por si queremos poner algo!
-        scroll = (ScrollView) findViewById(R.id.scroll);
-        text = (TextView) findViewById(R.id.text);
-
         // Configura location finder
         lastLocationFinder = PlatformSpecificImplementationFactory.getLastLocationFinder(this);
 
         // Hook up button presses to the appropriate event handler.
-        ((Button) findViewById(R.id.buttonUserAlarm)).setOnClickListener(mUserAlarm);
-
+        ((ImageView) findViewById(R.id.buttonUserAlarm)).setOnClickListener(mUserAlarm);
     }
 
     @Override

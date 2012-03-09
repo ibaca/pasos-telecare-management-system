@@ -2,36 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:weightSum="1"
-    android:orientation="vertical" >
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background_sos"
+    android:orientation="vertical"
+    android:weightSum="1" >
 
-    <Button
-        android:id="@+id/buttonUserAlarm"
-        android:textSize="30sp"
-        android:padding="20dp"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0.40"
-        android:text="@string/send_alert" />
+        android:layout_height="fill_parent" >
 
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.60" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </ScrollView>
+        <ImageButton
+            android:id="@+id/buttonUserAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/send_alert"
+            android:scaleType="center"
+            android:padding="0dp"
+			android:cropToPadding="true"
+            android:src="@drawable/selector_btn_user_alarm" />
+    </RelativeLayout>
 
 </LinearLayout>
