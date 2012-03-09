@@ -183,6 +183,7 @@ body {
   -moz-transform: translate(-1020px);
   -webkit-transform: translate3d(-1020px, 0, 0);
 }
+.slides > article.past iframe { display: none; }
 .slides > article.current {
   display: block;
   transform: translate(0);
@@ -197,6 +198,7 @@ body {
   -moz-transform: translate(1020px);
   -webkit-transform: translate3d(1020px, 0, 0);
 }
+.slides > article.next iframe { display: none; }
 .slides > article.far-next {
   display: block;
   transform: translate(2040px);

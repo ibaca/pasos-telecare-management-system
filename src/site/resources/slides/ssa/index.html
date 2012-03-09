@@ -235,14 +235,96 @@ http://www.androidconnect.com.ar/2011/08/usando-los-sensores.html</li>
 </article>
 
 <article>
-<h3>Slide with bullet points and paragraph</h3>
-<p>Esto es un parrafo normal ;)</p>
-<ul>
-<li>This is an example of a list</li>
-<li>The list items</li>
-<li>Last one!</li>
+<h3>La segregación</h3>
+<p>Android cambia de versión rápido</p>
+<p>En el 2011 sacó 15 versiones diferentes, incluyendo mejoras en las ramas 2.X, 3.X y 4.X.</p>
+<p>Opciones
+<ul style="margin-top:10px">
+<li>Programar en una versión antigua
+<br><span style="color:darkred">reinventar la rueda, mala idea</span>
+<li>Escribir código diferente para cada versión
+<br><span style="color:darkred">complejo, pero mejor que reinventar</span>
+<li>Usar librerías que mantienen compatibilidad
+<br><code>android-compatibility-package-v4</code>
+<br><span style="color:green">menos complejo, menos reinvención. Me gusta!</span>
 </ul>
 </article>
+
+<article>
+<h3>Localización: Tracking</h3>
+<p>El tracking es critico en el diseño de la app</p>
+<ul>
+<li>Consume energía
+<li>Consume comunicación (red)
+<li>Puede variar la precisión
+<li>Puede variar la disponibilidad
+</ul>
+<p>Elegir entre estos criterios e integrar las herramientas nativas es "complejo"</p>
+</article>
+
+<article>
+<h3>¿Porque es "complejo"?</h3>
+<img src="http://android10.org/images/stories/development/android_location_providers_03.jpg"
+	 style="float: right" />
+<ul>
+<li>Muchos proveedores: GPS, AGPS, CellID, Wifi MACID, Mocked, etc.
+<li>Los proveedores cambian en tiempo de ejecución
+<li>Cada proveedor tiene ventajas: precisión, tiempo de respuesta
+<li>O desventajas: consumo de energía, poca cobertura, etc.
+<li>El usuario puede deshabilitar algunos proveedores
+<li>Cada versión android aporta nuevas herramientas
+</ul>
+</article>
+
+<article>
+<h3>Localización: Subscripción antes que timmer</h3>
+<p>El sistema solo notifica cuando hay un cambio</p>
+<p><b>Ventaja: </b>Menor uso de recursos</p>
+<p><b>Problema: </b>Puede no estar disponible</p>
+<br>
+<p>Localización pasiva o activa
+<p>Subscripción por criterío de elección de proveedor
+</article>
+
+<article>
+<h3>Localización: Por subscripción 1/2</h3>
+<p>Pueden existir un numero desconocido de proveedores</p>
+<p>Se debe escoger la mejor localización gastando la menor cantidad de recursos</p>
+<p><b>Gingerbread 2.3</b> (permite definir criterios)</p>
+<pre>locationManager.requestLocationUpdates(
+  minTime, minDistance, criteria, pendingIntent);</pre>
+<p><b>Froyo 2.2</b> (permite definir suscripción pasiva)</p>
+<pre>locationManager.requestLocationUpdates
+  (PASSIVE_PROVIDER,MAX_TIME, MAX_DISTANCE, pendingIntent);</pre>
+</article>
+
+<article>
+<h3>Localización: Por subscripción 2/2</h3>
+<p><b>Legacy &lt;=2.1</b> (se debe usar timmer)</p>
+<p>Suscripción Activa, criteria se usa de forma manual
+<pre style="margin-top:10px;margin-bottom:-10px">
+String provider = locationManager.getBestProvider(criteria, true);
+if (provider != null) {
+  locationManager.requestLocationUpdates(provider, 
+  minTime, minDistance, pendingIntent); 
+}
+</pre>
+<p><span style="color:darkred">Se debe monitorizar que no se apage el proveedor</span></p>
+<p>Suscripción Pasiva, requiere uso de AlarmManager
+<pre style="margin-top:10px">
+alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, 
+  System.currentTimeMillis()+PlacesConstants.MAX_TIME, 
+  PlacesConstants.MAX_TIME, pendingIntent);
+</pre>
+</article>
+
+<article class="nobackground">
+<h3>Como hacerlo todo mal</h3>
+<iframe src="http://www.youtube.com/embed/HBoRCXoPUvg" frameborder="0" allowfullscreen></iframe>
+</article>
+
+Problemas:
+puede q el proveedor se desactive
 
 <!-- --------------------------------- dudas y gracias ----------------------------------------- -->
 
