@@ -60,20 +60,6 @@ public class AlarmManagerConfigurationService extends Service {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                 cal.getTimeInMillis(),
                 MSEC_TO_REPEAT, pendingIntent);
-
-        // /* Lista de sensores */
-        // List<Sensor> mList = sm.getSensorList(Sensor.TYPE_ALL);
-        // String sSensList = new String("");
-        // Sensor tmp;
-        // for (int i = 0; i < mList.size(); i++) {
-        // tmp = mList.get(i);
-        // sSensList = " " + sSensList + tmp.getName(); // Add the sensor name
-        // // to the string of
-        // // sensors available
-        // }
-        // /* END */
-        //
-        // Log.i(TAG, "Sensores: " + sSensList);
     }
 
     @Override

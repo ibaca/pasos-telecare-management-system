@@ -22,11 +22,8 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
- * The manifest Receiver is used to detect changes in battery state. When the
- * system broadcasts a "Battery Low" warning we turn off the passive location
- * updates to conserve battery when the app is in the background. When the
- * system broadcasts "Battery OK" to indicate the battery has returned to an
- * okay state, the passive location updates are resumed.
+ * The manifest Receiver is used for Alarm Manager. When the Alarm Manager
+ * broadcasts a pending intent we sends an automatic message to the server.
  */
 public class AutomaticAlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "AutomaticAlarmReceiver"; // for debug
@@ -34,7 +31,7 @@ public class AutomaticAlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "STARTED");
-        // Alarm sending by service
+        // Alarm sent by service
         Intent service = new Intent();
         service.setAction("org.inftel.tms.mobile.services.AutomaticAlarmService");
         context.startService(service);

@@ -60,8 +60,8 @@ public class AutomaticAlarmService extends Service {
         int batteryLevel = parseBatteryLevel();
         boolean isCharging = isCharging();
 
-        Log.i(TAG, "RULANDOOOO  " + batteryLevel + " " + isCharging + " " + temperature);
-
+        Log.i(TAG, "ENVIANDO: nivel de bateria " + batteryLevel + "% , cargando = " + isCharging
+                + " , temperatura = " + temperature + "ºC");
         sendAlarmMessage(batteryLevel, (int) temperature, isCharging);
     }
 
@@ -105,21 +105,8 @@ public class AutomaticAlarmService extends Service {
     }
 
     /**
-     * Obtains battery temperature
-     * 
-     * @return the String value of the temperature
+     * Sends the Alarm message to the server using a own Builder.
      */
-    private String getBatteryTemperature() {
-        Context context = getApplicationContext();
-        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatus = context.registerReceiver(null, ifilter);
-
-        int batteryLevel = batteryStatus.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
-
-        return String.valueOf(batteryLevel);
-    }
-
-    /* Sends an Alarm */
     protected void sendAlarmMessage(int batteryLevel, int temperature, boolean isCharging) {
 
         Location location = PlatformSpecificImplementationFactory.getLastLocationFinder(
@@ -128,27 +115,23 @@ public class AutomaticAlarmService extends Service {
         /* Constructs the message */
         Builder messageBuilder = buildTechnicalAlarm();
 
-        double latitude, longitude;
         try {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-
+            messageBuilder.location(location.getLatitude(), location.getLongitude());
+        } catch (NullPointerException e) { // if there is no last position
+                                           // probably we get a null pointer
+        } finally {
             if (temperature <= 0) {
                 messageBuilder
-                        .location(latitude, longitude)
                         .cause(
-                                "LowTemperature: La temeratura detectada en el dispositivo ha bajado de 0º");
+                        "LowTemperature: La temperatura detectada en el dispositivo ha bajado de 0º");
             } else if (temperature > 30) {
                 messageBuilder
-                        .location(latitude, longitude)
                         .cause(
-                                "HighTemperature: La temeratura detectada en el dispositivo ha superado 30º");
+                        "HighTemperature: La temeratura detectada en el dispositivo ha superado 30º");
             } else {
-                messageBuilder.location(latitude, longitude).cause(
+                messageBuilder.cause(
                         "AutomaticSending:OK");
             }
-        } catch (NullPointerException e) {
-        } finally {
             messageBuilder.charging(isCharging);
             messageBuilder.battery(batteryLevel);
             messageBuilder.temperature(temperature);

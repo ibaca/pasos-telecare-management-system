@@ -36,26 +36,12 @@ public class PowerStateChangedReceiver extends BroadcastReceiver {
         boolean batteryLow = intent.getAction().equals(Intent.ACTION_BATTERY_LOW);
 
         Log.d(TAG, "STARTED");
-        // Alarm sending by service if low power detected
+        // Alarm sent by service if low power detected
         if (batteryLow) {
             Intent service = new Intent();
             service.setAction("org.inftel.tms.mobile.services.LowPowerService");
             context.startService(service);
             Log.d(TAG, "GO BACK");
         }
-        //
-        // PackageManager pm = context.getPackageManager();
-        // ComponentName passiveLocationReceiver =
-        // new ComponentName(context, PassiveLocationChangedReceiver.class);
-        //
-        // // Disable the passive location update receiver when the battery
-        // state
-        // // is low.
-        // // Disabling the Receiver will prevent the app from initiating the
-        // // background
-        // // downloads of nearby locations.
-        // pm.setComponentEnabledSetting(passiveLocationReceiver, batteryLow ?
-        // COMPONENT_ENABLED_STATE_DISABLED : COMPONENT_ENABLED_STATE_DEFAULT,
-        // DONT_KILL_APP);
     }
 }

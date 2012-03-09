@@ -46,7 +46,7 @@ public class LowPowerService extends Service {
         int batteryLevel = parseBatteryLevel();
         boolean isCharging = isCharging();
 
-        Log.i(TAG, "RULANDOOOO  " + batteryLevel + " " + isCharging);
+        Log.i(TAG, "ENVIANDO: nivel de bateria " + batteryLevel + "% , cargando = " + isCharging);
 
         sendAlarmMessage(batteryLevel, isCharging);
     }
@@ -90,7 +90,9 @@ public class LowPowerService extends Service {
 
     }
 
-    /* Sends an Alarm */
+    /**
+     * Sends the Alarm message to the server using a own Builder.
+     */
     protected void sendAlarmMessage(int batteryLevel, boolean isCharging) {
 
         Location location = PlatformSpecificImplementationFactory.getLastLocationFinder(
@@ -99,20 +101,16 @@ public class LowPowerService extends Service {
         /* Constructs the message */
         Builder messageBuilder = buildTechnicalAlarm();
 
-        double latitude, longitude;
         try {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-
-            if (isCharging) {
-                messageBuilder.location(latitude, longitude)
-                        .cause("LowBattery:Batería baja pero cargando");
-            } else {
-                messageBuilder.location(latitude, longitude)
-                        .cause("LowBattery:Batería baja y SIN CARGAR");
-            }
-        } catch (NullPointerException e) {
+            messageBuilder.location(location.getLatitude(), location.getLongitude());
+        } catch (NullPointerException e) { // if there is no last position
+                                           // probably we get a null pointer
         } finally {
+            if (isCharging) {
+                messageBuilder.cause("LowBattery:Batería baja pero cargando");
+            } else {
+                messageBuilder.cause("LowBattery:Batería baja y SIN CARGAR");
+            }
             messageBuilder.charging(isCharging);
             messageBuilder.battery(batteryLevel);
             PasosMessage message = messageBuilder.build();

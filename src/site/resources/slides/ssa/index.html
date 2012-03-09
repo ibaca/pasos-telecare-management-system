@@ -105,17 +105,57 @@
 <article class='fill'>
 <h3> Sensores y Alarmas </h3>
 <p> <img src='images/example.jpg'> </p>
-<div class='source'>Por: Alguien</div>
+<div class='source'>Por: Miguel Pintor</div>
 </article>
 
 <article>
-<h3>Slide with bullet points and paragraph</h3>
-<p>Esto es un parrafo normal ;)</p>
+<h3>Objetivos marcados</h3>
+<p><b>Objetivos</b></p>
 <ul>
-<li>This is an example of a list</li>
-<li>The list items</li>
-<li>Last one!</li>
+<li>Alerta por batería baja.</li>
+<li>Alerta periódica con el nivel de batería y la temperatura.</li>
 </ul>
+<br/>
+<div class="build">
+<p><b>Soluciones</b></p>
+<ul>
+<li>Uso de BroadcastReceiver ligado a android.intent.action.BATTERY_LOW, evitando un polling continuo de la batería.</li>
+<li> Uso del AlarmManager (acciones periódicas programadas). Emulación del sensor de temperatura durante el desarrollo.</li>
+</ul>
+</div>
+</article>
+
+<article>
+<h3>Funcionamiento</h3>
+<p> video 1 </p>
+</article>
+
+<article>
+<h3>Herramientas</h3>
+<div style="font-size: 80%">
+<ul>
+<li>Telnet  para cambios relacionados con la batería </li>
+<p>Instalación en Windows 7</p>
+<ol>
+<li>Panel de control -> Programas -> Programas y características</li>
+<li>Marcar Activar o desactivar características de windows -> Telnet</li>
+<li>Abir una consola (cmd):
+<br/>c:\ > telnet localhost 5554 
+<br/>Ejemplos:
+<br/>[Desenchufar ac]  c:\ > power ac off
+<br/>[Cambiar estado] c:\ > power status not-charging
+<br/>[Cambiar nivel a 80%] c:\ > power capacity 80 
+</li>
+</ol>
+<li>Sensorsimulator-1.1.1 para la temperatura:<br/>
+http://www.androidconnect.com.ar/2011/08/usando-los-sensores.html</li>
+</ul>
+</div>
+</article>
+
+<article>
+<h3>Demo</h3>
+<p> video 2 </p>
 </article>
 
 <!-- --------------------------------- Preferencias y Diseño ----------------------------------- -->
