@@ -56,81 +56,97 @@
 </article>
 
 <article>
-<h3>Slide with bullet points</h3>
+<h3>TMS en terminales moviles. Planteamiento.</h3>
 <ul>
-<li>This is an example of a list</li>
-<li>The list items</li>
-<li>Last one!</li>
+<li>En esta practica nos planteamos el hecho de extender el	trabajo realizada en otros modulos a un terminal movil.</li>
+<li>En nuestro caso nos propusimos conservar todas las funcionalidades que ya poseia, y en caso de poder, ampliarlas.</li>
+<li>Algunas de las funcionalidades de nuestra aplicacion quedaban obsoletas (login), otras requerian de un complicado proceso para su implementacion el el terminal (mapas).</li>
+<li>Tambien veiamos interesantes nuevas funcionalidades que	podrian dar mas valor a nuestra aplicacion (vallas).</li>
+<li>Todo esto orientado a aplicar y afianzar los conceptos vistos en clase.</li>
+</ul>
+</article>
+
+<article>
+<h3>TMS en terminales moviles. Resolucion.</h3>
+<ul>
+<li>Dada la buena experiencia con las metodologias de desarrollo del modulo anterior nos planteamos utilizar Scrum en	este proyecto y distribuir el trabajo en tareas en lugar de la distribucion por capas. Para esto hicimos uso de herramientas como Trello,...</li>
+<li>De cara a las funcionalidades desechamos el uso de la pantalla de login, ya que consideramos el terminal movil como algo personal.</li>
+<li>En cuanto a mostrar mapas de las alertas consideramos que para un usuario no era imprescindible ver la localizacion desde	donde se manda una alerta, de echo ni siquiera necesario.</li>
+<li>En cuanto al protocolo hemos podido reciclar gran parte del	codigo usado otros modulos.</li>
+<li>Por ultimo decir que hemos desarrollado prototipos que se han ido refinando a lo largo de las diferentes iteraciones.</li>
 </ul>
 </article>
 
 <!-- --------------------------------- Widget & Activity --------------------------------------- -->
 
-		<article class='fill'>
-			<h3>Widgets & Activities</h3>
-			<p>
-				<img src='images/example.jpg'>
-			</p>
-			<!-- <div class='source'>Por: Alguien</div> -->
-		</article>
+<article class='fill'>
+<h3>Widgets & Activities</h3>
+<p>
+<img src='images/example.jpg'>
+</p>
+<!-- <div class='source'>Por: Alguien</div> -->
+</article>
 
-		<!-- --------------------------------- Parte de Cristian----------------------------------------- -->
+<!-- --------------------------------- Parte de Cristian----------------------------------------- -->
 
-		<article>
-			<h1>
-				Widgets y Activities<br>
-			</h1>
-			<p>
-				Activities<br> Widget<br>
-			</p>
-		</article>
+<article>
+<h3>
+TmsActivity<br>
+</h3>
+<p>
+Es el Activity principal de nuestra aplicacion.<br>Controla un boton para el envio de alertas.<br>Gestiona su propio Menu que	permite al usuario navegar entre los actitvities.<br>
+</p>
+<br>
+<h3>
+PreferencesActivity<br>
+</h3>
+<p>
+Es el Activity encargado de gestionar los diferentes parametros	configurables de nuestra aplicacion.<br> Mas en concreto nos permite especificar: 
+<span style="font-size: 25px">
+<ul>
+<li>Variables que definen la ruta donde se aloja el servidor.</li>
+<li>Numero de telefono del terminal.</li>
+</ul>
+</span> 
+Todos estos datos son almacenados en las preferencias de la	aplicacion.<br>
+</p>
+</article>
 
-		<article>
-			<h1>
-				TmsActivity<br>
-			</h1>
-			<p>
-				Es el Activity principal de nuestra aplicacion.<br> Controla un
-				boton para el envio de alertas.<br> Gestiona su propio Menu que
-				permite al usuario navegar entre los actitvities.<br>
-			</p>
-		</article>
-
-		<article>
-			<h1>
-				PreferencesActivity<br>
-			</h1>
-			<p>
-				Es el Activity encargado de gestionar los diferentes parametros
-				configurables de nuestra aplicacion.<br> Mas en concreto nos
-				permite especificar:<br> <span style="font-size: 25px">
-					<ul>
-						<li>Variables que definen la ruta donde se aloja el servidor.</li>
-						<li>Numero de telefono del terminal.</li>
-					</ul>
-				</span> Todos estos datos son almacenados en las preferencias de la
-				aplicacion.<br>
-			</p>
-		</article>
-
-		<article>
-			<h1>
-				FencesActivity<br>
-			</h1>
-			<p>
-				Nos permite asignar "vallas", o zonas alrededor de un punto con un
-				radio determinado.<br>Permite asignar acciones al entrar dentro
-				de estas "vallas".<br> Este activity tambien gestiona su propio
-				menu.
-			</p>
-		</article>
-
-		<article>
-			<h1>
-				AboutActivity<br>
-			</h1>
-			<p>Carga una pantalla de creditos.</p>
-		</article>
+<article>
+<h3>
+FencesActivity<br>
+</h3>
+<p>
+Nos permite asignar "vallas", o zonas alrededor de un punto con un radio determinado.<br>Permite asignar acciones al entrar dentro de estas "vallas".<br> Este activity tambien gestiona su propio	menu.
+</p>
+<br>
+<h3>
+AboutActivity<br>
+</h3>
+<p>Carga una pantalla de creditos.</p>
+</article>
+<article>
+<h3>
+Widget<br>
+</h3>
+<p>
+Pequeño Widget cuyo unico elemento es un boton.<br>Este boton lanza alarmas de usuario, con el mismo funcionamiento que la propia	aplicacion.<br>La ventaja es que con un solo dos clicks puedes mandar una alerta.<br>Las claves del widget: 
+<span style="font-size: 20px">
+<ul>
+<li>Obtener el ID del widget:</li>
+<pre>Intent intentOrigen = getIntent();
+Bundle params = intentOrigen.getExtras();
+widgetId = params.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+AppWidgetManager.INVALID_APPWIDGET_ID);</pre>
+<li>Lanzar adecuadamente un activity:</li>
+<pre>PendingIntent pendingIntent = PendingIntent.getActivity(context,
+widgetId, new Intent(context, aleluya.class),
+PendingIntent.FLAG_UPDATE_CURRENT);
+controles.setOnClickPendingIntent(R.id.BtnActualizar, pendingIntent);</pre>
+</ul>
+</span>
+</p>
+</article>
 
 <!-- --------------------------------- Protocolo y Servicios ----------------------------------- -->
 
