@@ -18,7 +18,7 @@
 <meta charset='utf-8'>
 <script src='../slides.js'></script>
 <style>
-.slides.template-inftel > article:not(.nobackground):not(.biglogo) {
+.slides.template-inftel>article:not (.nobackground ):not (.biglogo ) {
 	background: url(images/inftel-logo.png) 560px 605px no-repeat;
 	background-color: white;
 }
@@ -27,44 +27,71 @@
 
 
 <body style='display: none'>
-<img style='display:none' src='images/inftel-logo.png'>
-<section class='slides layout-regular template-inftel'> 
-  
-<article>
-<h1>
-<span style="font-size: 55px">Telecare Management System</span><br> 
-<span style="font-size: 50%">
-	Sistema de gestión de teleasistencia. Interfaz Android.
-</span>
-</h1>
-<p>
-	Agustín M. Pereña García<br>
-	Miguel Angel Quero Martín<br>
-	Miguel Pintor Moral<br>
-	Cristian Jiménez Salvatierra<br>
-	Ignacio Baca Moreno-Torres<br> 
-	Marzo 2012
-</p>
-</article>
+	<img style='display: none' src='images/inftel-logo.png'>
+	<section class='slides layout-regular template-inftel'>
 
-<!-- --------------------------------- Introduccion -------------------------------------------- -->
+		<article>
+			<h1>
+				<span style="font-size: 55px">Telecare Management System</span><br>
+				<span style="font-size: 50%"> Sistema de gestión de
+					teleasistencia. Interfaz Android. </span>
+			</h1>
+			<p>
+				Agustín M. Pereña García<br> Miguel Angel Quero Martín<br>
+				Miguel Pintor Moral<br> Cristian Jiménez Salvatierra<br>
+				Ignacio Baca Moreno-Torres<br> Marzo 2012
+			</p>
+		</article>
 
-<article class='fill'>
-<h3> Introducción y planteamiento del problema </h3>
-<p> <img src='images/example.jpg'> </p>
-<!-- <div class='source'>Por: Alguien</div> -->
-</article>
+		<!-- --------------------------------- Introduccion -------------------------------------------- -->
 
-<article>
-<h3>Slide with bullet points</h3>
-<ul>
-<li>This is an example of a list</li>
-<li>The list items</li>
-<li>Last one!</li>
-</ul>
-</article>
+		<article class='fill'>
+			<h3>Introducción y planteamiento del problema</h3>
+			<p>
+				<img src='images/example.jpg'>
+			</p>
+			<!-- <div class='source'>Por: Alguien</div> -->
+		</article>
 
-<!-- --------------------------------- Widget & Activity --------------------------------------- -->
+		<article>
+			<h3>TMS en terminales moviles. Planteamiento.</h3>
+			<ul>
+				<li>En esta practica nos planteamos el hecho de extender el
+					trabajo realizada en otros modulos a un terminal movil.</li>
+				<li>En nuestro caso nos propusimos conservar todas las
+					funcionalidades que ya poseia, y en caso de poder, ampliarlas.</li>
+				<li>Algunas de las funcionalidades de nuestra aplicacion
+					quedaban obsoletas (login), otras requerian de un complicado
+					proceso para su implementacion el el terminal (mapas).</li>
+				<li>Tambien veiamos interesantes nuevas funcionalidades que
+					podrian dar mas valor a nuestra aplicacion (vallas).</li>
+				<li>Todo esto orientado a aplicar y afianzar los conceptos
+					vistos en clase.</li>
+			</ul>
+		</article>
+
+		<article>
+			<h3>TMS en terminales moviles. Resolucion.</h3>
+			<ul>
+				<li>Dada la buena experiencia con las metodologias de
+					desarrollo del modulo anterior nos planteamos utilizar Scrum en
+					este proyecto y distribuir el trabajo en tareas en lugar de la
+					distribucion por capas. Para esto hicimos uso de herramientas como
+					Trello,...</li>
+				<li>De cara a las funcionalidades desechamos el uso de la
+					pantalla de login, ya que consideramos el terminal movil como algo
+					personal.</li>
+				<li>En cuanto a mostrar mapas de las alertas consideramos que
+					para un usuario no era imprescindible ver la localizacion desde
+					donde se manda una alerta, de echo ni siquiera necesario.</li>
+				<li>En cuanto al protocolo hemos podido reciclar gran parte del
+					codigo usado otros modulos.</li>
+				<li>Por ultimo decir que hemos desarrollado prototipos que se
+					han ido refinando a lo largo de las diferentes iteraciones.</li>
+			</ul>
+		</article>
+
+		<!-- --------------------------------- Widget & Activity --------------------------------------- -->
 
 		<article class='fill'>
 			<h3>Widgets & Activities</h3>
@@ -75,15 +102,6 @@
 		</article>
 
 		<!-- --------------------------------- Parte de Cristian----------------------------------------- -->
-
-		<article>
-			<h1>
-				Widgets y Activities<br>
-			</h1>
-			<p>
-				Activities<br> Widget<br>
-			</p>
-		</article>
 
 		<article>
 			<h1>
@@ -132,214 +150,273 @@
 			<p>Carga una pantalla de creditos.</p>
 		</article>
 
-<!-- --------------------------------- Protocolo y Servicios ----------------------------------- -->
+		<article>
+			<h1>
+				AboutActivity<br>
+			</h1>
+			<p>Carga una pantalla de creditos.</p>
+		</article>
 
-<article class='fill'>
-<h3> Protocolo PaSOS y Servicios Android </h3>
-<p> <img src='images/example.jpg'> </p>
-<div class='source'>Por: Alguien</div>
-</article>
+		<article>
+			<h1>
+				Widget<br>
+			</h1>
+			<p>
+				Pequeño Widget cuyo unico elemento es un boton.<br>Este boton
+				lanza alarmas de usuario, con el mismo funcionamiento que la propia
+				aplicacion.<br>La ventaja es que con un solo dos clicks puedes
+				mandar una alerta.
+			</p>
+		</article>
 
-<article>
-<h3>Slide with bullet points and paragraph</h3>
-<p>Esto es un parrafo normal ;)</p>
-<ul>
-<li>This is an example of a list</li>
-<li>The list items</li>
-<li>Last one!</li>
-</ul>
-</article>
+		<!-- --------------------------------- Protocolo y Servicios ----------------------------------- -->
 
-<!-- --------------------------------- Sensores y Alarms --------------------------------------- -->
+		<article class='fill'>
+			<h3>Protocolo PaSOS y Servicios Android</h3>
+			<p>
+				<img src='images/example.jpg'>
+			</p>
+			<div class='source'>Por: Alguien</div>
+		</article>
 
-<article class='fill'>
-<h3> Sensores y Alarmas </h3>
-<p> <img src='images/example.jpg'> </p>
-<div class='source'>Por: Miguel Pintor</div>
-</article>
+		<article>
+			<h3>Slide with bullet points and paragraph</h3>
+			<p>Esto es un parrafo normal ;)</p>
+			<ul>
+				<li>This is an example of a list</li>
+				<li>The list items</li>
+				<li>Last one!</li>
+			</ul>
+		</article>
 
-<article>
-<h3>Objetivos marcados</h3>
-<p><b>Objetivos</b></p>
-<ul>
-<li>Alerta por batería baja.</li>
-<li>Alerta periódica con el nivel de batería y la temperatura.</li>
-</ul>
-<br/>
-<div class="build">
-<p><b>Soluciones</b></p>
-<ul>
-<li>Uso de BroadcastReceiver ligado a android.intent.action.BATTERY_LOW, evitando un polling continuo de la batería.</li>
-<li> Uso del AlarmManager (acciones periódicas programadas). Emulación del sensor de temperatura durante el desarrollo.</li>
-</ul>
-</div>
-</article>
+		<!-- --------------------------------- Sensores y Alarms --------------------------------------- -->
 
-<article>
-<h3>Funcionamiento</h3>
-<p> video 1 </p>
-</article>
+		<article class='fill'>
+			<h3>Sensores y Alarmas</h3>
+			<p>
+				<img src='images/example.jpg'>
+			</p>
+			<div class='source'>Por: Miguel Pintor</div>
+		</article>
 
-<article>
-<h3>Herramientas</h3>
-<div style="font-size: 80%">
-<ul>
-<li>Telnet  para cambios relacionados con la batería </li>
-<p>Instalación en Windows 7</p>
-<ol>
-<li>Panel de control -> Programas -> Programas y características</li>
-<li>Marcar Activar o desactivar características de windows -> Telnet</li>
-<li>Abir una consola (cmd):
-<br/>c:\ > telnet localhost 5554 
-<br/>Ejemplos:
-<br/>[Desenchufar ac]  c:\ > power ac off
-<br/>[Cambiar estado] c:\ > power status not-charging
-<br/>[Cambiar nivel a 80%] c:\ > power capacity 80 
-</li>
-</ol>
-<li>Sensorsimulator-1.1.1 para la temperatura:<br/>
-http://www.androidconnect.com.ar/2011/08/usando-los-sensores.html</li>
-</ul>
-</div>
-</article>
+		<article>
+			<h3>Objetivos marcados</h3>
+			<p>
+				<b>Objetivos</b>
+			</p>
+			<ul>
+				<li>Alerta por batería baja.</li>
+				<li>Alerta periódica con el nivel de batería y la temperatura.</li>
+			</ul>
+			<br />
+			<div class="build">
+				<p>
+					<b>Soluciones</b>
+				</p>
+				<ul>
+					<li>Uso de BroadcastReceiver ligado a
+						android.intent.action.BATTERY_LOW, evitando un polling continuo de
+						la batería.</li>
+					<li>Uso del AlarmManager (acciones periódicas programadas).
+						Emulación del sensor de temperatura durante el desarrollo.</li>
+				</ul>
+			</div>
+		</article>
 
-<article>
-<h3>Demo</h3>
-<p> video 2 </p>
-</article>
+		<article>
+			<h3>Funcionamiento</h3>
+			<p>video 1</p>
+		</article>
 
-<!-- --------------------------------- Preferencias y Diseño ----------------------------------- -->
+		<article>
+			<h3>Herramientas</h3>
+			<div style="font-size: 80%">
+				<ul>
+					<li>Telnet para cambios relacionados con la batería</li>
+					<p>Instalación en Windows 7</p>
+					<ol>
+						<li>Panel de control -> Programas -> Programas y
+							características</li>
+						<li>Marcar Activar o desactivar características de windows ->
+							Telnet</li>
+						<li>Abir una consola (cmd): <br />c:\ > telnet localhost 5554
+							<br />Ejemplos: <br />[Desenchufar ac] c:\ > power ac off <br />[Cambiar
+							estado] c:\ > power status not-charging <br />[Cambiar nivel a
+							80%] c:\ > power capacity 80
+						</li>
+					</ol>
+					<li>Sensorsimulator-1.1.1 para la temperatura:<br />
+						http://www.androidconnect.com.ar/2011/08/usando-los-sensores.html
+					</li>
+				</ul>
+			</div>
+		</article>
 
-<article class='fill'>
-<h3> Preferencias y Diseño </h3>
-<p> <img src='images/example.jpg'> </p>
-<div class='source'>Por: Alguien</div>
-</article>
+		<article>
+			<h3>Demo</h3>
+			<p>video 2</p>
+		</article>
 
-<article>
-<h3>Slide with bullet points and paragraph</h3>
-<p>Esto es un parrafo normal ;)</p>
-<ul>
-<li>This is an example of a list</li>
-<li>The list items</li>
-<li>Last one!</li>
-</ul>
-</article>
+		<!-- --------------------------------- Preferencias y Diseño ----------------------------------- -->
 
-<!-- --------------------------------- Localizacion y Fragments -------------------------------- -->
+		<article class='fill'>
+			<h3>Preferencias y Diseño</h3>
+			<p>
+				<img src='images/example.jpg'>
+			</p>
+			<div class='source'>Por: Alguien</div>
+		</article>
 
-<article class='fill'>
-<h3> Localización e Interfaces Avanzadas </h3>
-<p> <img src='images/example.jpg'> </p>
-<div class='source'>Por: Ignacio Baca Moreno-Torres</div>
-</article>
+		<article>
+			<h3>Slide with bullet points and paragraph</h3>
+			<p>Esto es un parrafo normal ;)</p>
+			<ul>
+				<li>This is an example of a list</li>
+				<li>The list items</li>
+				<li>Last one!</li>
+			</ul>
+		</article>
 
-<article>
-<h3>La segregación</h3>
-<p>Android cambia de versión rápido</p>
-<p>En el 2011 sacó 15 versiones diferentes, incluyendo mejoras en las ramas 2.X, 3.X y 4.X.</p>
-<p>Opciones
-<ul style="margin-top:10px">
-<li>Programar en una versión antigua
-<br><span style="color:darkred">reinventar la rueda, mala idea</span>
-<li>Escribir código diferente para cada versión
-<br><span style="color:darkred">complejo, pero mejor que reinventar</span>
-<li>Usar librerías que mantienen compatibilidad
-<br><code>android-compatibility-package-v4</code>
-<br><span style="color:green">menos complejo, menos reinvención. Me gusta!</span>
-</ul>
-</article>
+		<!-- --------------------------------- Localizacion y Fragments -------------------------------- -->
 
-<article>
-<h3>Localización: Tracking</h3>
-<p>El tracking es critico en el diseño de la app</p>
-<ul>
-<li>Consume energía
-<li>Consume comunicación (red)
-<li>Puede variar la precisión
-<li>Puede variar la disponibilidad
-</ul>
-<p>Elegir entre estos criterios e integrar las herramientas nativas es "complejo"</p>
-</article>
+		<article class='fill'>
+			<h3>Localización e Interfaces Avanzadas</h3>
+			<p>
+				<img src='images/example.jpg'>
+			</p>
+			<div class='source'>Por: Ignacio Baca Moreno-Torres</div>
+		</article>
 
-<article>
-<h3>¿Porque es "complejo"?</h3>
-<img src="http://android10.org/images/stories/development/android_location_providers_03.jpg"
-	 style="float: right" />
-<ul>
-<li>Muchos proveedores: GPS, AGPS, CellID, Wifi MACID, Mocked, etc.
-<li>Los proveedores cambian en tiempo de ejecución
-<li>Cada proveedor tiene ventajas: precisión, tiempo de respuesta
-<li>O desventajas: consumo de energía, poca cobertura, etc.
-<li>El usuario puede deshabilitar algunos proveedores
-<li>Cada versión android aporta nuevas herramientas
-</ul>
-</article>
+		<article>
+			<h3>La segregación</h3>
+			<p>Android cambia de versión rápido</p>
+			<p>En el 2011 sacó 15 versiones diferentes, incluyendo mejoras en
+				las ramas 2.X, 3.X y 4.X.</p>
+			<p>Opciones
+			<ul style="margin-top: 10px">
+				<li>Programar en una versión antigua <br>
+				<span style="color: darkred">reinventar la rueda, mala idea</span>
+				<li>Escribir código diferente para cada versión <br>
+				<span style="color: darkred">complejo, pero mejor que
+						reinventar</span>
+				<li>Usar librerías que mantienen compatibilidad <br>
+				<code>android-compatibility-package-v4</code> <br>
+				<span style="color: green">menos complejo, menos reinvención.
+						Me gusta!</span>
+			</ul>
+		</article>
 
-<article>
-<h3>Localización: Subscripción antes que timmer</h3>
-<p>El sistema solo notifica cuando hay un cambio</p>
-<p><b>Ventaja: </b>Menor uso de recursos</p>
-<p><b>Problema: </b>Puede no estar disponible</p>
-<br>
-<p>Localización pasiva o activa
-<p>Subscripción por criterío de elección de proveedor
-</article>
+		<article>
+			<h3>Localización: Tracking</h3>
+			<p>El tracking es critico en el diseño de la app</p>
+			<ul>
+				<li>Consume energía
+				<li>Consume comunicación (red)
+				<li>Puede variar la precisión
+				<li>Puede variar la disponibilidad
+			</ul>
+			<p>Elegir entre estos criterios e integrar las herramientas
+				nativas es "complejo"</p>
+		</article>
 
-<article>
-<h3>Localización: Por subscripción 1/2</h3>
-<p>Pueden existir un numero desconocido de proveedores</p>
-<p>Se debe escoger la mejor localización gastando la menor cantidad de recursos</p>
-<p><b>Gingerbread 2.3</b> (permite definir criterios)</p>
-<pre>locationManager.requestLocationUpdates(
+		<article>
+			<h3>¿Porque es "complejo"?</h3>
+			<img
+				src="http://android10.org/images/stories/development/android_location_providers_03.jpg"
+				style="float: right" />
+			<ul>
+				<li>Muchos proveedores: GPS, AGPS, CellID, Wifi MACID, Mocked,
+					etc.
+				<li>Los proveedores cambian en tiempo de ejecución
+				<li>Cada proveedor tiene ventajas: precisión, tiempo de
+					respuesta
+				<li>O desventajas: consumo de energía, poca cobertura, etc.
+				<li>El usuario puede deshabilitar algunos proveedores
+				<li>Cada versión android aporta nuevas herramientas
+			</ul>
+		</article>
+
+		<article>
+			<h3>Localización: Subscripción antes que timmer</h3>
+			<p>El sistema solo notifica cuando hay un cambio</p>
+			<p>
+				<b>Ventaja: </b>Menor uso de recursos
+			</p>
+			<p>
+				<b>Problema: </b>Puede no estar disponible
+			</p>
+			<br>
+			<p>Localización pasiva o activa
+			<p>Subscripción por criterío de elección de proveedor
+		</article>
+
+		<article>
+			<h3>Localización: Por subscripción 1/2</h3>
+			<p>Pueden existir un numero desconocido de proveedores</p>
+			<p>Se debe escoger la mejor localización gastando la menor
+				cantidad de recursos</p>
+			<p>
+				<b>Gingerbread 2.3</b> (permite definir criterios)
+			</p>
+			<pre>locationManager.requestLocationUpdates(
   minTime, minDistance, criteria, pendingIntent);</pre>
-<p><b>Froyo 2.2</b> (permite definir suscripción pasiva)</p>
-<pre>locationManager.requestLocationUpdates
+			<p>
+				<b>Froyo 2.2</b> (permite definir suscripción pasiva)
+			</p>
+			<pre>locationManager.requestLocationUpdates
   (PASSIVE_PROVIDER,MAX_TIME, MAX_DISTANCE, pendingIntent);</pre>
-</article>
+		</article>
 
-<article>
-<h3>Localización: Por subscripción 2/2</h3>
-<p><b>Legacy &lt;=2.1</b> (se debe usar timmer)</p>
-<p>Suscripción Activa, criteria se usa de forma manual
-<pre style="margin-top:10px;margin-bottom:-10px">
+		<article>
+			<h3>Localización: Por subscripción 2/2</h3>
+			<p>
+				<b>Legacy &lt;=2.1</b> (se debe usar timmer)
+			</p>
+			<p>Suscripción Activa, criteria se usa de forma manual
+			<pre style="margin-top: 10px; margin-bottom: -10px">
 String provider = locationManager.getBestProvider(criteria, true);
 if (provider != null) {
   locationManager.requestLocationUpdates(provider, 
   minTime, minDistance, pendingIntent); 
 }
 </pre>
-<p><span style="color:darkred">Se debe monitorizar que no se apage el proveedor</span></p>
-<p>Suscripción Pasiva, requiere uso de AlarmManager
-<pre style="margin-top:10px">
+			<p>
+				<span style="color: darkred">Se debe monitorizar que no se
+					apage el proveedor</span>
+			</p>
+			<p>Suscripción Pasiva, requiere uso de AlarmManager
+			<pre style="margin-top: 10px">
 alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, 
   System.currentTimeMillis()+PlacesConstants.MAX_TIME, 
   PlacesConstants.MAX_TIME, pendingIntent);
 </pre>
-</article>
+		</article>
 
-<article class="nobackground">
-<h3>Como hacerlo todo mal</h3>
-<iframe src="http://www.youtube.com/embed/HBoRCXoPUvg" frameborder="0" allowfullscreen></iframe>
-</article>
+		<article class="nobackground">
+			<h3>Como hacerlo todo mal</h3>
+			<iframe src="http://www.youtube.com/embed/HBoRCXoPUvg"
+				frameborder="0" allowfullscreen></iframe>
+		</article>
 
-Problemas:
-puede q el proveedor se desactive
+		Problemas: puede q el proveedor se desactive
 
-<!-- --------------------------------- dudas y gracias ----------------------------------------- -->
+		<!-- --------------------------------- dudas y gracias ----------------------------------------- -->
 
-<article>
-<h3> Dudas </h3>
-<p style='margin-top:0'>
-<img style='width: 600px' src='images/questions.jpg' class="centered">
-</p>
-</article>
+		<article>
+			<h3>Dudas</h3>
+			<p style='margin-top: 0'>
+				<img style='width: 600px' src='images/questions.jpg'
+					class="centered">
+			</p>
+		</article>
 
-<article class='fill'>
-<h3> Gracias! </h3>
-<p> <img src='images/thanks.jpg'> </p>
-</article>
+		<article class='fill'>
+			<h3>Gracias!</h3>
+			<p>
+				<img src='images/thanks.jpg'>
+			</p>
+		</article>
 
-</section>
+	</section>
 </body>
 </html>
