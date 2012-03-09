@@ -137,17 +137,63 @@
 <article class='fill'>
 <h3> Protocolo PaSOS y Servicios Android </h3>
 <p> <img src='images/example.jpg'> </p>
-<div class='source'>Por: Alguien</div>
+<div class='source'>Por: Miguel Angel Quero Martín</div>
+</article>
+
+<article class="nobackground">
+<h3>Mensaje PASOS</h3>
+<p> <img src='images/pasos.png' class="centered" style="width:120%"> </p>
 </article>
 
 <article>
-<h3>Slide with bullet points and paragraph</h3>
-<p>Esto es un parrafo normal ;)</p>
+<h3>Patrón builder</h3>
 <ul>
-<li>This is an example of a list</li>
-<li>The list items</li>
-<li>Last one!</li>
+<li>Abstrae el proceso de creación de un objeto complejo,
+centralizando dicho proceso en un único punto</li>
+<li> Permite que el mismo proceso de construcción pueda crear
+representaciones diferentes del mismo objeto</li>
+<li>Permite controlar la construcción de un producto paso a paso</li>
+<li>Sólo cuando el producto está acabado se instancia el objeto</li>
 </ul>
+<pre style='margin-top:0'>
+PasosMessage message = buildTechnicalAlarm()
+  .location(latitude, longitude)
+  .cause("tracking: seguimiento pasivo");
+  .build();
+</pre>
+</article>
+
+<article>
+<h3>Envio de tramas al servidor</h3>
+<p>Problema: un Service se ejecuta por defecto en el mismo thread que
+lo llama, quedando este bloqueado.</p>
+<br />
+<p>Solución: usar Intent Services.</p>
+<ul>
+<li>IntentService es una subclase de Service.
+<li>Una instancia de IntentService se ejecuta en su propio thread y
+gestiona peticiones asincronas.</li>
+<li>Para usarlo solo es necesario crear una clase que herede de
+IntentService e implemente el método onHandleIntent(Intent).</li>
+</ul>
+</article>
+
+<article>
+<h3>Ciclo de vida de un Intent Service</h3>
+<ul>
+<li>El cliente manda peticiones mediante startService(Intent).</li>
+<li>El servicio se ejecuta si es necesario, y maneja cada petición en
+un sólo hilo, de una en una.</li>
+<li>Cuando la cola de peticiones está vacía, el mismo se muere.</li>
+</ul>
+<p>Ejemplo de uso</p>
+<pre style='margin-top:15px'>
+       Intent sendService = new Intent(this,
+SendPasosMessageIntentService.class);
+       sendService.putExtra(TmsConstants.EXTRA_KEY_MESSAGE_CONTENT,
+message.toString());
+       startService(sendService);
+</pre>
 </article>
 
 <!-- --------------------------------- Sensores y Alarms --------------------------------------- -->
