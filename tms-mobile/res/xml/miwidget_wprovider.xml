@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+	android:initialLayout="@layout/miwidget"
+	android:minWidth="146dip"
+	android:minHeight="146dip"
+	android:label="TMS Widget"
+	android:updatePeriodMillis="60000" 
+	android:configure="org.inftel.tms.mobile.ui.WidgetConfig"
+/>
