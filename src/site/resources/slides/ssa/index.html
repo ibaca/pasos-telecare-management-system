@@ -335,7 +335,7 @@ prefsEditor.commit();
 <h3>Preferencias</h3>
 <ul>
 <li>
-<p style="color:gray">Definición del pantalla en xml</p>
+<p style="color:gray">Definición del pantalla en /xml/preferences.xml</p>
 <pre style="font-size:55%">
 &lt;PreferenceScreen xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; &gt;
     &lt;PreferenceCategory android:title=&quot;@string/phone_preferences&quot; &gt;
@@ -378,11 +378,19 @@ public class PreferencesActivity extends PreferenceActivity {
 
 
 
-<article>
+<article class="nobackground">
 <h3>Preferencias</h3>
+
+<p>Consulta de preferencias</p>
 <p>
-<img src="images/preferences_2.png" style="width: 40%"/>
+<img src="images/preferences_2.png" style="width: 40%; float:right; margin-right:-20px; margin-left:15px "/>
 </p>
+
+<pre style="font-size:45%;"> 
+SharedPreferences prefs = PreferenceManager
+                             .getDefaultSharedPreferences(this);
+String host = prefs.getString(TmsConstants.KEY_IP_PREFERENCE, "");
+</pre>
 </article>
 
 
@@ -406,7 +414,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
 
 <article class="nobackground">
-<h3>Preferencias</h3>
+<h3>Diseño</h3>
 <ul>
 <li>
 <p style="color:gray">Declaración de componentes en /layout/about.xml</p>
@@ -429,6 +437,48 @@ android:text=&quot;@string/desc_agumpg&quot; /&gt;
 </li>
 </ul>
 </article>
+
+
+
+<article class="nobackground">
+<h3>Diseño</h3>
+<p style="color:green">Botón Pantalla principal</p>
+<img src="images/efecto_push_release.png" style="width: 40%; float:right"/>
+<p>Definición del selector:</p>
+<pre style="font-size:45%">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+   &lt;selector 
+   xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+   &lt;item android:drawable=&quot;@drawable/btn_push&quot;
+          android:state_pressed=&quot;true&quot; /&gt;
+   &lt;item android:drawable=&quot;@drawable/btn_release&quot;
+          android:state_pressed=&quot;false&quot; /&gt;
+&lt;/selector&gt;
+</pre>
+
+</article>
+
+
+
+<article class="nobackground">
+<h3>Diseño</h3>
+<p style="color:green">Botón Pantalla principal</p>
+<img src="images/efecto_push_release.png" style="width: 40%; float:right"/>
+<ul>
+
+<li><p>Inclusión del selector e imágenes de botones en /drawable</p></li>
+<li><p>Enlazar selector al ImageView definido en el layout</p></li>
+<pre style="font-size:45%">
+&lt;ImageButton
+    android:id=&quot;@+id/buttonUserAlarm&quot;
+    android:contentDescription=&quot;@string/send_alert&quot;
+    android:scaleType=&quot;center&quot;
+    android:src=&quot;@drawable/selector_btn_user_alarm&quot; /&gt;
+</pre>
+<li><b>Nota: </b>no olvidar definir contentDescription para accesibilidad</li>
+</ul>
+</article>
+
 
 
 
