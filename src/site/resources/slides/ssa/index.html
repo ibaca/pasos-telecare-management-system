@@ -290,7 +290,7 @@ http://www.androidconnect.com.ar/2011/08/usando-los-sensores.html</li>
 <div class='source'>Por: Agustín M. Pereña García</div>
 </article>
 
-<article>
+<article class="nobackground">
 <h3>Preferencias</h3>
 <p>Diferentes formas de gestionar las preferencias en Android</p>
 <ul>
@@ -302,7 +302,8 @@ data/data/org.inftel.tms.mobile/shared_prefs/
 org.inftel.tms.mobile_preferences.xml
 </pre>
 <p>Acceso a las preferencias</p>
-<pre>prefs = getSharedPreferences(TmsConstants.SHARED_PREFERENCE_FILE, Context.MODE_PRIVATE);
+<pre>prefs = getSharedPreferences(TmsConstants.SHARED_PREFERENCE_FILE, 
+									Context.MODE_PRIVATE);
 prefsEditor = prefs.edit();
 prefsEditor.putBoolean(TmsConstants.SP_KEY_RUN_ONCE, true);
 prefsEditor.commit();
