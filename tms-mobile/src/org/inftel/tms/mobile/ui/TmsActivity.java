@@ -139,7 +139,7 @@ public class TmsActivity extends Activity {
         public void onClick(View view) {
             // Obtener ultima posicion y construir PaSOS message
             Location location = lastLocationFinder.getLastBestLocation(
-                    TmsConstants.MAX_DISTANCE, TmsConstants.MAX_TIME);
+                    TmsConstants.MAX_DISTANCE, System.currentTimeMillis() - TmsConstants.MAX_TIME);
             Builder messageBuilder = buildUserAlarm().cause("click: solicitada asistencia");
 
             if (location != null) {
