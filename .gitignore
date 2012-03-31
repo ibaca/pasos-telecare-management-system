@@ -1,0 +1,18 @@
+target/
+.idea
+.classpath
+.project
+.settings
+.DS_Store
+.gwt
+*.iml
+*.ipr
+*.iws
+*.swp
+*.swo
+*.log
+*.launch
+
+## Android Project
+tms-mobile/bin
+tms-mobile/gen
